@@ -16,7 +16,7 @@ public class RestorerReport extends Report implements Serializable {
                 "Summary for " + "restorer: " + restorer.getName() + " "  + restorer.getSurname() + '\n' +
                 "Suggested bonus: " + restorer.getBaseSalary() + '\n' +
                 "Done renovations: " +  '\n' +
-                restorer.getDoneRenovations()
+                restorer.getRenovations()
         );
     }
 }

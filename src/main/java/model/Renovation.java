@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "model.Renovation")
+@Table(name = "renovation")
+
 public class Renovation implements Serializable {
 
     private long id;
@@ -18,25 +20,22 @@ public class Renovation implements Serializable {
     private Set<String> materials = new HashSet<>();
     private Status status;
     private String result;
+    private Book book;
+    private Restorer restorer;
 
-    public Renovation(LocalDate renovationDate, Set<String> material, Status status, String result) {
+    public Renovation(int id, LocalDate renovationDate, Set<String> material, Status status, String result) {
+        setId(id);
         setRenovationDate(renovationDate);
         setMaterials(materials);
         setStatus(status);
         setResult(result);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "restorer_id")
-    private Restorer restorer;
-
-    ManyToOne
-    @JoinColumn(name = "book_id");
-    private Book book;
 
     @Id()
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name = "renovation_id", nullable = false)
     public long getId() {
         return id;
     }
@@ -47,6 +46,26 @@ public class Renovation implements Serializable {
         }
         this.id = id;
     }
+    @ManyToOne
+    @JoinColumn(name = "restorer_id")
+    public Restorer getRestorer () {
+        return restorer;
+    }
+
+    public void setRestorer (Restorer restorer) {
+        this.restorer = restorer;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    public Book getBook () {
+        return book;
+    }
+
+    public void setBook (Book book) {
+        this.book = book;
+    }
+
 
     @Basic
     public LocalDate getRenovationDate () {

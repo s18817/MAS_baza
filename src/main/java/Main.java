@@ -71,17 +71,25 @@ public class Main {
         //book1.addAuthor(author3);
         //book2.addAuthor(author4);
 
+
         LocalDate date1 = LocalDate.of(2022, 11, 1);
-        Library library = new Library(1, "National library", "Pelczynskiego 110A", "Warsaw", "01-471");
-       Restorer restorer2 = new Restorer(1, "Karol", "Szyszka", birthDate7, "male", "polish", "001-004", library, date1, 7000, "Polska 12, Warszawa", "cleaning");
+        LocalDate date2 = LocalDate.of(2023, 01, 12);
+       // Library library = new Library(1, "National library", "Pelczynskiego 110A", "Warsaw", "01-471");
+       Restorer restorer2 = new Restorer(1, "Karol", "Szyszka", birthDate7, "male", "polish", "001-004", date1, 7000, "Polska 12, Warszawa", "cleaning");
 
         Set<String> materials = new HashSet<>();
         materials.add("glue");
         materials.add("foil");
 
+        Renovation renovation1 = new Renovation(1, date1, materials, Status.FINISHED, "everything ok");
+        Renovation renovation2 = new Renovation(2, date2, materials, Status.STARTED, "not finished");
 
-        Renovation renovation1 = new Renovation(date1, materials, Status.STARTED, "not finished");
-
+        book1.addRenovationToBook(restorer2, renovation1);
+        book1.addRenovationToBook(restorer2, renovation2);
+        renovation1.setBook(book1);
+        renovation2.setBook(book1);
+        renovation1.setRestorer(restorer2);
+        renovation2.setRestorer(restorer2);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -106,6 +114,7 @@ public class Main {
             session.save(author2);
             session.save(restorer2);
             session.save(renovation1);
+            session.save(renovation2);
 
             session.getTransaction().commit();
             session.close();

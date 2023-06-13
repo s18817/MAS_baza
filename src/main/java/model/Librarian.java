@@ -17,13 +17,13 @@ public class Librarian extends Employee implements Serializable {
     private List<Inventory> doneInventories = new ArrayList<>();
 
 
-    public Librarian (String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, Library library, LocalDate hiringDate, double baseSalary, String address, Set languages){
-        super(name, surname, birthDate, gender, nationality, ssn, library, hiringDate, baseSalary, address);
+    public Librarian (String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, Set languages){
+        super(name, surname, birthDate, gender, nationality, ssn, hiringDate, baseSalary, address);
         this.setLanguages(languages);
     }
 
     public Librarian(Employee prevEmployee, Set languages){
-        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getLibrary(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress()); // kopiowanie danych z poprzedniego obiektu
+        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress()); // kopiowanie danych z poprzedniego obiektu
         this.setLanguages(languages); // zapisanie nowych danych
     }
 

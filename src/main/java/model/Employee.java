@@ -21,11 +21,11 @@ public abstract class Employee extends Person implements Serializable {
     private static Set<String> ssnDictionary = new HashSet<>();  // zadbanie o unikalność numerów ssn każdego pracownika
 
 
-    public Employee(String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, Library library, LocalDate hiringDate, double baseSalary, String address) {
+    public Employee(String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address) {
         super(name, surname, birthDate, nationality, gender );
         //this.setSsn(ssn);
         this.setHiringDate(hiringDate);
-        this.addLibrary(library);
+        //this.addLibrary(library);
         this.setBaseSalary(baseSalary);
         this.setAddress(address);
     }

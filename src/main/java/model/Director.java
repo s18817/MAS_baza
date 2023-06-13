@@ -16,13 +16,13 @@ public class Director extends Employee implements Serializable {
     private String education;
 
 
-    public Director (String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, Library library, LocalDate hiringDate, double baseSalary, String address, String education){
-        super(name, surname, birthDate, gender, nationality, ssn, library, hiringDate, baseSalary, address);
+    public Director (String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn , LocalDate hiringDate, double baseSalary, String address, String education){
+        super(name, surname, birthDate, gender, nationality, ssn,  hiringDate, baseSalary, address);
         this.setEducation(education);
     }
 
     public Director(Employee prevEmployee, String education){
-        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getLibrary(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress()); // kopiowanie danych z poprzedniego obiektu
+        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress()); // kopiowanie danych z poprzedniego obiektu
         this.setEducation(education); // zapisanie nowych danych
     }
 

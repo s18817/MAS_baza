@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.*;
-import enums.Condition;
-import model.Author;
+
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
 
 @Entity(name = "model.Book")
+@Table(name = "book")
 public class Book extends ObjectPlus implements Serializable {
 
     private static String CurrentbookRentalName = "S18817"; // atrybut klasowy
@@ -33,10 +33,9 @@ public class Book extends ObjectPlus implements Serializable {
 
     private List<Author> authors = new ArrayList<>(); // asocjacja binarna ; kolekcja do przetrzymywania powiazan z Ksiazkami ; kolekcja, poniewaz jedna ksiazka moze miec wielu autorow
 
-
-
     private List<Borrow> borrowDetails = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii wypozyczen ksiazki ; kolekcja, poniewaz jedna ksiazka moze miec wiele wypozyczen
-    private List<Renovation> renovationHistory = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii renowacji ksiazki ; kolekcja, poniewaz jedna ksiazka moze byc poddana renowacji wielkrotnie
+
+    private List<Renovation> renovations = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii renowacji ksiazki ; kolekcja, poniewaz jedna ksiazka moze byc poddana renowacji wielkrotnie
 
     public Book(int id, String title, Set category, Condition bookCondition, int numberOfPages, int yearOfEdition, String publishingHouse) {
         super(); // wywolanie konstrukotra z nadklasy
@@ -82,8 +81,6 @@ public class Book extends ObjectPlus implements Serializable {
 
     }
 
-
-
 //    public void addAuthor(Author authorToAdd) {
 //
 //        if (!authors.contains(authorToAdd)) {
@@ -96,6 +93,7 @@ public class Book extends ObjectPlus implements Serializable {
     @Id()
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name = "book_id", nullable = false)
     public long getId() {
         return id;
     }
@@ -105,6 +103,15 @@ public class Book extends ObjectPlus implements Serializable {
             throw new ValidationException("ID cannot be negative");
         }
         this.id = id;
+    }
+
+    @OneToMany(mappedBy = "book")
+    public List<Renovation> getRenovations () {
+        return renovations;
+    }
+
+    public void setRenovations (List<Renovation> renovationHistory) {
+        this.renovations = renovationHistory;
     }
 
 
@@ -172,8 +179,8 @@ public class Book extends ObjectPlus implements Serializable {
 
     public void addRenovationToBook(Restorer restorer, Renovation renovation) {
 
-        if (!renovationHistory.contains(renovation)) {
-            renovationHistory.add(renovation);
+        if (!renovations.contains(renovation)) {
+            renovations.add(renovation);
 
             restorer.addRenovationToRestorer(this, renovation); // polaczenie zwrotne
         }

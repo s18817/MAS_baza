@@ -1,5 +1,6 @@
 import enums.Condition;
 import enums.Status;
+import gui.App;
 import model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,8 +9,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import static model.Book.booksFromDb;
 
 public class Main {
 
@@ -44,7 +48,7 @@ public class Main {
         LocalDate birthDate9 = LocalDate.of(1950, 6, 11);
 
 
-        // w klasie model.Book utworzenie encji jako klasa oraz atrybutow jako kolumny
+/*        // w klasie model.Book utworzenie encji jako klasa oraz atrybutow jako kolumny
         Book book1 = new Book(1, "Zbrodnia i Kara", book1Categories, Condition.BAD, 576, 2000, "Media");
         Book book2 = new Book(2, "Zbrodniacxzfsdfs i Kara", book1Categories, Condition.BAD, 576, 2000, "Media");
 
@@ -89,7 +93,9 @@ public class Main {
         renovation1.setBook(book1);
         renovation2.setBook(book1);
         renovation1.setRestorer(restorer2);
-        renovation2.setRestorer(restorer2);
+        renovation2.setRestorer(restorer2);*/
+
+
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -103,18 +109,25 @@ public class Main {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        booksFromDb = session.createQuery("FROM model.Book").list();
 
+        for (Book book : booksFromDb){
+            System.out.println(book.toString());
+        }
+        App app = new App();
+
+        app.start();
 
         try {
 
 
-            session.save(book1);
-            session.save(book2);
-            session.save(author3);
-            session.save(author2);
-            session.save(restorer2);
-            session.save(renovation1);
-            session.save(renovation2);
+//            session.save(book1);
+//            session.save(book2);
+//            session.save(author3);
+//            session.save(author2);
+//            session.save(restorer2);
+//            session.save(renovation1);
+//            session.save(renovation2);
 
             session.getTransaction().commit();
             session.close();

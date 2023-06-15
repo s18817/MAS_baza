@@ -31,11 +31,15 @@ public class Book extends ObjectPlus implements Serializable {
 
     private Rack rack;
 
-    private List<Author> authors = new ArrayList<>(); // asocjacja binarna ; kolekcja do przetrzymywania powiazan z Ksiazkami ; kolekcja, poniewaz jedna ksiazka moze miec wielu autorow
+    public static List<Book> booksFromDb = new ArrayList<>();
+
+    //private List<Author> authors = new ArrayList<>(); // asocjacja binarna ; kolekcja do przetrzymywania powiazan z Ksiazkami ; kolekcja, poniewaz jedna ksiazka moze miec wielu autorow
 
     private List<Borrow> borrowDetails = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii wypozyczen ksiazki ; kolekcja, poniewaz jedna ksiazka moze miec wiele wypozyczen
 
     private List<Renovation> renovations = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii renowacji ksiazki ; kolekcja, poniewaz jedna ksiazka moze byc poddana renowacji wielkrotnie
+
+    public Book () {}
 
     public Book(int id, String title, Set category, Condition bookCondition, int numberOfPages, int yearOfEdition, String publishingHouse) {
         super(); // wywolanie konstrukotra z nadklasy
@@ -63,7 +67,7 @@ public class Book extends ObjectPlus implements Serializable {
         setState(State.AVAILABLE);
     }
 
-    @ManyToMany(mappedBy = "books")
+/*    @ManyToMany(mappedBy = "books")
     public List<Author> getAuthors() {
         return authors;
     }
@@ -79,7 +83,7 @@ public class Book extends ObjectPlus implements Serializable {
     public void removeAuthor(Author authorToRemove) {
         getAuthors().remove(authorToRemove);
 
-    }
+    }*/
 
 //    public void addAuthor(Author authorToAdd) {
 //

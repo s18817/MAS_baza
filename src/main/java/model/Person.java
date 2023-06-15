@@ -22,6 +22,8 @@ public abstract class Person extends model.ObjectPlus implements Serializable {
         setNationality(nationality);
     }
 
+    public Person() {};
+
     public String getName() {
         return name;
     }

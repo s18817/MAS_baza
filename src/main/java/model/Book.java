@@ -7,7 +7,9 @@ import exception.ValidationException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Year;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
@@ -33,7 +35,7 @@ public class Book extends ObjectPlus implements Serializable {
 
     public static List<Book> booksFromDb = new ArrayList<>();
 
-    //private List<Author> authors = new ArrayList<>(); // asocjacja binarna ; kolekcja do przetrzymywania powiazan z Ksiazkami ; kolekcja, poniewaz jedna ksiazka moze miec wielu autorow
+    private List<Author> authors = new ArrayList<>(); // asocjacja binarna ; kolekcja do przetrzymywania powiazan z Ksiazkami ; kolekcja, poniewaz jedna ksiazka moze miec wielu autorow
 
     private List<Borrow> borrowDetails = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii wypozyczen ksiazki ; kolekcja, poniewaz jedna ksiazka moze miec wiele wypozyczen
 
@@ -67,7 +69,7 @@ public class Book extends ObjectPlus implements Serializable {
         setState(State.AVAILABLE);
     }
 
-/*    @ManyToMany(mappedBy = "books")
+   @ManyToMany(mappedBy = "books")
     public List<Author> getAuthors() {
         return authors;
     }
@@ -83,7 +85,7 @@ public class Book extends ObjectPlus implements Serializable {
     public void removeAuthor(Author authorToRemove) {
         getAuthors().remove(authorToRemove);
 
-    }*/
+    }
 
 //    public void addAuthor(Author authorToAdd) {
 //
@@ -399,5 +401,7 @@ public class Book extends ObjectPlus implements Serializable {
             return "Book '" + this.title + "' probably needs renovation (limit:" + ageLimit + ")";
         }
     }
+
+   // public List<Renovation> getRenovationsForBook(Book)
 
 }

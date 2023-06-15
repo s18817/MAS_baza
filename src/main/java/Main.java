@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import static model.Book.booksFromDb;
+import static model.Renovation.renovationsForBookFromDb;
 
 public class Main {
 
@@ -48,7 +49,7 @@ public class Main {
         LocalDate birthDate9 = LocalDate.of(1950, 6, 11);
 
 
-/*        // w klasie model.Book utworzenie encji jako klasa oraz atrybutow jako kolumny
+        // w klasie model.Book utworzenie encji jako klasa oraz atrybutow jako kolumny
         Book book1 = new Book(1, "Zbrodnia i Kara", book1Categories, Condition.BAD, 576, 2000, "Media");
         Book book2 = new Book(2, "Zbrodniacxzfsdfs i Kara", book1Categories, Condition.BAD, 576, 2000, "Media");
 
@@ -93,7 +94,7 @@ public class Main {
         renovation1.setBook(book1);
         renovation2.setBook(book1);
         renovation1.setRestorer(restorer2);
-        renovation2.setRestorer(restorer2);*/
+        renovation2.setRestorer(restorer2);
 
 
 
@@ -110,19 +111,38 @@ public class Main {
         session.beginTransaction();
 
         booksFromDb = session.createQuery("FROM model.Book").list();
+        renovationsForBookFromDb = session.createQuery("From model.Renovation ").list();
 
         for (Book book : booksFromDb){
             System.out.println(book.toString());
+        }
+
+        for (Renovation ren : renovationsForBookFromDb){
+            System.out.println(ren.toString());
         }
         App app = new App();
 
         app.start();
 
+        Book book3 = new Book(3, "Harry Potter 1", book1Categories, Condition.GOOD, 654, 2013, "Media");
+        Book book4 = new Book(3, "Harry Potter 2", book1Categories, Condition.BAD, 654, 2015, "Media");
+        Book book5 = new Book(4, "Harry Potter 3", book1Categories, Condition.DESTROYED, 554, 2017, "Media");
+        Book book6 = new Book(5, "Harry Potter 5", book1Categories, Condition.NEW, 875, 2019, "Media");
+        Book book7 = new Book(6, "Harry Potter 6", book1Categories, Condition.GOOD, 421, 2021, "Media");
+        Book book8 = new Book(7, "Harry Potter 7", book1Categories, Condition.GOOD, 332, 2023, "Media");
+
+
         try {
-
-
 //            session.save(book1);
 //            session.save(book2);
+//            session.save(book3);
+//            session.save(book4);
+//            session.save(book5);
+//            session.save(book6);
+//            session.save(book7);
+//            session.save(book8);
+//
+//
 //            session.save(author3);
 //            session.save(author2);
 //            session.save(restorer2);

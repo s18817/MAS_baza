@@ -1,168 +1,286 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.App">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+  <grid id="27dc6" binding="main" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="1050" height="533"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="287f0" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <tabbedpane id="e5c81" binding="tabbedPane">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="50bc5" class="javax.swing.JLabel">
-            <constraints border-constraint="North"/>
-            <properties>
-              <horizontalAlignment value="0"/>
-              <text value="Witaj w systemie Bibliotecznym"/>
-            </properties>
-          </component>
-          <component id="84c71" class="javax.swing.JLabel">
-            <constraints border-constraint="South"/>
-            <properties>
-              <horizontalAlignment value="4"/>
-              <text value="s18817 MAS 2023"/>
-            </properties>
-          </component>
-          <tabbedpane id="b462" binding="tabbedPane1" default-binding="true">
-            <constraints border-constraint="Center"/>
+          <grid id="fce45" binding="mainTab" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <tabbedpane title="Strona główna"/>
+            </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="c0661" binding="mainTab" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <component id="8fd6e" class="javax.swing.JLabel">
+                <constraints border-constraint="North"/>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <text value="Witaj na stronie głównej aplikacji"/>
+                </properties>
+              </component>
+              <component id="5e5b" class="javax.swing.JLabel">
+                <constraints border-constraint="South"/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <text value="s18817 MAS 2023"/>
+                </properties>
+              </component>
+              <component id="65e44" class="javax.swing.JButton" binding="button3" default-binding="true">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <text value="Button"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="907e" binding="booksTab" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Książki"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="f4d6" class="javax.swing.JLabel">
                 <constraints>
-                  <tabbedpane title="Strona główna"/>
+                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value="Lista wszystkich książek"/>
+                </properties>
+              </component>
+              <component id="a7405" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="28" height="113"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <text value="Książki:"/>
+                </properties>
+              </component>
+              <component id="9422a" class="javax.swing.JList" binding="lstBooks">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="113"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="28d50" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Tytuł"/>
+                </properties>
+              </component>
+              <component id="8f331" class="javax.swing.JTextArea" binding="txtTitle">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="3a2e3" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Kategorie"/>
+                </properties>
+              </component>
+              <component id="cfd4" class="javax.swing.JTextArea" binding="txtCategory">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                </properties>
+              </component>
+              <component id="3b5f0" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Kondycja"/>
+                </properties>
+              </component>
+              <component id="51fc8" class="javax.swing.JTextArea" binding="txtCondition">
+                <constraints>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                </properties>
+              </component>
+              <component id="e8ab1" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Liczba stron"/>
+                </properties>
+              </component>
+              <component id="14ef5" class="javax.swing.JTextArea" binding="txtPages">
+                <constraints>
+                  <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                </properties>
+              </component>
+              <component id="993bc" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Wiek"/>
+                </properties>
+              </component>
+              <component id="aeff6" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Wydawnictwo"/>
+                </properties>
+              </component>
+              <component id="c5010" class="javax.swing.JTextArea" binding="textPublishing">
+                <constraints>
+                  <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="a4cc1" class="javax.swing.JTextArea" binding="txtAge">
+                <constraints>
+                  <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+            </children>
+          </grid>
+          <grid id="a6e0b" binding="renovationTab" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Renowacje"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="2bbf" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value="Wybrana książka:"/>
+                </properties>
+              </component>
+              <component id="f090e" class="javax.swing.JTextField" binding="bookInfo">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                </properties>
+              </component>
+              <component id="7d6f8" class="javax.swing.JList" binding="list1" default-binding="true">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <grid id="19b11" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="12ac4" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="witaj"/>
-                    </properties>
-                  </component>
-                  <component id="ab26c" class="javax.swing.JButton" binding="button1" default-binding="true">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
+                  <component id="d67f9" class="javax.swing.JButton" binding="button1" default-binding="true">
+                    <constraints/>
                     <properties>
                       <text value="Button"/>
                     </properties>
                   </component>
+                  <component id="29102" class="javax.swing.JButton" binding="dokonajRenowacjiButton" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Dokonaj renowacji"/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
-              <grid id="65da3" binding="bookTab" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <component id="d800" class="javax.swing.JLabel">
                 <constraints>
-                  <tabbedpane title="Książki"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <background color="-7055079"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value="Akcje"/>
                 </properties>
-                <border type="none"/>
-                <children>
-                  <component id="23a07" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <horizontalAlignment value="0"/>
-                      <horizontalTextPosition value="0"/>
-                      <text value="Lista wszystkich książek"/>
-                    </properties>
-                  </component>
-                  <component id="1ec32" class="javax.swing.JTable" binding="booksTable">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="50"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                </children>
-              </grid>
-              <grid id="ed1d6" binding="borrowTab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              </component>
+              <component id="cc147" class="javax.swing.JLabel">
                 <constraints>
-                  <tabbedpane title="Wypożyczenia"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value="Historia renowacji książki"/>
+                </properties>
+              </component>
+              <component id="1fb28" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Historia renowacji zalogowanego użytkownika"/>
+                </properties>
+              </component>
+              <component id="81ea3" class="javax.swing.JList" binding="list2" default-binding="true">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
                 </constraints>
                 <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="c02b9" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="wypozyczenia"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <grid id="7eb88" binding="renovationTab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
-                <constraints>
-                  <tabbedpane title="Renowacje"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="66347" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="renowacje"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <grid id="3edf2" binding="inventoryTab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
-                <constraints>
-                  <tabbedpane title="Inwentaryzacje"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="842ab" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="inwentaryzacje"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <grid id="434dc" binding="reportsTab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
-                <constraints>
-                  <tabbedpane title="Raporty"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="bd38f" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="raporty"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
+              </component>
             </children>
-          </tabbedpane>
+          </grid>
         </children>
-      </grid>
+      </tabbedpane>
     </children>
   </grid>
 </form>

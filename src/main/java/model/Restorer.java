@@ -51,6 +51,8 @@ public class Restorer extends Employee implements Serializable {
         this.setSpecialisation(specialisation); // zapisanie nowych danych
     }
 
+    public Restorer(){};
+
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")

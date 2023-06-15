@@ -25,6 +25,11 @@ public class BookTableModel extends AbstractTableModel {
     }
 
     @Override
+    public String getColumnName (int index) {
+        return columns[index];
+    }
+
+    @Override
     public Object getValueAt (int rowIndex, int columnIndex) {
         Book book = bookList.get(rowIndex);
         switch (columnIndex) {

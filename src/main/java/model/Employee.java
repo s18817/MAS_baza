@@ -30,6 +30,8 @@ public abstract class Employee extends Person implements Serializable {
         this.setAddress(address);
     }
 
+    public Employee(){};
+
     //public abstract double getSalary();
 
 

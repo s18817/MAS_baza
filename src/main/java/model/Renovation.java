@@ -7,7 +7,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "model.Renovation")
@@ -23,13 +25,19 @@ public class Renovation implements Serializable {
     private Book book;
     private Restorer restorer;
 
-    public Renovation(int id, LocalDate renovationDate, Set<String> material, Status status, String result) {
+    public static List<Renovation> renovationsForBookFromDb = new ArrayList<>();
+
+
+    public Renovation(int id, LocalDate renovationDate, Set<String> materials, Status status, String result) {
         setId(id);
         setRenovationDate(renovationDate);
         setMaterials(materials);
         setStatus(status);
         setResult(result);
     }
+
+    public Renovation(){};
+
 
 
     @Id()
@@ -67,6 +75,17 @@ public class Renovation implements Serializable {
     }
 
 
+    @ElementCollection
+    public Set<String> getMaterials () {
+        return materials;
+    }
+    public void setMaterials (Set<String> materials) {
+        if (materials == null) {
+            throw new ValidationException("Materials cannot be empty");
+        }
+        this.materials = materials;
+    }
+
     @Basic
     public LocalDate getRenovationDate () {
         return renovationDate;
@@ -81,16 +100,6 @@ public class Renovation implements Serializable {
         this.renovationDate = renovationDate;
     }
 
-    @ElementCollection
-    public Set<String> getMaterials () {
-        return materials;
-    }
-    public void setMaterials (Set<String> materials) {
-        if (materials == null) {
-            throw new ValidationException("Materials cannot be empty");
-        }
-        this.materials = materials;
-    }
 
     @Enumerated(EnumType.STRING)
     public Status getStatus () {

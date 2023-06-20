@@ -26,6 +26,7 @@ public class Renovation implements Serializable {
     private Restorer restorer;
 
     public static List<Renovation> renovationsForBookFromDb = new ArrayList<>();
+    public static List<Renovation> renovationsFromDb = new ArrayList<>();
 
 
     public Renovation(int id, LocalDate renovationDate, Set<String> materials, Status status, String result) {

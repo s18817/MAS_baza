@@ -28,6 +28,8 @@ public class Restorer extends Employee implements Serializable {
     private LocalDate hiringDate; // data  zatrudnienia
     private String address; // dane adresowe
 
+    public static Restorer loggedRestorer;
+
     private List<Renovation> renovations = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania wykonanych renowacji ksiazek ; kolekcja, poniewaz jeden konwserwator moze wykonac wiele renowacji
 
     public Restorer(int id, String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, String specialisation){

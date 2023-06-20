@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
 import java.time.LocalDate;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 import static model.Book.booksFromDb;
 import static model.Renovation.renovationsForBookFromDb;
+import static model.Renovation.renovationsFromDb;
+import static model.Restorer.loggedRestorer;
 
 public class Main {
 
@@ -110,16 +113,42 @@ public class Main {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
+        //renovationsFromDb = session.createQuery("FROM model.Renovation").list();
+
+        //booksFromDb = session.createQuery("FROM model.Book JOIN FETCH model.Renovation").list();
         booksFromDb = session.createQuery("FROM model.Book").list();
-        renovationsForBookFromDb = session.createQuery("From model.Renovation ").list();
+
+
+        System.out.println("dasdsa");
+        //System.out.println(booksFromDb.get(book1));
+
+        //Query query = session.createQuery("FROM model.Restorer WHERE model.Restorer.id = :id");
+       // query.setParameter("id", 1);
+       // Restorer restorerFromDb = (Restorer) query.uniqueResult();
+       // System.out.println("restorer");
+        //System.out.println(restorerFromDb.toString());
+
+        //Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = :id");
+        Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = 1");
+        //query.setParameter("id", restorer2.getId());
+        List<Renovation> renovations = query.list();
+
+        //renovationsForBookFromDb = session.createQuery("From model.Renovation ").list();
 
         for (Book book : booksFromDb){
             System.out.println(book.toString());
+            System.out.println(book.getId());
         }
 
-        for (Renovation ren : renovationsForBookFromDb){
+        for (Renovation ren : renovations){
             System.out.println(ren.toString());
+            System.out.println(ren.getId());
         }
+
+        Query loginQuery = session.createQuery("FROM model.Restorer r WHERE r.id = :id");
+        loginQuery.setParameter("id", 1);
+        loggedRestorer = (Restorer) loginQuery.uniqueResult();
+
         App app = new App();
 
         app.start();

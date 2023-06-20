@@ -33,12 +33,26 @@
                   <text value="s18817 MAS 2023"/>
                 </properties>
               </component>
-              <component id="65e44" class="javax.swing.JButton" binding="button3" default-binding="true">
+              <grid id="4d630" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
                 <constraints border-constraint="Center"/>
-                <properties>
-                  <text value="Button"/>
-                </properties>
-              </component>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="60c38" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="Zalogowany jako użytkownik:"/>
+                    </properties>
+                  </component>
+                  <component id="ce8f3" class="javax.swing.JTextArea" binding="sadadasdaTextArea" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <editable value="false"/>
+                      <text value="sadadasda"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
           <grid id="907e" binding="booksTab" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -184,7 +198,7 @@
               </component>
             </children>
           </grid>
-          <grid id="a6e0b" binding="renovationTab" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="a6e0b" binding="renovationsTab" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Renowacje"/>
@@ -212,7 +226,7 @@
                   <editable value="false"/>
                 </properties>
               </component>
-              <component id="7d6f8" class="javax.swing.JList" binding="list1" default-binding="true">
+              <component id="7d6f8" class="javax.swing.JList" binding="lstBookRenovations">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -269,7 +283,7 @@
                   <text value="Historia renowacji zalogowanego użytkownika"/>
                 </properties>
               </component>
-              <component id="81ea3" class="javax.swing.JList" binding="list2" default-binding="true">
+              <component id="81ea3" class="javax.swing.JList" binding="lstRestorerRenovations">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>

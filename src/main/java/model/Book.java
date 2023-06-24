@@ -11,6 +11,8 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
 
@@ -111,7 +113,7 @@ public class Book extends ObjectPlus implements Serializable {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     public List<Renovation> getRenovations () {
         return renovations;
     }

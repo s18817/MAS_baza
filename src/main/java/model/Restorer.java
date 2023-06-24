@@ -70,7 +70,7 @@ public class Restorer extends Employee implements Serializable {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "restorer")
+    @OneToMany(mappedBy = "restorer", fetch = FetchType.EAGER)
     public List<Renovation> getRenovations () {
         return renovations;
     }

@@ -117,7 +117,7 @@ public class Main {
 
         //booksFromDb = session.createQuery("FROM model.Book JOIN FETCH model.Renovation").list();
         booksFromDb = session.createQuery("FROM model.Book").list();
-
+        //System.out.println(booksFromDb.get(0).getRenovations().);
 
         System.out.println("dasdsa");
         //System.out.println(booksFromDb.get(book1));

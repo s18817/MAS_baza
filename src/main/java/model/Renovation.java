@@ -55,7 +55,7 @@ public class Renovation implements Serializable {
         }
         this.id = id;
     }
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restorer_id")
     public Restorer getRestorer () {
         return restorer;
@@ -65,7 +65,7 @@ public class Renovation implements Serializable {
         this.restorer = restorer;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     public Book getBook () {
         return book;

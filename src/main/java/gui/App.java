@@ -2,18 +2,19 @@ package gui;
 
 import model.Book;
 import model.Renovation;
+import model.Restorer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
 import javax.swing.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import static model.Book.booksFromDb;
 import static model.Restorer.loggedRestorer;
@@ -33,7 +34,7 @@ public class App extends JFrame {
     private JTextField bookInfo;
     private JList lstBookRenovations;
     private JButton button1;
-    private JButton dokonajRenowacjiButton;
+    private JButton btnCreateRenovation;
     private JTabbedPane tabbedPane;
     private JList lstBooks;
     private JTextArea txtTitle;
@@ -43,7 +44,10 @@ public class App extends JFrame {
     private JTextArea textPublishing;
     private JTextArea txtAge;
     private JList lstRestorerRenovations;
-    private JTextArea sadadasdaTextArea;
+    private JTextArea loggedUser;
+
+    private Restorer selectedRestorer;
+    private Book selectedBook;
 
 
     public App () {
@@ -54,9 +58,11 @@ public class App extends JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
 
 
-
+        selectedRestorer = loggedRestorer;
+        loggedUser.setText(loggedRestorer.getName() + " " + loggedRestorer.getSurname());
 
         loadBooks();
+        loadRestorerRenovations();
 
         lstBooks.addMouseListener(new MouseAdapter() {
             @Override
@@ -67,7 +73,7 @@ public class App extends JFrame {
                    if(renovationOption()){
                        bookInfo.setText(((Book) lstBooks.getSelectedValue()).getTitle());
                        loadBookRenovations((Book) lstBooks.getSelectedValue());
-                       loadRestorerRenovations();
+                       selectedBook = ((Book) lstBooks.getSelectedValue());
                    }
 
                 }
@@ -83,6 +89,29 @@ public class App extends JFrame {
                 }
             }
         });
+
+        lstBookRenovations.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked (MouseEvent e) {
+                super.mouseClicked(e);
+                if (e.getClickCount() == 2){
+                    showRestorerForRenovation(((Renovation) lstBookRenovations.getSelectedValue()));
+                }
+            }
+        });
+
+
+        btnCreateRenovation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                openRenovationForm();
+            }
+        });
+    }
+
+    public void openRenovationForm(){
+        RenovationFormFrame renovationFormFrame = new RenovationFormFrame(selectedBook, selectedRestorer);
+        renovationFormFrame.start();
     }
 
     public boolean renovationOption () {
@@ -101,30 +130,32 @@ public class App extends JFrame {
 
     }
     public void showBookForRenovation(Renovation renovation){
-//        Session session = createSession();
-//        Query query = session.createQuery("FROM model.Book b WHERE b.renovations.id = :id");
-//        query.setParameter("id", renovation);
-//        Book bookForRenovation = (Book) query.uniqueResult();
-//        System.out.println(bookForRenovation.toString());
-        //session.close();
+        BookFrame bookFrame = new BookFrame(renovation.getBook());
+        bookFrame.start();
+    }
+
+    public void showRestorerForRenovation(Renovation renovation){
+        RestorerFrame restorerFrame = new RestorerFrame(renovation.getRestorer());
+        restorerFrame.start();
     }
 
     public void loadBookRenovations(Book book){
-        Session session = createSession();
-        Query query = session.createQuery("FROM model.Renovation r WHERE r.book.id = :id");
-        query.setParameter("id", book.getId());
-        List<Renovation> renovations = query.list();
-        RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(renovations);
+//        Session session = createSession();
+//        Query query = session.createQuery("FROM model.Renovation r WHERE r.book.id = :id");
+//        query.setParameter("id", book.getId());
+//        List<Renovation> renovations = query.list();
+
+        RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(book.getRenovations());
         lstBookRenovations.setModel(modelRenovation);
         //session.close();
     }
 
     public void loadRestorerRenovations() {
-        Session session = createSession();
-        Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = :id");
-        query.setParameter("id", loggedRestorer.getId());
-        List<Renovation> renovations = query.list();
-        RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(renovations);
+//        Session session = createSessloadRestorerRenovationsion();
+//        Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = :id");
+//        query.setParameter("id", loggedRestorer.getId());
+//        List<Renovation> renovations = query.list();
+        RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(loggedRestorer.getRenovations());
         lstRestorerRenovations.setModel(modelRenovation);
         //session.close();
 
@@ -157,7 +188,7 @@ public class App extends JFrame {
         this.setVisible(true);
         this.setContentPane(main);
         this.pack();
-        //this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
     }
 

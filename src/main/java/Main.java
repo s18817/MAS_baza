@@ -84,6 +84,7 @@ public class Main {
         LocalDate date2 = LocalDate.of(2023, 01, 12);
        // Library library = new Library(1, "National library", "Pelczynskiego 110A", "Warsaw", "01-471");
        Restorer restorer2 = new Restorer(1, "Karol", "Szyszka", birthDate7, "male", "polish", "001-004", date1, 7000, "Polska 12, Warszawa", "cleaning");
+       Restorer restorer3 = new Restorer(2, "Lukasz", "Lubik", birthDate7, "male", "polish", "001-005", date1, 11000, "Polska 12, Warszawa", "cleaning");
 
         Set<String> materials = new HashSet<>();
         materials.add("glue");
@@ -129,9 +130,9 @@ public class Main {
         //System.out.println(restorerFromDb.toString());
 
         //Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = :id");
-        Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = 1");
+        //Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = 1");
         //query.setParameter("id", restorer2.getId());
-        List<Renovation> renovations = query.list();
+        //List<Renovation> renovations = query.list();
 
         //renovationsForBookFromDb = session.createQuery("From model.Renovation ").list();
 
@@ -140,13 +141,13 @@ public class Main {
             System.out.println(book.getId());
         }
 
-        for (Renovation ren : renovations){
-            System.out.println(ren.toString());
-            System.out.println(ren.getId());
-        }
+       // for (Renovation ren : renovations){
+        //    System.out.println(ren.toString());
+        //    System.out.println(ren.getId());
+        //}
 
         Query loginQuery = session.createQuery("FROM model.Restorer r WHERE r.id = :id");
-        loginQuery.setParameter("id", 1);
+        loginQuery.setParameter("id", 2);
         loggedRestorer = (Restorer) loginQuery.uniqueResult();
 
         App app = new App();
@@ -162,6 +163,7 @@ public class Main {
 
 
         try {
+            //session.save(restorer3);
 //            session.save(book1);
 //            session.save(book2);
 //            session.save(book3);

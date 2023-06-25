@@ -325,16 +325,10 @@ public class Book extends ObjectPlus implements Serializable {
 
     @Override // przesloniecie metody z klasy bazowej
     public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                "', category=" + category +
-                ", bookCondition=" + bookCondition +
-                ", numberOfPages=" + numberOfPages +
-                ", yearOfEdition=" + yearOfEdition +
-                ", publishingHouse='" + publishingHouse + '\'' +
-                ", bookRentalName='" + bookRentalName + '\'' +
-                ", ageOfBook=" + getAgeOfBook() +
-                "}";
+        return
+                "Tytuł: '" + title +
+                "', kondycja: " + bookCondition +
+                ", stan: " + state;
     }
 
     @Transient

@@ -12,6 +12,7 @@ public class BookFrame extends JFrame {
     private JPanel bookPanel;
     private JTextArea textPublishing;
     private JTextArea txtAge;
+    private JTextArea txtState;
 
     private Book book;
 
@@ -27,6 +28,7 @@ public class BookFrame extends JFrame {
         txtPages.setText(String.valueOf(book.getNumberOfPages()));
         textPublishing.setText(book.getPublishingHouse());
         txtAge.setText(String.valueOf(book.getAgeOfBook()));
+        txtState.setText(book.getState().toString());
     }
 
     public void start () {

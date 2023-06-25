@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.RenovationFormFrame">
-  <grid id="27dc6" binding="RenovationFormPanel" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="RenovationFormPanel" layout-manager="GridLayoutManager" row-count="10" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="500" height="469"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1006045"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="4f37b" class="javax.swing.JLabel">
@@ -26,7 +28,7 @@
       </component>
       <component id="5e70f" class="javax.swing.JTextArea" binding="txtRestorer">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -36,7 +38,7 @@
       </component>
       <component id="44291" class="javax.swing.JTextArea" binding="txtBook">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -54,15 +56,15 @@
       </component>
       <component id="9de09" class="javax.swing.JLabel">
         <constraints>
-          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Wynik"/>
         </properties>
       </component>
-      <component id="c3d96" class="javax.swing.JTextArea" binding="textArea4" default-binding="true">
+      <component id="c3d96" class="javax.swing.JTextArea" binding="txtResult">
         <constraints>
-          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="8" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -72,7 +74,7 @@
       </component>
       <component id="2c3cf" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Formularz nowej renowacji"/>
@@ -80,7 +82,7 @@
       </component>
       <component id="44b0e" class="javax.swing.JList" binding="lstMaterials">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -91,12 +93,12 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Data renowacji"/>
+          <text value="Data renowacji (RRRR-MM-DD)"/>
         </properties>
       </component>
-      <component id="352b7" class="javax.swing.JTextArea" binding="textArea3" default-binding="true">
+      <component id="352b7" class="javax.swing.JTextArea" binding="txtRenovationDate">
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
@@ -106,9 +108,11 @@
       </component>
       <grid id="387c2" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints>
-          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="6" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1006045"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="879b2" class="javax.swing.JButton" binding="btnRemoveMaterial">
@@ -127,18 +131,20 @@
       </grid>
       <grid id="cdf0b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints>
-          <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="9" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1006045"/>
+        </properties>
         <border type="none"/>
         <children>
-          <component id="74fe9" class="javax.swing.JButton" binding="anulujButton" default-binding="true">
+          <component id="74fe9" class="javax.swing.JButton" binding="btnCancel">
             <constraints/>
             <properties>
               <text value="Anuluj"/>
             </properties>
           </component>
-          <component id="1adde" class="javax.swing.JButton" binding="zapiszButton" default-binding="true">
+          <component id="1adde" class="javax.swing.JButton" binding="btnSaveRenovation">
             <constraints/>
             <properties>
               <text value="Zapisz"/>
@@ -148,7 +154,7 @@
       </grid>
       <component id="3af25" class="javax.swing.JLabel">
         <constraints>
-          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Akcje"/>
@@ -164,11 +170,55 @@
       </component>
       <component id="d2d0e" class="javax.swing.JTextArea" binding="txtMaterial">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
         <properties/>
+      </component>
+      <component id="773c2" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Status"/>
+        </properties>
+      </component>
+      <component id="c7521" class="javax.swing.JRadioButton" binding="radioPlanned">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1006045"/>
+          <selected value="true"/>
+          <text value="Zaplanowana"/>
+        </properties>
+      </component>
+      <component id="42d07" class="javax.swing.JRadioButton" binding="radioFinished">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1006045"/>
+          <text value="Zakończona"/>
+        </properties>
+      </component>
+      <component id="3e849" class="javax.swing.JRadioButton" binding="radioInProgress">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1006045"/>
+          <text value="W trakcie"/>
+        </properties>
+      </component>
+      <component id="45388" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="1" column="4" row-span="8" col-span="1" vsize-policy="6" hsize-policy="6" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <orientation value="1"/>
+        </properties>
       </component>
     </children>
   </grid>

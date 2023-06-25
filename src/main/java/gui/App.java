@@ -1,5 +1,6 @@
 package gui;
 
+import enums.State;
 import model.Book;
 import model.Renovation;
 import model.Restorer;
@@ -11,10 +12,9 @@ import org.hibernate.service.ServiceRegistry;
 
 import javax.swing.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import static model.Book.booksFromDb;
 import static model.Restorer.loggedRestorer;
@@ -45,7 +45,10 @@ public class App extends JFrame {
     private JTextArea txtAge;
     private JList lstRestorerRenovations;
     private JTextArea loggedUser;
+    private JTextArea txtState;
+    private JLabel Stan;
 
+    public static RenovationFormFrame renovationFormFrame;
     private Restorer selectedRestorer;
     private Book selectedBook;
 
@@ -104,13 +107,28 @@ public class App extends JFrame {
         btnCreateRenovation.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                openRenovationForm();
+                if(selectedBook.getState() != State.AVAILABLE){
+                    JOptionPane.showMessageDialog(null, "Książka nie jest dostępna, nie można dokonać renowacji");
+                }
+                else{
+                    openRenovationForm();
+                }
+            }
+        });
+        lstBookRenovations.addComponentListener(new ComponentAdapter() {
+        });
+        lstBookRenovations.addContainerListener(new ContainerAdapter() {
+        });
+        lstBookRenovations.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange (PropertyChangeEvent evt) {
+
             }
         });
     }
 
     public void openRenovationForm(){
-        RenovationFormFrame renovationFormFrame = new RenovationFormFrame(selectedBook, selectedRestorer);
+        renovationFormFrame = new RenovationFormFrame(selectedBook, selectedRestorer);
         renovationFormFrame.start();
     }
 
@@ -168,12 +186,16 @@ public class App extends JFrame {
         txtPages.setText(String.valueOf(book.getNumberOfPages()));
         textPublishing.setText(book.getPublishingHouse());
         txtAge.setText(String.valueOf(book.getAgeOfBook()));
+        txtState.setText(book.getState().toString());
+    }
+
+    public static void closeForm (){
+        renovationFormFrame.dispose();
     }
 
     private void setBook(Book book){
         bookInfo.setText(book.toString());
     }
-
 
 
     private void createUIComponents () {
@@ -191,8 +213,11 @@ public class App extends JFrame {
         this.setLocationRelativeTo(null);
 
     }
+    public JList getLstBooks () {
+        return lstBooks;
+    }
 
-    public Session createSession() {
+    public static Session createSession () {
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();

@@ -76,7 +76,7 @@ public class Renovation implements Serializable {
     }
 
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     public Set<String> getMaterials () {
         return materials;
     }
@@ -127,11 +127,11 @@ public class Renovation implements Serializable {
 
     @Override
     public String toString () {
-        return "Renovation{" +
-                "renovationDate=" + renovationDate +
-                ", materials=" + materials +
-                ", status=" + status +
-                ", result='" + result + '\'' +
+        return
+                "Data wykonania: " + renovationDate +
+                ", wykorzystane materiały: " + materials +
+                ", status: " + status +
+                ", wynik: '" + result + '\'' +
                 '}';
     }
 

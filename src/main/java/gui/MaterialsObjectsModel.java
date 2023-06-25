@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialsObjectsModel extends AbstractListModel<String> {
+public class MaterialsObjectsModel<S> extends AbstractListModel<String> {
     ArrayList<String> objects;
 
     public MaterialsObjectsModel (List<String> objs) {

@@ -288,10 +288,10 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="d67f9" class="javax.swing.JButton" binding="button1" default-binding="true">
+                  <component id="d67f9" class="javax.swing.JButton" binding="btnRefresh">
                     <constraints/>
                     <properties>
-                      <text value="Button"/>
+                      <text value="Odśwież listy"/>
                     </properties>
                   </component>
                   <component id="29102" class="javax.swing.JButton" binding="btnCreateRenovation">

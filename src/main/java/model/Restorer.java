@@ -70,7 +70,7 @@ public class Restorer extends Employee implements Serializable {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "restorer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "restorer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<Renovation> getRenovations () {
         return renovations;
     }
@@ -145,7 +145,7 @@ public class Restorer extends Employee implements Serializable {
         public void addRenovationToRestorer (Book book, Renovation renovation) {
 
         if (!renovations.contains(renovation)) {
-            if (book.getState() == State.AVAILABLE) { // nie mozna poddac renowacji ksiazki, ktora nie jest dostepna
+            if (book.getState() == State.DOSTĘPNA) { // nie mozna poddac renowacji ksiazki, ktora nie jest dostepna
                 renovations.add(renovation);
                 book.addRenovationToBook(this, renovation); // polaczenie zwrotne
             } else {

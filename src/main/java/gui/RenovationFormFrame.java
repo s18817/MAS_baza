@@ -1,7 +1,6 @@
 package gui;
 
 import enums.Condition;
-import enums.State;
 import enums.Status;
 import model.Book;
 import model.Renovation;
@@ -11,10 +10,9 @@ import org.hibernate.Session;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
 import java.util.*;
+import static model.Restorer.loggedRestorer;
 
 public class RenovationFormFrame extends JFrame {
     private JTextArea txtRestorer;
@@ -36,6 +34,7 @@ public class RenovationFormFrame extends JFrame {
     private  Restorer restorer;
     private List<String> materials = new ArrayList<>();
     private MaterialsObjectsModel model = new MaterialsObjectsModel<String>(materials);
+
 
     public RenovationFormFrame (Book book, Restorer restorer){
         this.book = book;
@@ -72,8 +71,6 @@ public class RenovationFormFrame extends JFrame {
             @Override
             public void actionPerformed (ActionEvent e) {
                 saveRenovationToDb();
-                App.closeForm();
-                //App.loadRestorerRenovations();
             }
         });
 
@@ -128,36 +125,92 @@ public class RenovationFormFrame extends JFrame {
 
         }
 
+    public boolean validateDate (String formDate) {
+
+        if (formDate.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Podaj prawidłową datę (RRRR-MM-DD)");
+            return false;
+        }
+    }
+
+    public boolean validateMaterials(Set<String> formMaterials){
+        if (formMaterials.size() >= 1){
+            return true;
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Podaj przynajmniej jeden materiał");
+            return false;
+        }
+    }
+
+    public boolean validateResult (String formResult) {
+        if (formResult.length() <= 255 && formResult.length() > 0) {
+            return true;
+        } else if (formResult == null || formResult.trim().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Wynik renowacji nie może być pusty");
+            return false;
+        } else {
+            JOptionPane.showMessageDialog(null, "Podany tekst jest zbyt długi. Maksymalna ilośc znaków to 255. Podano: " + formResult.length());
+            return false;
+        }
+    }
+
         public void saveRenovationToDb(){
-            String newCondition = conditionChoice();
-            Session session = App.createSession();
-            LocalDate renovationDate = LocalDate.parse(txtRenovationDate.getText());
+
             Set<String> materials = new HashSet<>();
-            Status renovationStatus;
+
             for (int i = 0; i < model.getSize(); i++) {
                 materials.add(model.getElementAt(i));
             }
-            if (radioPlanned.isSelected()) {
-                renovationStatus = Status.TODO;
-            } else if (radioInProgress.isSelected()) {
-                renovationStatus = Status.STARTED;
-            } else {
-                renovationStatus = Status.FINISHED;
-            }
 
-            Renovation newRenovation = new Renovation(1000, renovationDate, materials, renovationStatus, txtResult.getText());
-            newRenovation.setBook(book);
-            newRenovation.setRestorer(restorer);
-            session.save(newRenovation);
+            if (validateDate(txtRenovationDate.getText()) && validateMaterials(materials) && validateResult(txtResult.getText())){
+                String newCondition = conditionChoice();
+                Session session = App.createSession();
+                Status renovationStatus;
+                LocalDate renovationDate = LocalDate.parse(txtRenovationDate.getText());
+                if (radioPlanned.isSelected()) {
+                    renovationStatus = Status.ZAPLANOWANA;
+                } else if (radioInProgress.isSelected()) {
+                    renovationStatus = Status.W_TRAKCIE;
+                } else {
+                    renovationStatus = Status.ZAKOŃCZONA;
+                }
+                Renovation newRenovation = new Renovation(1000, renovationDate, materials, renovationStatus, txtResult.getText());
+                newRenovation.setRestorer(loggedRestorer);
+                newRenovation.setBook(book);
+                session.save(newRenovation);
 
-            if (!(newCondition == null || newCondition.trim().isBlank())) {
-                book.updateBookCondition(Condition.valueOf(newCondition));
-                session.update(book);
+
+                if (!(newCondition == null || newCondition.trim().isBlank())) {
+                    book.updateBookCondition(Condition.valueOf(newCondition));
+                    session.update(book);
+
+                }
+                session.getTransaction().commit();
+
+                if (newCondition != null){
+                    session.refresh(book);
+                    loggedRestorer = session.get(Restorer.class, loggedRestorer.getId());
+                    session.close();
+                }else{
+                    Session session2 = App.createSession();
+                    session2.refresh(book);
+                    loggedRestorer = session2.get(Restorer.class, loggedRestorer.getId());
+                    session2.close();
+                }
+
+
+                JOptionPane.showMessageDialog(null, "Renowacja została zapisana");
+
+                System.out.println(restorer.getRenovations().toString());
+                System.out.println(loggedRestorer.getRenovations().toString());
+                System.out.println(book.getRenovations().toString());
+                App.closeForm();
+
             }
-            session.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Renowacja została zapisana");
         }
-
 
     public void start () {
             this.setSize(300, 300);

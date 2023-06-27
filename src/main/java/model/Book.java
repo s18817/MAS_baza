@@ -7,12 +7,9 @@ import exception.ValidationException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Year;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-import org.hibernate.FetchMode;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
 
@@ -55,7 +52,7 @@ public class Book extends ObjectPlus implements Serializable {
         setYearOfEdition(yearOfEdition);
         setPublishingHouse(publishingHouse);
         setBookRentalName(CurrentbookRentalName);
-        setState(State.AVAILABLE);
+        setState(State.DOSTĘPNA);
     }
 
     // jest to tez przyklad przeciazenia
@@ -68,7 +65,7 @@ public class Book extends ObjectPlus implements Serializable {
         setYearOfEdition(yearOfEdition);
         setPublishingHouse(publishingHouse);
         setBookRentalName(CurrentbookRentalName);
-        setState(State.AVAILABLE);
+        setState(State.DOSTĘPNA);
     }
 
    @ManyToMany(mappedBy = "books")
@@ -143,7 +140,7 @@ public class Book extends ObjectPlus implements Serializable {
 
 
     public void updateBookCondition (Condition newCondition){
-        if (this.bookCondition != Condition.NEW && newCondition == Condition.NEW) {
+        if (this.bookCondition != Condition.NOWA && newCondition == Condition.NOWA) {
             throw new ValidationException("Book cannot become new if it's already used ");
         }
         else {
@@ -154,9 +151,9 @@ public class Book extends ObjectPlus implements Serializable {
     public void addBorrowToBook(Client client, Borrow newBorrow) {
 
         if (!borrowDetails.contains(newBorrow)) {
-            if (this.state == State.AVAILABLE) {
+            if (this.state == State.DOSTĘPNA) {
                 borrowDetails.add(newBorrow);
-                this.setState(State.BORROWED); // ksiazka zostala wypozyczena, nie jest juz dostepna dla innych
+                this.setState(State.WYPOŻYCZONA); // ksiazka zostala wypozyczena, nie jest juz dostepna dla innych
                 client.addBorrowToClient(this, newBorrow); // polaczenie zwrotne
             }
             else{
@@ -182,7 +179,7 @@ public class Book extends ObjectPlus implements Serializable {
         else{
             borrowToEnd.setOnTime(true);
         }
-        this.setState(State.AVAILABLE); // ksiazka jest juz dostepna do ponownego wypozyczenia
+        this.setState(State.DOSTĘPNA); // ksiazka jest juz dostepna do ponownego wypozyczenia
     }
 
     public void addRenovationToBook(Restorer restorer, Renovation renovation) {
@@ -344,16 +341,16 @@ public class Book extends ObjectPlus implements Serializable {
         Iterable<Book> extent = getExtent(Book.class);
         int newBooks = 0, goodBooks = 0, badBooks = 0, destroyedBooks = 0, otherBooks = 0;
         for (Book book : extent) {
-            if (book.bookCondition == Condition.NEW){
+            if (book.bookCondition == Condition.NOWA){
                 newBooks++;
             }
-            else if (book.bookCondition == Condition.GOOD){
+            else if (book.bookCondition == Condition.DOBRA){
                 goodBooks++;
             }
-            else if (book.bookCondition == Condition.BAD){
+            else if (book.bookCondition == Condition.ZŁA){
                 badBooks++;
             }
-            else if (book.bookCondition == Condition.DESTROYED){
+            else if (book.bookCondition == Condition.ZNISZCZONA){
                 destroyedBooks++;
             }
             else {
@@ -369,11 +366,11 @@ public class Book extends ObjectPlus implements Serializable {
     }
 
     public String analyzeBookCondition(){ // ogolnie przyjety limit
-        if (this.getAgeOfBook() <= 10 && ( this.bookCondition == Condition.NEW) || ( this.bookCondition == Condition.GOOD) )
+        if (this.getAgeOfBook() <= 10 && ( this.bookCondition == Condition.NOWA) || ( this.bookCondition == Condition.DOBRA) )
         {
             return "Book '" + this.title + "' should be in a adequate condition - no action required";
         }
-        else if (this.getAgeOfBook() <= 20 && ( this.bookCondition == Condition.NEW) || ( this.bookCondition == Condition.GOOD) )
+        else if (this.getAgeOfBook() <= 20 && ( this.bookCondition == Condition.NOWA) || ( this.bookCondition == Condition.DOBRA) )
         {
             return "Seems that book '" + this.title + "' may require condition change or additional activities";
         }
@@ -384,11 +381,11 @@ public class Book extends ObjectPlus implements Serializable {
     }
 
     public String analyzeBookCondition(int ageLimit){ // limit podany przez uzytkownika - niektore ksiazki moga byc cenniejsze i bardziej trzeba je kontrolowac
-        if (this.getAgeOfBook() <= ageLimit && ( this.bookCondition == Condition.NEW) || ( this.bookCondition == Condition.GOOD) )
+        if (this.getAgeOfBook() <= ageLimit && ( this.bookCondition == Condition.NOWA) || ( this.bookCondition == Condition.DOBRA) )
         {
             return "Book '" + this.title + "' should be in a adequate condition - no action required (limit:" + ageLimit + ")";
         }
-        else if (this.getAgeOfBook() <= ageLimit*2 && ( this.bookCondition == Condition.NEW) || ( this.bookCondition == Condition.GOOD) )
+        else if (this.getAgeOfBook() <= ageLimit*2 && ( this.bookCondition == Condition.NOWA) || ( this.bookCondition == Condition.DOBRA) )
         {
             return "Seems that book '" + this.title + "' may require condition change or additional activities (limit: " + ageLimit + ")";
         }

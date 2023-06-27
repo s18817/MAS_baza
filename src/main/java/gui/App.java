@@ -13,14 +13,11 @@ import org.hibernate.service.ServiceRegistry;
 import javax.swing.*;
 
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import static model.Book.booksFromDb;
 import static model.Restorer.loggedRestorer;
 
 public class App extends JFrame {
-    private JTabbedPane tabbedPane1;
 
     private JButton btn;
     private JPanel main;
@@ -33,7 +30,7 @@ public class App extends JFrame {
     private JPanel renovationsTab;
     private JTextField bookInfo;
     private JList lstBookRenovations;
-    private JButton button1;
+    private JButton btnRefresh;
     private JButton btnCreateRenovation;
     private JTabbedPane tabbedPane;
     private JList lstBooks;
@@ -49,23 +46,28 @@ public class App extends JFrame {
     private JLabel Stan;
 
     public static RenovationFormFrame renovationFormFrame;
-    private Restorer selectedRestorer;
+    //private Restorer selectedRestorer;
     private Book selectedBook;
 
 
     public App () {
 
-        JPanel mainTab = new JPanel();
-        JPanel booksTab = new JPanel();
-        JPanel renovationTab = new JPanel();
-        JTabbedPane tabbedPane = new JTabbedPane();
+//        mainTab = new JPanel();
+//        booksTab = new JPanel();
+//        renovationsTab = new JPanel();
+//        tabbedPane = new JTabbedPane();
+//
+//        tabbedPane.addTab("Strona główna", mainTab);
+//        tabbedPane.addTab("Książki", booksTab);
+//        tabbedPane.addTab("Renowacje", renovationsTab);
+//        main.add(tabbedPane, BorderLayout.CENTER);
 
 
-        selectedRestorer = loggedRestorer;
+        //selectedRestorer = loggedRestorer;
         loggedUser.setText(loggedRestorer.getName() + " " + loggedRestorer.getSurname());
 
         loadBooks();
-        loadRestorerRenovations();
+        loadRestorerRenovations(loggedRestorer);
 
         lstBooks.addMouseListener(new MouseAdapter() {
             @Override
@@ -76,7 +78,10 @@ public class App extends JFrame {
                    if(renovationOption()){
                        bookInfo.setText(((Book) lstBooks.getSelectedValue()).getTitle());
                        loadBookRenovations((Book) lstBooks.getSelectedValue());
+                       loadRestorerRenovations(loggedRestorer);
                        selectedBook = ((Book) lstBooks.getSelectedValue());
+                       //tabbedPane.setSelectedIndex(2);
+                       //tabbedPane.setSelectedComponent(renovationsTab);
                    }
 
                 }
@@ -107,7 +112,7 @@ public class App extends JFrame {
         btnCreateRenovation.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                if(selectedBook.getState() != State.AVAILABLE){
+                if(selectedBook.getState() != State.DOSTĘPNA){
                     JOptionPane.showMessageDialog(null, "Książka nie jest dostępna, nie można dokonać renowacji");
                 }
                 else{
@@ -115,20 +120,19 @@ public class App extends JFrame {
                 }
             }
         });
-        lstBookRenovations.addComponentListener(new ComponentAdapter() {
-        });
-        lstBookRenovations.addContainerListener(new ContainerAdapter() {
-        });
-        lstBookRenovations.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange (PropertyChangeEvent evt) {
 
+        btnRefresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                loadBookRenovations(selectedBook);
+                loadRestorerRenovations(loggedRestorer);
+                loadBook(selectedBook);
             }
         });
     }
 
     public void openRenovationForm(){
-        renovationFormFrame = new RenovationFormFrame(selectedBook, selectedRestorer);
+        renovationFormFrame = new RenovationFormFrame(selectedBook, loggedRestorer);
         renovationFormFrame.start();
     }
 
@@ -136,7 +140,7 @@ public class App extends JFrame {
         String[] options = {"Tak", "Nie"};
         int choice = JOptionPane.showOptionDialog(null, "Czy chcesz dokonać renowacji wybranej książki?", "Możliwość renowacji", 0, 3, null, options, options[0]);
         if (choice == 0) {
-            JOptionPane.showMessageDialog(null, "Przejdz do zakładki Renowacje - książka jest wybrana do rozpoczęcia renowacji");
+            JOptionPane.showMessageDialog(null, "Przejdź do zakładki Renowacje - książka jest wybrana do rozpoczęcia renowacji");
             return true;
         } else
             return false;
@@ -158,24 +162,14 @@ public class App extends JFrame {
     }
 
     public void loadBookRenovations(Book book){
-//        Session session = createSession();
-//        Query query = session.createQuery("FROM model.Renovation r WHERE r.book.id = :id");
-//        query.setParameter("id", book.getId());
-//        List<Renovation> renovations = query.list();
-
         RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(book.getRenovations());
         lstBookRenovations.setModel(modelRenovation);
-        //session.close();
     }
 
-    public void loadRestorerRenovations() {
-//        Session session = createSessloadRestorerRenovationsion();
-//        Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = :id");
-//        query.setParameter("id", loggedRestorer.getId());
-//        List<Renovation> renovations = query.list();
-        RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(loggedRestorer.getRenovations());
+    public void loadRestorerRenovations(Restorer restorer) {
+        RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(restorer.getRenovations());
+        System.out.println(restorer.getRenovations().toString());
         lstRestorerRenovations.setModel(modelRenovation);
-        //session.close();
 
     }
 
@@ -207,10 +201,10 @@ public class App extends JFrame {
     public void start () {
         this.setSize(300, 300);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setVisible(true);
         this.setContentPane(main);
         this.pack();
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
     }
     public JList getLstBooks () {

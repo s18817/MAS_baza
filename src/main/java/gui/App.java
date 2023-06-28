@@ -112,11 +112,15 @@ public class App extends JFrame {
         btnCreateRenovation.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                if(selectedBook.getState() != State.DOSTĘPNA){
-                    JOptionPane.showMessageDialog(null, "Książka nie jest dostępna, nie można dokonać renowacji");
+                if (!(bookInfo.getText() == null || bookInfo.getText().trim().isBlank())) {
+                    if ((selectedBook.getState() != State.DOSTĘPNA)) {
+                        JOptionPane.showMessageDialog(null, "Książka nie jest dostępna, nie można dokonać renowacji");
+                    } else {
+                        openRenovationForm();
+                    }
                 }
-                else{
-                    openRenovationForm();
+                else {
+                    JOptionPane.showMessageDialog(null, "Proszę wybrać książkę, aby dokonać renowacji");
                 }
             }
         });
@@ -124,9 +128,12 @@ public class App extends JFrame {
         btnRefresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                loadBookRenovations(selectedBook);
+                if (!(bookInfo.getText() == null || bookInfo.getText().trim().isBlank())){
+                    loadBookRenovations(selectedBook);
+                    loadBook(selectedBook);
+                }
                 loadRestorerRenovations(loggedRestorer);
-                loadBook(selectedBook);
+
             }
         });
     }
@@ -162,8 +169,8 @@ public class App extends JFrame {
     }
 
     public void loadBookRenovations(Book book){
-        RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(book.getRenovations());
-        lstBookRenovations.setModel(modelRenovation);
+            RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(book.getRenovations());
+            lstBookRenovations.setModel(modelRenovation);
     }
 
     public void loadRestorerRenovations(Restorer restorer) {

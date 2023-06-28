@@ -1,6 +1,7 @@
 package gui;
 
 import enums.Condition;
+import enums.State;
 import enums.Status;
 import model.Book;
 import model.Renovation;
@@ -114,7 +115,7 @@ public class RenovationFormFrame extends JFrame {
                         conditionOptions[0]);
                 String finalCondition = conditionOptions[selectedCondition];
 
-                if (finalCondition.equals("NEW") && (book.getBookCondition().toString().equals("NEW"))){
+                if (finalCondition.equals("NOWA") && (book.getBookCondition().toString().equals("NOWA"))){
                     JOptionPane.showMessageDialog(null, "Nie można zmienić statusu na nowy - książka już nie jest nowa");
                     conditionChoice();
                 }
@@ -146,13 +147,13 @@ public class RenovationFormFrame extends JFrame {
     }
 
     public boolean validateResult (String formResult) {
-        if (formResult.length() <= 255 && formResult.length() > 0) {
+        if (formResult.length() <= 100 && formResult.length() > 0) {
             return true;
         } else if (formResult == null || formResult.trim().isBlank()) {
             JOptionPane.showMessageDialog(null, "Wynik renowacji nie może być pusty");
             return false;
         } else {
-            JOptionPane.showMessageDialog(null, "Podany tekst jest zbyt długi. Maksymalna ilośc znaków to 255. Podano: " + formResult.length());
+            JOptionPane.showMessageDialog(null, "Podany tekst jest zbyt długi. Maksymalna ilość znaków to 100. Podano: " + formResult.length());
             return false;
         }
     }
@@ -174,6 +175,7 @@ public class RenovationFormFrame extends JFrame {
                     renovationStatus = Status.ZAPLANOWANA;
                 } else if (radioInProgress.isSelected()) {
                     renovationStatus = Status.W_TRAKCIE;
+                    book.setState(State.RENOWACJA);
                 } else {
                     renovationStatus = Status.ZAKOŃCZONA;
                 }

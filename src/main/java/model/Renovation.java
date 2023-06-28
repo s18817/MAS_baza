@@ -3,6 +3,8 @@ package model;
 import enums.Status;
 import exception.ValidationException;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
@@ -77,6 +79,7 @@ public class Renovation implements Serializable {
 
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
     public Set<String> getMaterials () {
         return materials;
     }

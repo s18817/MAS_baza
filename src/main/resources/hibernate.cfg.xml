@@ -26,7 +26,7 @@
         <property name="hibernate.generate_statistics">false</property>
 
         <mapping class="model.Book"/>
-        <mapping class="model.Author"/>
+        <!--<mapping class="model.Author"/> -->
         <mapping class="model.Restorer"/>
         <mapping class="model.Renovation"/>
 

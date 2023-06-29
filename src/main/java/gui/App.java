@@ -44,9 +44,9 @@ public class App extends JFrame {
     private JTextArea loggedUser;
     private JTextArea txtState;
     private JLabel Stan;
+    private JButton btnSelectBookForRenovation;
 
     public static RenovationFormFrame renovationFormFrame;
-    //private Restorer selectedRestorer;
     private Book selectedBook;
 
 
@@ -63,7 +63,6 @@ public class App extends JFrame {
 //        main.add(tabbedPane, BorderLayout.CENTER);
 
 
-        //selectedRestorer = loggedRestorer;
         loggedUser.setText(loggedRestorer.getName() + " " + loggedRestorer.getSurname());
 
         loadBooks();
@@ -75,15 +74,7 @@ public class App extends JFrame {
                 super.mouseClicked(e);
                 if (e.getClickCount() == 2){
                    loadBook((Book) lstBooks.getSelectedValue());
-                   if(renovationOption()){
-                       bookInfo.setText(((Book) lstBooks.getSelectedValue()).getTitle());
-                       loadBookRenovations((Book) lstBooks.getSelectedValue());
-                       loadRestorerRenovations(loggedRestorer);
-                       selectedBook = ((Book) lstBooks.getSelectedValue());
-                       //tabbedPane.setSelectedIndex(2);
-                       //tabbedPane.setSelectedComponent(renovationsTab);
-                   }
-
+                   selectedBook = ((Book) lstBooks.getSelectedValue());
                 }
             }
         });
@@ -136,6 +127,21 @@ public class App extends JFrame {
 
             }
         });
+        btnSelectBookForRenovation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                if (selectedBook == null){
+                    JOptionPane.showMessageDialog(null, "Proszę wybrać książkę, aby dokonać renowacji");
+                }
+                else if (renovationOption()) {
+                    bookInfo.setText(((Book) lstBooks.getSelectedValue()).getTitle());
+                    loadBookRenovations((Book) lstBooks.getSelectedValue());
+                    loadRestorerRenovations(loggedRestorer);
+                    //tabbedPane.setSelectedIndex(2);
+                    //tabbedPane.setSelectedComponent(renovationsTab);
+                }
+            }
+        });
     }
 
     public void openRenovationForm(){
@@ -154,6 +160,9 @@ public class App extends JFrame {
     }
 
     public void loadBooks() {
+        if (booksFromDb.size() == 0){
+            JOptionPane.showMessageDialog(null, "Brak książek do wyświetlenia");
+        }
         BookObjectsModel<Book> modelBook = new BookObjectsModel<Book>(booksFromDb);
         lstBooks.setModel(modelBook);
 

@@ -71,6 +71,7 @@ public class Restorer extends Employee implements Serializable {
     }
 
     @OneToMany(mappedBy = "restorer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OrderBy("renovationDate")
     public List<Renovation> getRenovations () {
         return renovations;
     }

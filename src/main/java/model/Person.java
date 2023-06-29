@@ -15,6 +15,7 @@ public abstract class Person extends model.ObjectPlus implements Serializable {
     private String nationality;
 
     public Person(String name,String surname, LocalDate birthDate, String nationality, String gender){
+        super();
         setName(name);
         setSurname(surname);
         setBirthDate(birthDate);

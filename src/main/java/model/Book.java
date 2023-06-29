@@ -68,7 +68,8 @@ public class Book extends ObjectPlus implements Serializable {
         setState(State.DOSTĘPNA);
     }
 
-   @ManyToMany(mappedBy = "books")
+   //@ManyToMany(mappedBy = "books")
+    @Transient
     public List<Author> getAuthors() {
         return authors;
     }
@@ -77,23 +78,23 @@ public class Book extends ObjectPlus implements Serializable {
         this.authors = authorsToAdd;
     }
 
-    public void addAuthor(Author authorToAdd) {
-        getAuthors().add(authorToAdd);
-    }
+//    public void addAuthor(Author authorToAdd) {
+//        getAuthors().add(authorToAdd);
+//    }
 
     public void removeAuthor(Author authorToRemove) {
         getAuthors().remove(authorToRemove);
 
     }
 
-//    public void addAuthor(Author authorToAdd) {
-//
-//        if (!authors.contains(authorToAdd)) {
-//            authors.add(authorToAdd);
-//
-//            authorToAdd.addBook(this); // polaczenie zwrotne
-//        }
-//    }
+    public void addAuthor(Author authorToAdd) {
+
+        if (!authors.contains(authorToAdd)) {
+            authors.add(authorToAdd);
+
+            authorToAdd.addBookToAuthor(this); // polaczenie zwrotne
+        }
+    }
 
     @Id()
     @GeneratedValue(generator="increment")
@@ -111,6 +112,7 @@ public class Book extends ObjectPlus implements Serializable {
     }
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @OrderBy("renovationDate")
     public List<Renovation> getRenovations () {
         return renovations;
     }
@@ -151,14 +153,9 @@ public class Book extends ObjectPlus implements Serializable {
     public void addBorrowToBook(Client client, Borrow newBorrow) {
 
         if (!borrowDetails.contains(newBorrow)) {
-            if (this.state == State.DOSTĘPNA) {
                 borrowDetails.add(newBorrow);
                 this.setState(State.WYPOŻYCZONA); // ksiazka zostala wypozyczena, nie jest juz dostepna dla innych
                 client.addBorrowToClient(this, newBorrow); // polaczenie zwrotne
-            }
-            else{
-                throw new ValidationException("Book is not available and cannot be borrowed");
-            }
         }
     }
 
@@ -171,13 +168,13 @@ public class Book extends ObjectPlus implements Serializable {
         }
     }
 
-    public void returnBook (Borrow borrowToEnd){
-        borrowToEnd.setActualTo(LocalDate.now());
-        if(borrowToEnd.getActualTo().isAfter(borrowToEnd.getTo())) {
-            borrowToEnd.setOnTime(false);
+    public void returnBook (Borrow borrowToReturn){
+        borrowToReturn.setActualTo(LocalDate.now());
+        if(borrowToReturn.getActualTo().isAfter(borrowToReturn.getTo())) {
+            borrowToReturn.setOnTime(false);
         }
         else{
-            borrowToEnd.setOnTime(true);
+            borrowToReturn.setOnTime(true);
         }
         this.setState(State.DOSTĘPNA); // ksiazka jest juz dostepna do ponownego wypozyczenia
     }

@@ -10,35 +10,39 @@ public class Rack extends ObjectPlus implements Serializable {
 
     private List<Inventory> inventoryHistory = new ArrayList<>();
 
-    enum RackType {RegularRack, MovingRack, SmartRack};
+    enum RackType {RegałStandardowy, RegałRuchomy, RegałInteligenty};
 
     private List<Book> books = new ArrayList<>(); // regal przetrzymuje wiele ksiazek
 
     private static Set<Book> allBooks = new HashSet<>();
 
-    private EnumSet<RackType> rackKind = EnumSet.of(RackType.RegularRack); // overlapping
+    private EnumSet<RackType> rackKind = EnumSet.of(RackType.RegałStandardowy); // overlapping
     private int floor;
     private String marking;
     private String subject;
 
+
     private String softwareVersion; // dla reguału smart
+    private boolean working; // dla reguału smart
+
 
 
     private double maxWeight; // dla regału ruchomego
     private boolean hasBrake; // dla regału ruchomego
 
 
-    public Rack(int floor, String marking, String subject, String softwareVersion , double maxWeight, boolean hasBrake) { // regał ruchomy smart
+    public Rack(int floor, String marking, String subject, String softwareVersion, boolean working, double maxWeight, boolean hasBrake) { // regał ruchomy smart
         super();
         this.setFloor(floor);
         this.setMarking(marking);
         this.setSubject(subject);
         this.setSoftwareVersion(softwareVersion);
+        this.setWorking(working);
         this.setMaxWeight(maxWeight);
         this.hasBrake = hasBrake;
-        this.rackKind.add(RackType.MovingRack);
-        this.rackKind.add(RackType.SmartRack);
-        this.rackKind.remove(RackType.RegularRack);
+        this.rackKind.add(RackType.RegałRuchomy);
+        this.rackKind.add(RackType.RegałInteligenty);
+        this.rackKind.remove(RackType.RegałStandardowy);
     }
 
     public Rack(int floor, String marking, String subject, String softwareVersion, boolean working) { // regał smart
@@ -47,8 +51,9 @@ public class Rack extends ObjectPlus implements Serializable {
         this.setMarking(marking);
         this.setSubject(subject);
         this.setSoftwareVersion(softwareVersion);
-        this.rackKind.add(RackType.SmartRack);
-        this.rackKind.remove(RackType.RegularRack);
+        this.setWorking(working);
+        this.rackKind.add(RackType.RegałInteligenty);
+        this.rackKind.remove(RackType.RegałStandardowy);
     }
 
     public Rack(int floor, String marking, String subject, double maxWeight, boolean hasBrake) { // regał ruchomy
@@ -58,8 +63,8 @@ public class Rack extends ObjectPlus implements Serializable {
         this.setSubject(subject);
         this.setMaxWeight(maxWeight);
         this.hasBrake = hasBrake;
-        this.rackKind.add(RackType.MovingRack);
-        this.rackKind.remove(RackType.RegularRack);
+        this.rackKind.add(RackType.RegałRuchomy);
+        this.rackKind.remove(RackType.RegałStandardowy);
     }
 
     public Rack(int floor, String marking, String subject) { // regał zwykły
@@ -90,7 +95,7 @@ public class Rack extends ObjectPlus implements Serializable {
                 throw new ValidationException("This book is already in another rack");
             }
             books.add(book); // dodanie ksiazki do regalu
-
+            book.addRack(this); // polaczenie zwrotne
             allBooks.add(book); // zapamietanie, ze ksiazka juz ma swoj regal
         }
     }
@@ -101,6 +106,14 @@ public class Rack extends ObjectPlus implements Serializable {
             books.add(book); // dodanie ksiazki do nowego regalu
         }
 
+    }
+
+    public boolean isWorking () {
+        return working;
+    }
+
+    public void setWorking (boolean working) {
+        this.working = working;
     }
 
     public List<Inventory> getInventoryHistory () {

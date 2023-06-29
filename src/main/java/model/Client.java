@@ -1,5 +1,6 @@
 package model;
 
+import enums.State;
 import exception.ValidationException;
 
 import java.io.Serializable;
@@ -28,15 +29,30 @@ public class Client extends Person implements Serializable {
         setEmail(email);
     }
 
-    public void addBorrowToClient(Book book, Borrow newBorrow) {
+    public void addBorrowToClient (Book book, Borrow newBorrow) {
 
         if (!borrowDetails.contains(newBorrow)) {
-            borrowDetails.add(newBorrow);
-            if (this.regularClient != true && borrowDetails.size() > 9 ){
-                this.setRegularClientTrue(); // klient staje sie stalym klientem przy dziesiatym wypozyczeniu
+            if (book.getState() == State.DOSTĘPNA) {
+                borrowDetails.add(newBorrow);
+                if (this.regularClient != true && borrowDetails.size() > 9) {
+                    this.setRegularClientTrue(); // klient staje sie stalym klientem przy dziesiatym wypozyczeniu
+                }
+                book.addBorrowToBook(this, newBorrow); // polaczenie zwrotne
+            } else {
+                throw new ValidationException("Book is not available and cannot be borrowed");
             }
-            book.addBorrowToBook(this, newBorrow); // polaczenie zwrotne
         }
+    }
+
+    public void returnBook (Borrow borrowToReturn, Book bookToReturn){
+        borrowToReturn.setActualTo(LocalDate.now());
+        if(borrowToReturn.getActualTo().isAfter(borrowToReturn.getTo())) {
+            borrowToReturn.setOnTime(false);
+        }
+        else{
+            borrowToReturn.setOnTime(true);
+        }
+        bookToReturn.setState(State.DOSTĘPNA); // ksiazka jest juz dostepna do ponownego wypozyczenia
     }
 
 

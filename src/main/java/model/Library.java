@@ -1,5 +1,6 @@
 package model;
 
+import exception.ValidationException;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.*;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-@Entity(name = "model.Library")
+//@Entity(name = "model.Library")
 public class Library {
 
     private long id;
@@ -21,33 +22,32 @@ public class Library {
 
     private Map<String, Employee> employeeQualif = new TreeMap<>(); // w jednej bibliotece moze pracowac wielu pracownikow
 
-    public Library(long id, String name, String street, String city, String postalCode) {
-        this.id = id;
-        this.name = name;
-        this.street = street;
-        this.city = city;
-        this.postalCode = postalCode;
+    public Library(String name, String street, String city, String postalCode) {
+        setName(name);
+        setStreet(street);
+        setCity(city);
+        setPostalCode(postalCode);
     }
 
-    private List<Workstation> workstation = new ArrayList<Workstation>();
-
-
-    @Id()
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    @Id()
+//    @GeneratedValue(generator="increment")
+//    @GenericGenerator(name="increment", strategy = "increment")
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isBlank()){
+            throw new ValidationException("Name cannot be empty");
+        }
         this.name = name;
     }
 
@@ -56,6 +56,9 @@ public class Library {
     }
 
     public void setStreet(String street) {
+        if (street == null || street.trim().isBlank()){
+            throw new ValidationException("Street cannot be empty");
+        }
         this.street = street;
     }
 
@@ -64,6 +67,9 @@ public class Library {
     }
 
     public void setCity(String city) {
+        if (city == null || city.trim().isBlank()){
+            throw new ValidationException("City cannot be empty");
+        }
         this.city = city;
     }
 
@@ -72,17 +78,12 @@ public class Library {
     }
 
     public void setPostalCode(String postalCode) {
+        if (postalCode == null || postalCode.trim().isBlank()){
+            throw new ValidationException("Postal code cannot be empty");
+        }
         this.postalCode = postalCode;
     }
 
-    @OneToMany(mappedBy="library")
-    public List<Workstation> getWorkstation() {
-        return workstation;
-    }
-
-    public void setWorkstation(List<Workstation> workstation) {
-        this.workstation = workstation;
-    }
 
     public void addEmployee(Employee employeeToAdd) {
 

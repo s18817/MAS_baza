@@ -1,5 +1,7 @@
 package model;
 
+import exception.ValidationException;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -14,11 +16,11 @@ public class Borrow extends ObjectPlus implements Serializable {
 
     public Borrow(LocalDate from, LocalDate to, LocalDate actualTo, boolean onTime, String remarks) {
         super();
-        this.from = from;
-        this.to = to;
-        this.actualTo = actualTo;
-        this.onTime = onTime;
-        this.remarks = remarks;
+        setFrom(from);
+        setTo(to);
+        setActualTo(actualTo);
+        setOnTime(onTime);
+        setRemarks(remarks);
     }
 
     public LocalDate getFrom() {
@@ -26,6 +28,12 @@ public class Borrow extends ObjectPlus implements Serializable {
     }
 
     public void setFrom(LocalDate from) {
+        if (from == null){
+            throw new ValidationException("Date cannot be empty");
+        }
+        else if (from.getYear() < 1900 ) {
+            throw new ValidationException("Provide valid date");
+        }
         this.from = from;
     }
 
@@ -34,6 +42,12 @@ public class Borrow extends ObjectPlus implements Serializable {
     }
 
     public void setTo(LocalDate to) {
+        if (to == null){
+            throw new ValidationException("Date cannot be empty");
+        }
+        else if (to.getYear() < 1900 ) {
+            throw new ValidationException("Provide valid date");
+        }
         this.to = to;
     }
 
@@ -42,6 +56,9 @@ public class Borrow extends ObjectPlus implements Serializable {
     }
 
     public void setRemarks(String remarks) {
+        if (remarks == null || remarks.trim().isBlank()) {
+            throw new ValidationException("Result cannot be empty");
+        }
         this.remarks = remarks;
     }
 
@@ -50,6 +67,12 @@ public class Borrow extends ObjectPlus implements Serializable {
     }
 
     public void setActualTo (LocalDate actualTo) {
+        if (actualTo == null){
+            throw new ValidationException("Date cannot be empty");
+        }
+        else if (actualTo.getYear() < 1900 ) {
+            throw new ValidationException("Provide valid date");
+        }
         this.actualTo = actualTo;
     }
 

@@ -15,10 +15,10 @@ public class Inventory extends ObjectPlus implements Serializable {
     private LocalDate date;
 
     public Inventory(String sector, String status, String notes, LocalDate date) {
-        this.sector = sector;
-        this.status = status;
-        this.notes = notes;
-        this.date = date;
+        setSector(sector);
+        setStatus(status);
+        setNotes(notes);
+        setDate(date);
     }
 
 
@@ -37,6 +37,38 @@ public class Inventory extends ObjectPlus implements Serializable {
     public LocalDate getDate() {
         return date;
     }
+
+    public void setSector (String sector) {
+        if (sector == null || sector.trim().isBlank()){
+            throw new ValidationException("Sector cannot be empty");
+        }
+        this.sector = sector;
+    }
+
+    public void setStatus (String status) {
+        if (status == null || status.trim().isBlank()){
+            throw new ValidationException("Status cannot be empty");
+        }
+        this.status = status;
+    }
+
+    public void setNotes (String notes) {
+        if (notes == null || notes.trim().isBlank()){
+            throw new ValidationException("Sector cannot be empty");
+        }
+        this.notes = notes;
+    }
+
+    public void setDate (LocalDate date) {
+        if (date == null){
+            throw new ValidationException("Date cannot be empty");
+        }
+        else if (date.getYear() < 1900 ) {
+            throw new ValidationException("Provide valid date");
+        }
+        this.date = date;
+    }
+
 
     @Override
     public String toString() {

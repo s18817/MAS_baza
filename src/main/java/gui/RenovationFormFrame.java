@@ -89,8 +89,7 @@ public class RenovationFormFrame extends JFrame {
         }
 
         public void addMaterial(String materialToAdd){
-            //materials.add(materialToAdd);
-            model.addObject(txtMaterial.getText());
+            model.addObject(materialToAdd);
             lstMaterials.setModel(model);
             txtMaterial.setText("");
         }

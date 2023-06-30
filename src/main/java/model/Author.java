@@ -165,4 +165,12 @@ public class Author extends Person implements Serializable {
                 ", pseudonym='" + pseudonym + '\'' +
                 '}';
     }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Author.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Author.class);
+    }
 }

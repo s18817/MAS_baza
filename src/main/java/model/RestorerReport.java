@@ -9,9 +9,10 @@ public class RestorerReport extends Report implements Serializable {
     private Restorer restorer;
     private double avgCost;
 
-    public RestorerReport (String topic, boolean confidential, Restorer restorer) {
+    public RestorerReport (String topic, boolean confidential, Restorer restorer, double avgCost) {
         super(topic, confidential);
-        this.restorer = restorer;
+        setAvgCost(avgCost);
+        setRestorer(restorer);
     }
 
     public Restorer getRestorer () {
@@ -41,9 +42,18 @@ public class RestorerReport extends Report implements Serializable {
         System.out.println(super.toString()  +
                 "Summary for " + "restorer: " + restorer.getName() + " "  + restorer.getSurname() + '\n' +
                 "Suggested bonus: " + restorer.getBaseSalary() + '\n' +
+                "Estimated cost of done renovations: " + restorer.getRenovations().size() * avgCost  + '\n' +
                 "Done renovations: " +  '\n' +
                 restorer.getRenovations()
         );
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(RestorerReport.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(RestorerReport.class);
     }
 }
 

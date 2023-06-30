@@ -7,8 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Report implements Serializable {
-
+public abstract class Report extends ObjectPlus implements Serializable {
 
     private LocalDate creationDate;
     private String topic;
@@ -16,6 +15,7 @@ public abstract class Report implements Serializable {
     private Director reportAuthor; // Kazdy raport ma jednego autora
 
     public Report(String topic, boolean confidential){
+        super();
         creationDate = LocalDate.now();
         this.setTopic(topic);
         this.confidential = confidential;
@@ -26,10 +26,9 @@ public abstract class Report implements Serializable {
 
     @Override
     public String toString () {
-        return  "Report name: " + topic + '\n' +
+        return  "\nReport name: " + topic + '\n' +
                 "Creation date: " + creationDate + '\n' +
-                "Confidentiality: " + confidential + '\n' +
-                "Author: " + reportAuthor.getName() + " " + reportAuthor.getSurname() + '\n';
+                "Confidentiality: " + confidential + '\n';
     }
 
 
@@ -47,6 +46,21 @@ public abstract class Report implements Serializable {
         this.topic = topic;
     }
 
+    public void setCreationDate (LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setConfidential (boolean confidential) {
+        this.confidential = confidential;
+    }
+
+    public Director getReportAuthor () {
+        return reportAuthor;
+    }
+
+    public void setReportAuthor (Director reportAuthor) {
+        this.reportAuthor = reportAuthor;
+    }
 
     public LocalDate getCreationDate() {
         return creationDate;
@@ -59,5 +73,7 @@ public abstract class Report implements Serializable {
     public boolean isConfidential() {
         return confidential;
     }
+
+
 
 }

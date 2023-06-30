@@ -1,4 +1,5 @@
 import enums.Condition;
+import enums.State;
 import enums.Status;
 import gui.App;
 import model.*;
@@ -9,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,155 +21,185 @@ import static model.Restorer.loggedRestorer;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
 
-
-        Set<String> book1Categories = new HashSet<>();
-        Set<String> book2Categories = new HashSet<>();
-        Set<String> book3Categories = new HashSet<>();
-        Set<String> book4Categories = new HashSet<>();
-        Set<String> book5Categories = new HashSet<>();
-        Set<String> book6Categories = new HashSet<>();
-        Set<String> book7Categories = new HashSet<>();
-        Set<String> book8Categories = new HashSet<>();
-        Set<String> book9Categories = new HashSet<>();
-        Set<String> book10Categories = new HashSet<>();
-        Set<String> book11Categories = new HashSet<>();
-        Set<String> book12Categories = new HashSet<>();
-        Set<String> book13Categories = new HashSet<>();
-        Set<String> book14Categories = new HashSet<>();
-
-        Set<String> testCategories = new HashSet<>();
-        Set<String> testCategories2 = new HashSet<>();
-        testCategories.add("fantastyka");
-        testCategories2.add("nauka");
-        LocalDate testBirthDate = LocalDate.of(1982, 1, 3);
-        LocalDate testBirthDate2 = LocalDate.of(1933, 10, 4);
-        LocalDate testBirthDate3 = LocalDate.of(1919, 5, 1);
-        LocalDate testBirthDate4 = LocalDate.of(1995, 11, 21);
-
-        LocalDate testHiringDate = LocalDate.of(2020, 1, 1);
-        LocalDate testHiringDate2 = LocalDate.of(2021, 1, 1);
-        LocalDate testHiringDate3 = LocalDate.of(2022, 1, 1);
-        LocalDate testHiringDate4 = LocalDate.of(2023, 1, 1);
-
-        LocalDate testFrom = LocalDate.of(2023, 6, 29);
-        LocalDate testTo = LocalDate.of(2023, 7, 1);
-
-        LocalDate testRenovationDate = LocalDate.of(2023, 06,28);
-        LocalDate testInventoryDate = LocalDate.of(2023, 06,28);
-
-        Set<String> testLanguages = new HashSet<>();
-        testLanguages.add("angielski");
-        testLanguages.add("francuski");
-
-        Set<String> testMaterials = new HashSet<>();
-        testMaterials.add("folia");
-        testMaterials.add("klej");
-
-
-        Book testBook = new Book(21, "Władca Pierścieni Drużynia Pierścienia", testCategories, Condition.ZŁA, 448, 2009, "Wydawnictwo Amber");
-        Book testBook2 = new Book(22, "Trzy kroki w szachowy świat", testCategories2, Condition.DOBRA, 88, 2020, "Wydawnictwo BIS");
-        Author testAuthor = new Author("John", "Tolkien", testBirthDate, "angielska", "mężczyzna");
-        Author testAuthor2 = new Author("Ryszard", "Czajkowski", testBirthDate2, "polska", "mężczyzna");
-        Author testAuthor3 = new Author("Andrzej", "Nowicki", testBirthDate3, "polska", "mężczyzna");
-
-        testBook.addAuthor(testAuthor);
-        testBook2.addAuthor(testAuthor2);
-        testBook2.addAuthor(testAuthor3);
-
-        System.out.println(testAuthor.toString());
-        System.out.println(testBook2.getAuthors());
-        System.out.println(testAuthor.getBooks());
-
-        Client testClient = new Client("Jan", "Kowalski", testBirthDate4, "mężczyzna", "polska", false, "brak", "jan.kowalski@gmail.com");
-
-        Borrow testBorrow = new Borrow(testFrom, testTo, testTo,true, "brak");
-
-        System.out.println(testBook.getState());
-        testClient.addBorrowToClient(testBook, testBorrow);
-        System.out.println(testBook.getBorrowDetails());
-        System.out.println(testBook.getState());
-        testClient.returnBook(testBorrow, testBook);
-        System.out.println(testBook.getBorrowDetails());
-        System.out.println(testBook.getState());
-
-        Rack testStandardRack = new Rack(1, "A01", "fantastyka");
-        Rack testMovingRack = new Rack(1, "A02", "fantastyka", 10000, true);
-        Rack testSmartRack = new Rack(1, "A03", "fantastyka", "Software 1.1.12", true);
-        Rack testMovingSmartRack = new Rack(1, "A03", "fantastyka", "Software 1.1.12", true, 10000,true);
-
-        testStandardRack.addBook(testBook);
-        testMovingRack.addBook(testBook2);
-        System.out.println(testBook.getRack());
-        System.out.println(testBook2.getRack());
-
-
-        Restorer testRestorer = new Restorer(100, "Adam", "Nowak", testBirthDate, "mężczyzna", "polska", "001-321", testHiringDate, 10000, "Damięcka 12A/14 01-471 Warszawa", "sklejanie" );
-        Librarian testLibrarian = new Librarian ("Krzysztof", "Damięcki", testBirthDate2, "mężczyzna", "polska", "001-322", testHiringDate2, 11000, "Damięcka 12A/14 01-471 Warszawa", testLanguages);
-        Director testDirector = new Director("Joanna", "Kalisz", testBirthDate3, "kobieta", "polska", "001-323", testHiringDate3, 15000, "Anielewicza 100/4", "Doktorat SGH");
-        Librarian testChangeRestorerToLibrarian = new Librarian(testRestorer, testLanguages);
-
-        Library testLibrary = new Library("Biblioteka narodowa", "Aleja Niepodległości 213", "Warszawa", "02-086");
-
-        testLibrary.addEmployee(testRestorer);
-        testLibrary.addEmployee(testLibrarian);
-        testLibrary.addEmployee(testDirector);
-
-        Renovation testRenovation = new Renovation(100, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "renowacja zakończona sukcesem" );
-        testBook.addRenovationToBook(testRestorer,testRenovation);
-        testBook.updateBookCondition(Condition.DOBRA);
-        System.out.println(testBook.getRenovations());
-        System.out.println(testRestorer.getRenovations());
-
-        List<Librarian> testLibrariansList = new ArrayList<>();
-        testLibrariansList.add(testLibrarian);
-        testLibrariansList.add(testChangeRestorerToLibrarian);
-
-
-        Inventory testInventory = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "potrzeba zwrócenia uwagi na fantastykę", testInventoryDate);
-        testLibrarian.addInventory(testStandardRack, testInventory);
-        testStandardRack.addInventory(testLibrariansList, testInventory);
-        testBook.changeRack(testMovingSmartRack);
-
-        // sprawdzic powiazania
-        // dodac raporty
-        // dodac znalezienie pracowania
-        // dodac serializacje
-
-
-
-//        Author author2 = new Author(1,"Steven", "Hawking", birthDate2, "British", "male", "big");
-//        Author author3 = new Author(2, "Joanne", "Rowling", birthDate3, "British", "female", "potter");
-//        Author author4 = new Author(3, "John", "Tolkien", birthDate4, "British", "male", "freak");
-//        Author author5 = new Author(4, "Terry", "Brooks", birthDate5, "American", "male", "faceless");
-//        Author author6 = new Author(5, "Henryk", "Sienkiewicz", birthDate6, "Polish", "male", "dreamer");
-
-
-
-//        // wiele do wiele - jeden autor moze napisac wiele ksiazek; jedna ksiazka moze miec wiele autorow @ManyToMany
-//        author3.addBook(book1);
-//        author3.addBook(book2);
-//        author2.addBook(book1);
-        //book1.addAuthor(author2);
-        //book1.addAuthor(author3);
-        //book2.addAuthor(author4);
-
-
-
-
-
-        //Renovation renovation1 = new Renovation(1, date1, materials, Status.FINISHED, "everything ok");
-        //Renovation renovation2 = new Renovation(2, date2, materials, Status.STARTED, "not finished");
-
-        //book1.addRenovationToBook(restorer2, renovation1);
-        //book1.addRenovationToBook(restorer2, renovation2);
-//        renovation1.setBook(book1);
-//        renovation1.setRestorer(restorer2);
+//        Set<String> book1Categories = new HashSet<>();
+//        book1Categories.add("fantastyka");
+//        Book book1 = new Book(1, "Harry Potter i Kamień Filozoficzny", book1Categories, Condition.ZNISZCZONA, 654, 2016, "Media Rodzina");
+////        Rack testStandardRack = new Rack(1, "A01", "fantastyka");
 //
-//        renovation2.setBook(book2);
-//        renovation2.setRestorer(restorer3);
+//
 
+//
+//        Set<String> testCategories = new HashSet<>();
+//        Set<String> testCategories2 = new HashSet<>();
+//        testCategories.add("fantastyka");
+//        testCategories2.add("nauka");
+//        LocalDate testBirthDate = LocalDate.of(1982, 1, 3);
+//        LocalDate testBirthDate2 = LocalDate.of(1933, 10, 4);
+//        LocalDate testBirthDate3 = LocalDate.of(1919, 5, 1);
+//        LocalDate testBirthDate4 = LocalDate.of(1995, 11, 21);
+//
+//        LocalDate testHiringDate = LocalDate.of(2020, 1, 1);
+//        LocalDate testHiringDate2 = LocalDate.of(2021, 1, 1);
+//        LocalDate testHiringDate3 = LocalDate.of(2022, 1, 1);
+//        LocalDate testHiringDate4 = LocalDate.of(2023, 1, 1);
+//
+//        LocalDate testFrom = LocalDate.of(2023, 6, 29);
+//        LocalDate testTo = LocalDate.of(2023, 7, 1);
+//
+//        LocalDate testRenovationDate = LocalDate.of(2023, 06,28);
+//        LocalDate testInventoryDate = LocalDate.of(2023, 06,28);
+//
+//        Set<String> testLanguages = new HashSet<>();
+//        testLanguages.add("angielski");
+//        testLanguages.add("francuski");
+//
+//        Set<String> testMaterials = new HashSet<>();
+//        testMaterials.add("folia");
+//        testMaterials.add("klej");
+//
+//
+//        Book testBook = new Book(21, "Władca Pierścieni Drużynia Pierścienia", testCategories, Condition.ZŁA, 448, 2009, "Wydawnictwo Amber");
+//        Book testBook2 = new Book(22, "Trzy kroki w szachowy świat", testCategories2, Condition.DOBRA, 88, 2020, "Wydawnictwo BIS");
+//        Author testAuthor = new Author("John", "Tolkien", testBirthDate, "angielska", "mężczyzna");
+//        Author testAuthor2 = new Author("Ryszard", "Czajkowski", testBirthDate2, "polska", "mężczyzna");
+//        Author testAuthor3 = new Author("Andrzej", "Nowicki", testBirthDate3, "polska", "mężczyzna");
+//
+//        testBook.addAuthor(testAuthor);
+//        testBook2.addAuthor(testAuthor2);
+//        testBook2.addAuthor(testAuthor3);
+//
+//        System.out.println(testBook2.getAuthors());
+//        System.out.println(testAuthor2.getBooks());
+//
+//        Client testClient = new Client("Jan", "Kowalski", testBirthDate4, "mężczyzna", "polska", false, "brak", "jan.kowalski@gmail.com");
+//
+//        Borrow testBorrow = new Borrow(testFrom, testTo, testTo,true, "brak");
+//
+//        System.out.println(testBook.getState());
+//        testClient.addBorrowToClient(testBook, testBorrow);
+//        System.out.println(testBook.getBorrowDetails());
+//        System.out.println(testClient.getBorrowDetails());
+//        System.out.println(testBook.getState());
+//        testClient.returnBook(testBorrow, testBook);
+//        System.out.println(testBook.getBorrowDetails());
+//        System.out.println(testBook.getState());
+//
+//        Rack testStandardRack = new Rack(1, "A01", "fantastyka");
+//        Rack testMovingRack = new Rack(1, "A02", "fantastyka", 10000, true);
+//        Rack testSmartRack = new Rack(1, "A03", "fantastyka", "Software 1.1.12", true);
+//        Rack testMovingSmartRack = new Rack(1, "A04", "fantastyka", "Software 1.1.12", true, 10000,true);
+//
+//        testStandardRack.addBook(testBook);
+//        testMovingRack.addBook(testBook2);
+//        System.out.println(testBook.getRack());
+//        System.out.println(testBook2.getRack());
+//        System.out.println(testMovingRack.getBooks());
+//
+//
+//        Restorer testRestorer = new Restorer(100, "Adam", "Nowak", testBirthDate, "mężczyzna", "polska", "001-321", testHiringDate, 10000, "Damięcka 12A/14 01-471 Warszawa", "sklejanie" );
+//        Librarian testLibrarian = new Librarian ("Krzysztof", "Damięcki", testBirthDate2, "mężczyzna", "polska", "001-322", testHiringDate2, 11000, "Damięcka 12A/14 01-471 Warszawa", testLanguages);
+//        Director testDirector = new Director("Joanna", "Kalisz", testBirthDate3, "kobieta", "polska", "001-323", testHiringDate3, 15000, "Anielewicza 100/4", "Doktorat SGH");
+//        Librarian testChangeRestorerToLibrarian = new Librarian(testRestorer, testLanguages);
+//
+//        Library testLibrary = new Library("Biblioteka narodowa", "Aleja Niepodległości 213", "Warszawa", "02-086");
+//
+//        testLibrary.addEmployee(testRestorer);
+//        testLibrary.addEmployee(testLibrarian);
+//        testLibrary.addEmployee(testDirector);
+//
+//        System.out.println(testLibrary.getEmployees());
+//        System.out.println(testRestorer.getLibrary());
+//
+//        System.out.println(testDirector.findEmployee("001-321"));
+//
+//        Renovation testRenovation = new Renovation(100, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "renowacja zakończona sukcesem" );
+//        testBook.addRenovationToBook(testRestorer,testRenovation);
+//        testBook.updateBookCondition(Condition.DOBRA);
+//        System.out.println(testBook.getRenovations());
+//        System.out.println(testRestorer.getRenovations());
+//
+//        List<Librarian> testLibrariansList = new ArrayList<>();
+//        testLibrariansList.add(testLibrarian);
+//        testLibrariansList.add(testChangeRestorerToLibrarian);
+//
+//
+//        Inventory testInventory = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "potrzeba zwrócenia uwagi na fantastykę", testInventoryDate);
+//        testStandardRack.addInventory(testLibrariansList, testInventory);
+//        testBook.changeRack(testMovingSmartRack);
+//        System.out.println(testStandardRack.getInventoryHistory());
+//        System.out.println(testLibrarian.getDoneInventories());
+//
+//        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
+//        RestorerReport testRestorerReport = new RestorerReport("Przegląd konserwatora", false, testRestorer, 10);
+//        LibrarianReport tesLibrarianReport = new LibrarianReport("Przegląd bibliotekarza", false, testLibrarian, "potrzeba więcej inwentaryzacji");
+//
+//        testDirector.generateReport(testBookReport);
+//        testDirector.generateReport(testRestorerReport);
+//        testDirector.generateReport(tesLibrarianReport);
+//
+//        System.out.println(testDirector.getGeneratedReports());
+//        System.out.println(testBookReport.getReportAuthor());
+//
+//        testBookReport.showReport();
+//        testRestorerReport.showReport();
+//        tesLibrarianReport.showReport();
+
+        // dodac serializacje
+        // stan w trakcie sie nie zmienia
+
+        final String extentFile = "C:\\Users\\lukas\\Data.ser"; // okreslenie sciezki zapisu ekstensji
+
+        try {
+//            var out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(extentFile))); // trwalosc ekstensji zapisanie
+//            Author.writeExtents(out);
+//            Book.writeExtents(out);
+//            BookReport.writeExtents(out);
+//            Client.writeExtents(out);
+//            Director.writeExtents(out);
+//            Inventory.writeExtents(out);
+//            Librarian.writeExtents(out);
+//            LibrarianReport.writeExtents(out);
+//            Library.writeExtents(out);
+//            Rack.writeExtents(out);
+//            Renovation.writeExtents(out);
+//            RestorerReport.writeExtents(out);
+//
+//            out.close();
+
+            var in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(extentFile))); // trwalosc ekstensji wczytanie
+            Author.readExtents(in);
+            Book.readExtents(in);
+            BookReport.readExtents(in);
+            Client.readExtents(in);
+            Director.readExtents(in);
+            Inventory.readExtents(in);
+            Librarian.readExtents(in);
+            LibrarianReport.readExtents(in);
+            Library.readExtents(in);
+            Rack.readExtents(in);
+            Renovation.readExtents(in);
+            RestorerReport.readExtents(in);
+            in.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        System.out.println("Ekstensje:");
+//        Author.showExtent(); // wypisanie ekstensji przy pomocy przesloniecia metody toString()
+//        Book.showExtent();
+//        BookReport.showExtent();
+//        Client.showExtent();
+//        Director.showExtent();
+//        Inventory.showExtent();
+//        Librarian.showExtent();
+//        LibrarianReport.showExtent();
+//        Library.showExtent();
+//        Rack.showExtent();
+//        Renovation.showExtent();
+//        RestorerReport.showExtent();
 
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -182,9 +214,6 @@ public class Main {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        //renovationsFromDb = session.createQuery("FROM model.Renovation").list();
-
-        //booksFromDb = session.createQuery("FROM model.Book JOIN FETCH model.Renovation").list();
         booksFromDb = session.createQuery("FROM model.Book ORDER BY title").list();
         Query loginQuery = session.createQuery("FROM model.Restorer r WHERE r.id = :id");
         loginQuery.setParameter("id", 5);
@@ -192,44 +221,32 @@ public class Main {
         session.getTransaction().commit();
         session.close();
 
-
-        //booksFromDb = session.createQuery("FROM model.Book").list();
-        //System.out.println(booksFromDb.get(0).getRenovations().);
-
-        //System.out.println("dasdsa");
-        //System.out.println(booksFromDb.get(book1));
-
-        //Query query = session.createQuery("FROM model.Restorer WHERE model.Restorer.id = :id");
-       // query.setParameter("id", 1);
-       // Restorer restorerFromDb = (Restorer) query.uniqueResult();
-       // System.out.println("restorer");
-        //System.out.println(restorerFromDb.toString());
-
-        //Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = :id");
-        //Query query = session.createQuery("FROM model.Renovation r WHERE r.restorer.id = 1");
-        //query.setParameter("id", restorer2.getId());
-        //List<Renovation> renovations = query.list();
-
-        //renovationsForBookFromDb = session.createQuery("From model.Renovation ").list();
-
 //        for (Book book : booksFromDb){
 //            System.out.println(book.toString());
 //            System.out.println(book.getId());
 //            System.out.println(book.getRenovations());
 //        }
-//
-//        System.out.println(loggedRestorer.getRenovations());
 
-       // for (Renovation ren : renovations){
-        //    System.out.println(ren.toString());
-        //    System.out.println(ren.getId());
-        //}
         try {
-
 
        App app = new App();
 
        app.start();
+
+//        Set<String> book1Categories = new HashSet<>();
+//        Set<String> book2Categories = new HashSet<>();
+//        Set<String> book3Categories = new HashSet<>();
+//        Set<String> book4Categories = new HashSet<>();
+//        Set<String> book5Categories = new HashSet<>();
+//        Set<String> book6Categories = new HashSet<>();
+//        Set<String> book7Categories = new HashSet<>();
+//        Set<String> book8Categories = new HashSet<>();
+//        Set<String> book9Categories = new HashSet<>();
+//        Set<String> book10Categories = new HashSet<>();
+//        Set<String> book11Categories = new HashSet<>();
+//        Set<String> book12Categories = new HashSet<>();
+//        Set<String> book13Categories = new HashSet<>();
+//        Set<String> book14Categories = new HashSet<>();
 //
 //            book1Categories.add("fantastyka");
 //
@@ -311,6 +328,13 @@ public class Main {
 //        Restorer restorer4 = new Restorer(4, "Izabela", "Damięcka", birthDate4, "kobieta", "polska", "001-004", hiringdate4, 13000, "Polska 12, Warszawa", "naprawa");
 //        Restorer restorer5 = new Restorer(5, "Łukasz", "Łubik", birthDate5, "mężczyzna", "polska", "001-005", hiringdate5, 12000, "Polska 12, Warszawa", "sklejanie");
 //
+//        book2.setState(State.NIEDOSTĘPNA);
+//        book5.setState(State.WYPOŻYCZONA);
+//        book7.setState(State.NIEDOSTĘPNA);
+//        book11.setState(State.WYPOŻYCZONA);
+//        book13.setState(State.NIEDOSTĘPNA);
+//        book15.setState(State.WYPOŻYCZONA);
+//        book17.setState(State.NIEDOSTĘPNA);
 //
 ////
 //            session.save(book1);
@@ -339,8 +363,7 @@ public class Main {
 //            session.save(restorer3);
 //            session.save(restorer4);
 //            session.save(restorer5);
-////          session.save(renovation1);
-////          session.save(renovation2);
+//
 //            session.getTransaction().commit();
 //            session.close();
 

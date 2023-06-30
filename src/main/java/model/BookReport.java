@@ -9,8 +9,9 @@ public class BookReport extends Report implements Serializable {
 
     private String propositions;
 
-    public BookReport (String topic, boolean confidential) {
+    public BookReport (String topic, boolean confidential, String propositions) {
         super(topic, confidential);
+        setPropositions(propositions);
     }
 
     public String getPropositions () {
@@ -25,9 +26,18 @@ public class BookReport extends Report implements Serializable {
     }
 
     public void showReport () throws Exception {
-        System.out.println("List of all books:");
+        System.out.println(super.toString() +
+        "List of all books:");
         Book.showExtent();
         System.out.println(Book.printBooksConditon());
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(BookReport.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(BookReport.class);
     }
 
 }

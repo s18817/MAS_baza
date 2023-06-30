@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity(name = "model.Renovation")
 @Table(name = "renovation")
 
-public class Renovation implements Serializable {
+public class Renovation extends ObjectPlus implements Serializable {
 
     private long id;
     private LocalDate renovationDate;
@@ -29,6 +29,7 @@ public class Renovation implements Serializable {
 
 
     public Renovation(int id, LocalDate renovationDate, Set<String> materials, Status status, String result) {
+        super();
         setId(id);
         setRenovationDate(renovationDate);
         setMaterials(materials);
@@ -133,6 +134,14 @@ public class Renovation implements Serializable {
                 ", status: " + status +
                 ", wynik: '" + result + '\'' +
                 '}';
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Renovation.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Renovation.class);
     }
 
 }

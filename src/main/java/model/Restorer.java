@@ -49,7 +49,7 @@ public class Restorer extends Employee implements Serializable {
     }
 
     public Restorer(Employee prevEmployee, String specialisation, int booksRenovated){
-        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(),prevEmployee.getBaseSalary(), prevEmployee.getAddress()); // kopiowanie danych z poprzedniego obiektu
+        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(),prevEmployee.getBaseSalary(), prevEmployee.getAddress(), true); // kopiowanie danych z poprzedniego obiektu
         this.setSpecialisation(specialisation); // zapisanie nowych danych
     }
 

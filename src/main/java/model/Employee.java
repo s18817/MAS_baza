@@ -22,10 +22,20 @@ public abstract class Employee extends Person implements Serializable {
 
 
     public Employee(String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address) {
-        super(name, surname, birthDate, nationality, gender );
-        //this.setSsn(ssn);
+        super(name, surname, birthDate, nationality, gender);
+        this.setSsn(ssn);
         this.setHiringDate(hiringDate);
-        //this.addLibrary(library);
+        this.setBaseSalary(baseSalary);
+        this.setAddress(address);
+    }
+
+    public Employee(String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, boolean changedEmployee) {
+        super(name, surname, birthDate, nationality, gender);
+        if (changedEmployee){
+            ssnDictionary.remove(ssn);
+            this.setSsn(ssn);
+        }
+        this.setHiringDate(hiringDate);
         this.setBaseSalary(baseSalary);
         this.setAddress(address);
     }

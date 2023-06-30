@@ -93,10 +93,18 @@ public class Client extends Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Client{" +
+        return super.toString() + "Client{" +
                 "borrowDetails=" + borrowDetails +
                 ", regularClient=" + regularClient +
                 ", opinion='" + opinion + '\'' +
                 '}';
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Client.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Client.class);
     }
 }

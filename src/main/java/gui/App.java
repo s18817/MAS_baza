@@ -130,10 +130,11 @@ public class App extends JFrame {
         btnSelectBookForRenovation.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed (ActionEvent e) {
-                if (selectedBook == null){
+                if (selectedBook == null) {
                     JOptionPane.showMessageDialog(null, "Proszę wybrać książkę, aby dokonać renowacji");
-                }
-                else if (renovationOption()) {
+                } else if ((selectedBook.getState() != State.DOSTĘPNA)) {
+                    JOptionPane.showMessageDialog(null, "Książka nie jest dostępna, nie można dokonać renowacji");
+                } else if (renovationOption()) {
                     bookInfo.setText(((Book) lstBooks.getSelectedValue()).getTitle());
                     loadBookRenovations((Book) lstBooks.getSelectedValue());
                     loadRestorerRenovations(loggedRestorer);
@@ -184,7 +185,7 @@ public class App extends JFrame {
 
     public void loadRestorerRenovations(Restorer restorer) {
         RenovationObjectsModel<Renovation> modelRenovation = new RenovationObjectsModel<Renovation>(restorer.getRenovations());
-        System.out.println(restorer.getRenovations().toString());
+        //System.out.println(restorer.getRenovations().toString());
         lstRestorerRenovations.setModel(modelRenovation);
 
     }

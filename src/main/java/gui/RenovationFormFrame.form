@@ -206,7 +206,7 @@
       </component>
       <component id="45388" class="javax.swing.JSeparator">
         <constraints>
-          <grid row="1" column="4" row-span="8" col-span="1" vsize-policy="2" hsize-policy="6" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="4" row-span="9" col-span="1" vsize-policy="2" hsize-policy="6" anchor="4" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <orientation value="1"/>

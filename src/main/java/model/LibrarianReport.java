@@ -10,9 +10,10 @@ public class LibrarianReport extends Report implements Serializable {
     private Librarian librarian;
     private String summary;
 
-    public LibrarianReport (String topic, boolean confidential, Librarian librarian) {
+    public LibrarianReport (String topic, boolean confidential, Librarian librarian, String summary) {
         super(topic, confidential);
-        this.librarian = librarian;
+        setSummary(summary);
+        setLibrarian(librarian);
     }
 
     public String getSummary () {
@@ -47,5 +48,12 @@ public class LibrarianReport extends Report implements Serializable {
         );
     }
 
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(LibrarianReport.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(LibrarianReport.class);
+    }
 }
 

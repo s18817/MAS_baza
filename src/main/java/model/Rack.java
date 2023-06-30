@@ -171,6 +171,14 @@ public class Rack extends ObjectPlus implements Serializable {
         this.maxWeight = maxWeight;
     }
 
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Rack.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Rack.class);
+    }
+
     @Override
     public String toString() {
         String result = "Rack: " + marking + "\n";

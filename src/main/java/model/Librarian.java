@@ -23,7 +23,7 @@ public class Librarian extends Employee implements Serializable {
     }
 
     public Librarian(Employee prevEmployee, Set languages){
-        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress()); // kopiowanie danych z poprzedniego obiektu
+        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress(), true); // kopiowanie danych z poprzedniego obiektu
         this.setLanguages(languages); // zapisanie nowych danych
     }
 
@@ -59,16 +59,18 @@ public class Librarian extends Employee implements Serializable {
         return languages;
     }
 
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Librarian.class);
-    }
-
-
-
     @Override
     public String toString() {
         return super.toString() + " Librarian{" +
                 "languages=" + languages +
                 '}';
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Librarian.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Librarian.class);
     }
 }

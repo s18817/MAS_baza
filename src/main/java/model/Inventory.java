@@ -15,6 +15,7 @@ public class Inventory extends ObjectPlus implements Serializable {
     private LocalDate date;
 
     public Inventory(String sector, String status, String notes, LocalDate date) {
+        super();
         setSector(sector);
         setStatus(status);
         setNotes(notes);
@@ -78,5 +79,13 @@ public class Inventory extends ObjectPlus implements Serializable {
                 ", notes='" + notes + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Inventory.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Inventory.class);
     }
 }

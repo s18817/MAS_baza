@@ -114,15 +114,9 @@ public class RenovationFormFrame extends JFrame {
                         conditionOptions[0]);
                 String finalCondition = conditionOptions[selectedCondition];
 
-                if (finalCondition.equals("NOWA") && (book.getBookCondition().toString().equals("NOWA"))){
-                    JOptionPane.showMessageDialog(null, "Nie można zmienić statusu na nowy - książka już nie jest nowa");
-                    conditionChoice();
-                }
-
                 return finalCondition;
             } else
                 return null;
-
         }
 
     public boolean validateDate (String formDate) {
@@ -166,7 +160,20 @@ public class RenovationFormFrame extends JFrame {
             }
 
             if (validateDate(txtRenovationDate.getText()) && validateMaterials(materials) && validateResult(txtResult.getText())){
-                String newCondition = conditionChoice();
+                boolean flag = true;
+                String newCondition = "";
+                while(flag){
+                    newCondition = conditionChoice();
+                    if (newCondition == null){
+                        flag = false;
+                    }
+                    else if (newCondition.equals("NOWA") && !(book.getBookCondition().toString().equals("NOWA"))) {
+                        JOptionPane.showMessageDialog(null, "Nie można zmienić statusu na nowy - książka już nie jest nowa");
+                    }
+                    else{
+                        flag = false;
+                    }
+                }
                 Session session = App.createSession();
                 Status renovationStatus;
                 LocalDate renovationDate = LocalDate.parse(txtRenovationDate.getText());
@@ -175,6 +182,8 @@ public class RenovationFormFrame extends JFrame {
                 } else if (radioInProgress.isSelected()) {
                     renovationStatus = Status.W_TRAKCIE;
                     book.setState(State.RENOWACJA);
+                    session.update(book);
+
                 } else {
                     renovationStatus = Status.ZAKOŃCZONA;
                 }
@@ -205,9 +214,9 @@ public class RenovationFormFrame extends JFrame {
 
                 JOptionPane.showMessageDialog(null, "Renowacja została zapisana");
 
-                System.out.println(restorer.getRenovations().toString());
-                System.out.println(loggedRestorer.getRenovations().toString());
-                System.out.println(book.getRenovations().toString());
+//                System.out.println(restorer.getRenovations().toString());
+//                System.out.println(loggedRestorer.getRenovations().toString());
+//                System.out.println(book.getRenovations().toString());
                 App.closeForm();
 
             }

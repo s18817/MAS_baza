@@ -4,13 +4,15 @@ import exception.ValidationException;
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 //@Entity(name = "model.Library")
-public class Library {
+public class Library extends ObjectPlus implements Serializable {
 
     private long id;
     private String name;
@@ -21,6 +23,15 @@ public class Library {
     private List<Employee> employees = new ArrayList<>(); // kolekcja do przetrzymywania powiazan z Pracownikami
 
     private Map<String, Employee> employeeQualif = new TreeMap<>(); // w jednej bibliotece moze pracowac wielu pracownikow
+
+    @Override
+    public String toString () {
+        return "Library{" +
+                "name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '}';
+    }
 
     public Library(String name, String street, String city, String postalCode) {
         setName(name);
@@ -110,7 +121,28 @@ public class Library {
         return employeeQualif.get(ssn);
     }
 
+    public List<Employee> getEmployees () {
+        return employees;
+    }
 
+    public void setEmployees (List<Employee> employees) {
+        this.employees = employees;
+    }
 
+    public Map<String, Employee> getEmployeeQualif () {
+        return employeeQualif;
+    }
+
+    public void setEmployeeQualif (Map<String, Employee> employeeQualif) {
+        this.employeeQualif = employeeQualif;
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Library.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Library.class);
+    }
 
 }

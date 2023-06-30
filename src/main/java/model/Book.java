@@ -362,6 +362,15 @@ public class Book extends ObjectPlus implements Serializable {
                 "Other books: " + otherBooks ;
     }
 
+    public static void printDestroyedBooks () throws ClassNotFoundException {
+        Iterable<Book> extent = getExtent(Book.class);
+        for (Book book : extent) {
+            if (book.bookCondition == Condition.ZNISZCZONA) {
+                System.out.println(book);
+            }
+        }
+    }
+
     public String analyzeBookCondition(){ // ogolnie przyjety limit
         if (this.getAgeOfBook() <= 10 && ( this.bookCondition == Condition.NOWA) || ( this.bookCondition == Condition.DOBRA) )
         {
@@ -391,7 +400,5 @@ public class Book extends ObjectPlus implements Serializable {
             return "Book '" + this.title + "' probably needs renovation (limit:" + ageLimit + ")";
         }
     }
-
-   // public List<Renovation> getRenovationsForBook(Book)
 
 }

@@ -22,7 +22,7 @@ public class Director extends Employee implements Serializable {
     }
 
     public Director(Employee prevEmployee, String education){
-        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress()); // kopiowanie danych z poprzedniego obiektu
+        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(), prevEmployee.getBaseSalary(), prevEmployee.getAddress(), true); // kopiowanie danych z poprzedniego obiektu
         this.setEducation(education); // zapisanie nowych danych
     }
 
@@ -55,14 +55,18 @@ public class Director extends Employee implements Serializable {
         return ( this.getBaseSalary() + (getSeniority() * 500) + 5000); // bonus za staz i bonus dyrektorski
     }
 
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Director.class);
-    }
-
     @Override
     public String toString() {
         return super.toString() + " Director{" +
                 "education='" + education + '\'' +
                 '}';
+    }
+
+    public static void showExtent() throws Exception {
+        ObjectPlus.showExtent(Director.class);
+    }
+
+    public static void getExtent() throws Exception {
+        ObjectPlus.getExtent(Director.class);
     }
 }

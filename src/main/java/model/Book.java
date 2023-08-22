@@ -78,10 +78,6 @@ public class Book extends ObjectPlus implements Serializable {
         this.authors = authorsToAdd;
     }
 
-//    public void addAuthor(Author authorToAdd) {
-//        getAuthors().add(authorToAdd);
-//    }
-
     public void removeAuthor(Author authorToRemove) {
         getAuthors().remove(authorToRemove);
 
@@ -183,7 +179,10 @@ public class Book extends ObjectPlus implements Serializable {
 
         if (!renovations.contains(renovation)) {
             renovations.add(renovation);
-
+            if(renovation.getRestorer() == null && renovation.getBook() == null){
+                renovation.setBook(this);
+                renovation.setRestorer(restorer);
+            }
             restorer.addRenovationToRestorer(this, renovation); // polaczenie zwrotne
         }
     }

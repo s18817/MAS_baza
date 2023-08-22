@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity(name = "model.Restorer")
 @Table(name = "restorer")
-public class Restorer extends Employee implements Serializable {
+public class Restorer implements Serializable {
 
     private long id;
     private String name;
@@ -33,7 +33,6 @@ public class Restorer extends Employee implements Serializable {
     private List<Renovation> renovations = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania wykonanych renowacji ksiazek ; kolekcja, poniewaz jeden konwserwator moze wykonac wiele renowacji
 
     public Restorer(int id, String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, String specialisation){
-        super(name, surname, birthDate, gender, nationality, ssn, hiringDate, baseSalary, address);
         setId(id);
         setName(name);
         setSurname(surname);
@@ -42,15 +41,24 @@ public class Restorer extends Employee implements Serializable {
         setNationality(nationality);
         setSsn(ssn);
         setHiringDate(hiringDate);
-        //addLibrary(library);
         setBaseSalary(baseSalary);
         setAddress(address);
         setSpecialisation(specialisation);
     }
 
     public Restorer(Employee prevEmployee, String specialisation, int booksRenovated){
-        super (prevEmployee.getName(), prevEmployee.getSurname(), prevEmployee.getBirthDate(), prevEmployee.getGender(),prevEmployee.getNationality(), prevEmployee.getSsn(), prevEmployee.getHiringDate(),prevEmployee.getBaseSalary(), prevEmployee.getAddress(), true); // kopiowanie danych z poprzedniego obiektu
-        this.setSpecialisation(specialisation); // zapisanie nowych danych
+        setId(id);
+        setName(prevEmployee.getName());
+        setSurname(surname);
+        setBirthDate(prevEmployee.getBirthDate());
+        setGender(prevEmployee.getGender());
+        setNationality(prevEmployee.getNationality());
+        setSsn(prevEmployee.getSsn());
+        setHiringDate(prevEmployee.getHiringDate());
+        setBaseSalary(prevEmployee.getBaseSalary());
+        setAddress(prevEmployee.getAddress());
+        setSpecialisation(specialisation); // zapisanie nowych danych
+        // dodac true w sprawie SSN
     }
 
     public Restorer(){};
@@ -148,6 +156,10 @@ public class Restorer extends Employee implements Serializable {
         if (!renovations.contains(renovation)) {
             if (book.getState() == State.DOSTĘPNA) { // nie mozna poddac renowacji ksiazki, ktora nie jest dostepna
                 renovations.add(renovation);
+                if(renovation.getRestorer() == null && renovation.getBook() == null){
+                    renovation.setBook(book);
+                    renovation.setRestorer(this);
+                }
                 book.addRenovationToBook(this, renovation); // polaczenie zwrotne
             } else {
                 throw new ValidationException("Book is not available and cannot be borrowed");
@@ -200,10 +212,10 @@ public class Restorer extends Employee implements Serializable {
         if (ssn == null || ssn.trim().isBlank()){
             throw new ValidationException("SSN cannot be empty");
         }
-        else if (getSsnDictionary().contains(ssn)) { // unikalnosc ssn
-            //throw new ValidationException("Given SSN is already used");
-        }
-        getSsnDictionary().add(ssn);
+//        else if (getSsnDictionary().contains(ssn)) { // unikalnosc ssn
+//            //throw new ValidationException("Given SSN is already used");
+//        }
+//        getSsnDictionary().add(ssn);
         this.ssn = ssn;
     }
 
@@ -222,20 +234,19 @@ public class Restorer extends Employee implements Serializable {
         this.hiringDate = hiringDate;
     }
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "library_id")
     public Library getLibrary() {
         return library;
     }
-    public void setLibrary (Library library) {
-        this.library = library;
-    }
 
-    public void addLibrary(Library library){
+    public void setLibrary (Library library) {
         if ( library != null && this.library != library ) {
             this.library = library;
-            library.addEmployee(this);
         }
     }
+
+
 
     @Basic
     public String getAddress () {
@@ -250,6 +261,7 @@ public class Restorer extends Employee implements Serializable {
         }
         this.address = address;
     }
+
 
     @Override
     public String toString () {

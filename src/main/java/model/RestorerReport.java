@@ -38,10 +38,11 @@ public class RestorerReport extends Report implements Serializable {
     }
 
 
+
     public void showReport(){
         System.out.println(super.toString()  +
                 "Summary for " + "restorer: " + restorer.getName() + " "  + restorer.getSurname() + '\n' +
-                "Suggested bonus: " + restorer.getBaseSalary() + '\n' +
+                "Suggested bonus: " + (restorer.getBaseSalary() + (restorer.getRenovations().size() * 100)) + '\n' +
                 "Estimated cost of done renovations: " + restorer.getRenovations().size() * avgCost  + '\n' +
                 "Done renovations: " +  '\n' +
                 restorer.getRenovations()

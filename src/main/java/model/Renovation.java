@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity(name = "model.Renovation")
 @Table(name = "renovation")
 
-public class Renovation extends ObjectPlus implements Serializable {
+public class Renovation implements Serializable {
 
     private long id;
     private LocalDate renovationDate;
@@ -29,7 +29,6 @@ public class Renovation extends ObjectPlus implements Serializable {
 
 
     public Renovation(int id, LocalDate renovationDate, Set<String> materials, Status status, String result) {
-        super();
         setId(id);
         setRenovationDate(renovationDate);
         setMaterials(materials);

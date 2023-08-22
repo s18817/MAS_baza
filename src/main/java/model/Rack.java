@@ -1,14 +1,17 @@
 package model;
 
 import exception.ValidationException;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class Rack extends ObjectPlus implements Serializable {
-
-
-    private List<Inventory> inventoryHistory = new ArrayList<>();
+@Entity(name = "model.Rack")
+@Table(name = "rack")
+public class Rack implements Serializable {
 
     enum RackType {RegałStandardowy, RegałRuchomy, RegałInteligenty};
 
@@ -16,7 +19,10 @@ public class Rack extends ObjectPlus implements Serializable {
 
     private static Set<Book> allBooks = new HashSet<>();
 
-    private EnumSet<RackType> rackKind = EnumSet.of(RackType.RegałStandardowy); // overlapping
+    //private EnumSet<RackType> rackKind = EnumSet.of(RackType.RegałStandardowy); // overlapping
+    private Set<RackType> rackKind = new HashSet<>();
+
+    private long id;
     private int floor;
     private String marking;
     private String subject;
@@ -30,64 +36,99 @@ public class Rack extends ObjectPlus implements Serializable {
     private double maxWeight; // dla regału ruchomego
     private boolean hasBrake; // dla regału ruchomego
 
+    private List<Inventory> inventories = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii renowacji ksiazki ; kolekcja, poniewaz jedna ksiazka moze byc poddana renowacji wielkrotnie
+
+
 
     public Rack(int floor, String marking, String subject, String softwareVersion, boolean working, double maxWeight, boolean hasBrake) { // regał ruchomy smart
-        super();
-        this.setFloor(floor);
-        this.setMarking(marking);
-        this.setSubject(subject);
-        this.setSoftwareVersion(softwareVersion);
-        this.setWorking(working);
-        this.setMaxWeight(maxWeight);
-        this.hasBrake = hasBrake;
-        this.rackKind.add(RackType.RegałRuchomy);
-        this.rackKind.add(RackType.RegałInteligenty);
-        this.rackKind.remove(RackType.RegałStandardowy);
+        rackKind.add(RackType.RegałRuchomy);
+        rackKind.add(RackType.RegałInteligenty);
+        setFloor(floor);
+        setMarking(marking);
+        setSubject(subject);
+        setSoftwareVersion(softwareVersion);
+        setWorking(working);
+        setMaxWeight(maxWeight);
+        setHasBrake(hasBrake);;
     }
 
     public Rack(int floor, String marking, String subject, String softwareVersion, boolean working) { // regał smart
-        super();
-        this.setFloor(floor);
-        this.setMarking(marking);
-        this.setSubject(subject);
-        this.setSoftwareVersion(softwareVersion);
-        this.setWorking(working);
-        this.rackKind.add(RackType.RegałInteligenty);
-        this.rackKind.remove(RackType.RegałStandardowy);
+        rackKind.add(RackType.RegałInteligenty);
+        setFloor(floor);
+        setMarking(marking);
+        setSubject(subject);
+        setSoftwareVersion(softwareVersion);
+        setWorking(working);
     }
 
     public Rack(int floor, String marking, String subject, double maxWeight, boolean hasBrake) { // regał ruchomy
-        super();
-        this.setFloor(floor);
-        this.setMarking(marking);
-        this.setSubject(subject);
-        this.setMaxWeight(maxWeight);
-        this.hasBrake = hasBrake;
-        this.rackKind.add(RackType.RegałRuchomy);
-        this.rackKind.remove(RackType.RegałStandardowy);
+        rackKind.add(RackType.RegałRuchomy);
+        setFloor(floor);
+        setMarking(marking);
+        setSubject(subject);
+        setMaxWeight(maxWeight);
+        setHasBrake(hasBrake);;
     }
 
     public Rack(int floor, String marking, String subject) { // regał zwykły
-        super();
-        this.setFloor(floor);
-        this.setMarking(marking);
-        this.setSubject(subject);
+        setFloor(floor);
+        setMarking(marking);
+        setSubject(subject);
+        rackKind.add(RackType.RegałStandardowy);
     }
 
-    public void addInventory(List<Librarian> librariansList, Inventory inventory) {
+    public Rack() {}
 
-        if (!inventoryHistory.contains(inventory)) {
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @Column(name = "rack_id", nullable = false)
+    public long getId () {
+        return id;
+    }
 
-            if (librariansList.size() < 2 || librariansList == null){
-                throw new ValidationException("Inventory can be done by minimum 2 librarians");
+    public void setId (long id) {
+        if (id < 0) {
+            throw new ValidationException("ID cannot be negative");
+        }
+        this.id = id;
+    }
+
+    @OneToMany(mappedBy = "rack", fetch = FetchType.EAGER)
+    @OrderBy("date")
+    public List<Inventory> getInventories () { return inventories;
+    }
+
+    public void setInventories (List<Inventory> inventoryHistory) {
+        this.inventories = inventoryHistory;
+    }
+
+    public void addInventoryToRack(Librarian librarian, Inventory inventory) {
+
+        if (!inventories.contains(inventory)) {
+            inventories.add(inventory);
+            if(inventory.getLibrarian() == null && inventory.getRack() == null) {
+                inventory.setRack(this);
+                inventory.setLibrarian(librarian);
             }
-            inventoryHistory.add(inventory);
-
-            for (Librarian librarian : librariansList){
-                librarian.addInventory(this, inventory); // polaczenie zwrotne
+             librarian.addInventoryToLibrarian(this, inventory); // polaczenie zwrotne
             }
         }
-    }
+
+//    public void addInventory(List<Librarian> librariansList, Inventory inventory) {
+//
+//        if (!inventoryHistory.contains(inventory)) {
+//
+//            if (librariansList.size() < 2 || librariansList == null){
+//                throw new ValidationException("Inventory can be done by minimum 2 librarians");
+//            }
+//            inventoryHistory.add(inventory);
+//
+//            for (Librarian librarian : librariansList){
+//                librarian.addInventory(this, inventory); // polaczenie zwrotne
+//            }
+//        }
+//    }
 
     public void addBook(Book book) {
         if (!books.contains(book)) {
@@ -108,6 +149,7 @@ public class Rack extends ObjectPlus implements Serializable {
 
     }
 
+    @Basic
     public boolean isWorking () {
         return working;
     }
@@ -116,14 +158,21 @@ public class Rack extends ObjectPlus implements Serializable {
         this.working = working;
     }
 
-    public List<Inventory> getInventoryHistory () {
-        return inventoryHistory;
-    }
-
-    public EnumSet<RackType> getRackKind() {
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    //@Fetch(FetchMode.SELECT)
+    public Set<RackType> getRackKind() {
         return rackKind;
     }
 
+    public void setRackKind (Set<RackType> rackKind) {
+        if (rackKind == null) {
+            throw new ValidationException("Rack kind cannot be empty");
+        }
+        this.rackKind = rackKind;
+    }
+
+    @Basic
     public int getFloor() {
         return floor;
     }
@@ -135,6 +184,7 @@ public class Rack extends ObjectPlus implements Serializable {
         this.floor = floor;
     }
 
+    @Basic
     public String getMarking() {
         return marking;
     }
@@ -146,6 +196,7 @@ public class Rack extends ObjectPlus implements Serializable {
         this.marking = marking;
     }
 
+    @Basic
     public String getSubject() {
         return subject;
     }
@@ -157,11 +208,33 @@ public class Rack extends ObjectPlus implements Serializable {
         this.subject = subject;
     }
 
+    @Basic
+    public String getSoftwareVersion () {
+        return softwareVersion;
+    }
+
     public void setSoftwareVersion (String softwareVersion) {
-        if (softwareVersion == null || softwareVersion.trim().isBlank()){
-            throw new ValidationException("Software version cannot be empty");
-        }
+        if(this.rackKind.contains(RackType.RegałInteligenty)) {
+            if (softwareVersion == null || softwareVersion.trim().isBlank()) {
+                throw new ValidationException("Software version cannot be empty");
+            }
         this.softwareVersion = softwareVersion;
+        }
+    }
+
+
+    @Basic
+    public boolean isHasBrake () {
+        return hasBrake;
+    }
+
+    public void setHasBrake (boolean hasBrake) {
+        this.hasBrake = hasBrake;
+    }
+
+    @Basic
+    public double getMaxWeight () {
+        return maxWeight;
     }
 
     public void setMaxWeight (double maxWeight) {
@@ -169,14 +242,6 @@ public class Rack extends ObjectPlus implements Serializable {
             throw new ValidationException("Max weight cannot be negative");
         }
         this.maxWeight = maxWeight;
-    }
-
-    public static void showExtent() throws Exception {
-        ObjectPlus.showExtent(Rack.class);
-    }
-
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Rack.class);
     }
 
     @Override
@@ -187,7 +252,7 @@ public class Rack extends ObjectPlus implements Serializable {
         }
         return result;
     }
-
+    @Transient
     public List<Book> getBooks() {
         return this.books;
     }

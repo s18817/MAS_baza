@@ -11,8 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-//@Entity(name = "model.Library")
-public class Library extends ObjectPlus implements Serializable {
+@Entity(name = "model.Library")
+@Table(name = "library")
+public class Library implements Serializable {
 
     private long id;
     private String name;
@@ -20,7 +21,9 @@ public class Library extends ObjectPlus implements Serializable {
     private String city;
     private String postalCode;
 
-    private List<Employee> employees = new ArrayList<>(); // kolekcja do przetrzymywania powiazan z Pracownikami
+    private List<Director> directors = new ArrayList<>(); // kolekcja do przetrzymywania powiazan z Pracownikami
+    private List<Restorer> restorers = new ArrayList<>(); // kolekcja do przetrzymywania powiazan z Pracownikami
+    private List<Librarian> librarians = new ArrayList<>(); // kolekcja do przetrzymywania powiazan z Pracownikami
 
     private Map<String, Employee> employeeQualif = new TreeMap<>(); // w jednej bibliotece moze pracowac wielu pracownikow
 
@@ -40,17 +43,46 @@ public class Library extends ObjectPlus implements Serializable {
         setPostalCode(postalCode);
     }
 
-//    @Id()
-//    @GeneratedValue(generator="increment")
-//    @GenericGenerator(name="increment", strategy = "increment")
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
+    public Library(){}
 
+    @Id()
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
+    public List<Director> getDirectors () {
+        return directors;
+    }
+
+    public void setDirectors (List<Director> directors) {
+        this.directors = directors;
+    }
+
+    @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
+    public List<Restorer> getRestorers () {
+        return restorers;
+    }
+
+    public void setRestorers (List<Restorer> restorers) {
+        this.restorers = restorers;
+    }
+
+    @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
+    public List<Librarian> getLibrarians () { return librarians;
+    }
+
+    public void setLibrarians (List<Librarian> librarians) {
+        this.librarians = librarians;
+    }
+
+    @Basic
     public String getName() {
         return name;
     }
@@ -62,6 +94,7 @@ public class Library extends ObjectPlus implements Serializable {
         this.name = name;
     }
 
+    @Basic
     public String getStreet() {
         return street;
     }
@@ -73,6 +106,7 @@ public class Library extends ObjectPlus implements Serializable {
         this.street = street;
     }
 
+    @Basic
     public String getCity() {
         return city;
     }
@@ -84,6 +118,7 @@ public class Library extends ObjectPlus implements Serializable {
         this.city = city;
     }
 
+    @Basic
     public String getPostalCode() {
         return postalCode;
     }
@@ -98,11 +133,11 @@ public class Library extends ObjectPlus implements Serializable {
 
     public void addEmployee(Employee employeeToAdd) {
 
-        if (!employees.contains(employeeToAdd)) {
-            employees.add(employeeToAdd);
-
-            employeeToAdd.addLibrary(this); // polaczenie zwrotne
-        }
+//        if (!employees.contains(employeeToAdd)) {
+//            employees.add(employeeToAdd);
+//
+//            employeeToAdd.addLibrary(this); // polaczenie zwrotne
+//        }
     }
 
     public void addEmployeeQualif(Employee newEmployee) {
@@ -121,14 +156,9 @@ public class Library extends ObjectPlus implements Serializable {
         return employeeQualif.get(ssn);
     }
 
-    public List<Employee> getEmployees () {
-        return employees;
-    }
 
-    public void setEmployees (List<Employee> employees) {
-        this.employees = employees;
-    }
 
+    @Transient
     public Map<String, Employee> getEmployeeQualif () {
         return employeeQualif;
     }
@@ -137,12 +167,5 @@ public class Library extends ObjectPlus implements Serializable {
         this.employeeQualif = employeeQualif;
     }
 
-    public static void showExtent() throws Exception {
-        ObjectPlus.showExtent(Library.class);
-    }
-
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Library.class);
-    }
 
 }

@@ -1,42 +1,73 @@
 package model;
 
 import exception.ValidationException;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory extends ObjectPlus implements Serializable {
+@Entity(name = "model.Inventory")
+@Table(name = "inventory")
+public class Inventory  implements Serializable {
 
+    private long id;
     private String sector;
     private String status;
     private String notes;
     private LocalDate date;
+    //private List<Librarian> librariansList;
+    private Librarian librarian;
+    private Rack rack;
 
     public Inventory(String sector, String status, String notes, LocalDate date) {
-        super();
         setSector(sector);
         setStatus(status);
         setNotes(notes);
         setDate(date);
     }
 
+    public Inventory(){};
 
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @Column(name = "inventory_id", nullable = false)
+    public long getId () {
+        return id;
+    }
+
+    public void setId (long id) {
+        if (id < 0) {
+            throw new ValidationException("ID cannot be negative");
+        }
+        this.id = id;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "librarian_id")
+    public Librarian getLibrarian () { return librarian;
+    }
+
+    public void setLibrarian (Librarian librarian) {
+        this.librarian = librarian;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rack_id")
+    public Rack getRack() {  return rack;
+    }
+
+    public void setRack (Rack rack) {
+        this.rack = rack;
+    }
+
+
+    @Basic
     public String getSector() {
         return sector;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public LocalDate getDate() {
-        return date;
     }
 
     public void setSector (String sector) {
@@ -46,6 +77,12 @@ public class Inventory extends ObjectPlus implements Serializable {
         this.sector = sector;
     }
 
+
+    @Basic
+    public String getStatus() {
+        return status;
+    }
+
     public void setStatus (String status) {
         if (status == null || status.trim().isBlank()){
             throw new ValidationException("Status cannot be empty");
@@ -53,11 +90,21 @@ public class Inventory extends ObjectPlus implements Serializable {
         this.status = status;
     }
 
+    @Basic
+    public String getNotes() {
+        return notes;
+    }
+
     public void setNotes (String notes) {
         if (notes == null || notes.trim().isBlank()){
             throw new ValidationException("Sector cannot be empty");
         }
         this.notes = notes;
+    }
+
+    @Basic
+    public LocalDate getDate() {
+        return date;
     }
 
     public void setDate (LocalDate date) {
@@ -70,7 +117,6 @@ public class Inventory extends ObjectPlus implements Serializable {
         this.date = date;
     }
 
-
     @Override
     public String toString() {
         return "Inventory{" +
@@ -81,11 +127,4 @@ public class Inventory extends ObjectPlus implements Serializable {
                 '}';
     }
 
-    public static void showExtent() throws Exception {
-        ObjectPlus.showExtent(Inventory.class);
-    }
-
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Inventory.class);
-    }
 }

@@ -42,9 +42,9 @@ public class LibrarianReport extends Report implements Serializable {
         System.out.println (
                 super.toString()  +
                         "Summary for " + "librarian: " + librarian.getName() + " "  + librarian.getSurname() + '\n' +
-                        "Suggested bonus: " + librarian.getSalary() + '\n' +
+                        "Suggested bonus: " + librarian.getBaseSalary() + '\n' +
                         "Done inventories: "  + '\n' +
-                        librarian.getDoneInventories()
+                        librarian.getInventories()
         );
     }
 

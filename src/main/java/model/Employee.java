@@ -119,17 +119,17 @@ public abstract class Employee extends Person implements Serializable {
     public static Employee findEmployee(String ssn) throws ClassNotFoundException { // na bazie ssn
         for (Librarian lib : ObjectPlus.getExtent(Librarian.class)) {
             if (lib.getSsn().equals(ssn)) {
-                return lib;
+                //return lib;
             }
         }
         for (Restorer res : ObjectPlus.getExtent(Restorer.class)) {
             if (res.getSsn().equals(ssn)) {
-                return res;
+                //return res;
             }
         }
         for (Director dir : ObjectPlus.getExtent(Director.class)) {
             if (dir.getSsn().equals(ssn)) {
-                return dir;
+                //return dir;
             }
         }
         return null;

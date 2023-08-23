@@ -31,6 +31,7 @@ public class Restorer implements Serializable {
     public static Restorer loggedRestorer;
 
     private List<Renovation> renovations = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania wykonanych renowacji ksiazek ; kolekcja, poniewaz jeden konwserwator moze wykonac wiele renowacji
+    private List<RestorerReport> restorerReports = new ArrayList<>();
 
     public Restorer(int id, String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, String specialisation){
         setId(id);
@@ -86,6 +87,27 @@ public class Restorer implements Serializable {
 
     public void setRenovations (List<Renovation> doneRenovations) {
         this.renovations = doneRenovations;
+    }
+
+    @OneToMany(mappedBy = "restorer", fetch = FetchType.EAGER)
+    public List<RestorerReport> getRestorerReports () {
+        return restorerReports;
+    }
+
+    public void setRestorerReports (List<RestorerReport> restorerReports) {
+        this.restorerReports = restorerReports;
+    }
+
+    public void generateReport(RestorerReport reportToGenerate){
+        if (reportToGenerate == null) {
+            throw new ValidationException("Report  cannot be empty");
+        }
+        else if (!restorerReports.contains(reportToGenerate)) {
+            reportToGenerate.setDoneRenovations(this.getRenovations().size());
+            reportToGenerate.setSuggestedBonus(this.getBaseSalary() + reportToGenerate.getDoneRenovations() * 100 );
+            restorerReports.add(reportToGenerate);
+            reportToGenerate.addRestorerToReport(this); // polaczenie zwrotne
+        }
     }
 
     @Basic

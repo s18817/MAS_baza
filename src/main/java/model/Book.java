@@ -68,8 +68,23 @@ public class Book extends ObjectPlus implements Serializable {
         setState(State.DOSTĘPNA);
     }
 
-   //@ManyToMany(mappedBy = "books")
-    @Transient
+
+    @Id()
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name = "book_id", nullable = false)
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        if (id < 0){
+            throw new ValidationException("ID cannot be negative");
+        }
+        this.id = id;
+    }
+
+    @ManyToMany(mappedBy = "books")
     public List<Author> getAuthors() {
         return authors;
     }
@@ -92,39 +107,22 @@ public class Book extends ObjectPlus implements Serializable {
         }
     }
 
-    @Id()
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
-    @Column(name = "book_id", nullable = false)
-    public long getId() {
-        return id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rack_id")
+    public Rack getRack() {  return rack;
     }
 
-    public void setId(long id) {
-        if (id < 0){
-            throw new ValidationException("ID cannot be negative");
+    public void setRack (Rack rack) {
+        this.rack = rack;
+    }
+
+    public void addRackToBook(Rack rackToAssign) {
+
+        if ( rackToAssign != null && this.rack != rackToAssign ) {
+            this.rack = rackToAssign;
+
+            rackToAssign.addBookToRack(this); // polaczenie zwrotne
         }
-        this.id = id;
-    }
-
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
-    @OrderBy("renovationDate")
-    public List<Renovation> getRenovations () {
-        return renovations;
-    }
-
-    public void setRenovations (List<Renovation> renovationHistory) {
-        this.renovations = renovationHistory;
-    }
-
-
-    public void addRack (Rack rackToAdd) {
-        if (this.rack != rackToAdd) {
-
-            rackToAdd.addBook(this); // polaczenie zwrotne
-            this.rack = rackToAdd;
-        }
-
     }
 
     public void changeRack (Rack rackToChange) {
@@ -136,6 +134,15 @@ public class Book extends ObjectPlus implements Serializable {
     }
 
 
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @OrderBy("renovationDate")
+    public List<Renovation> getRenovations () {
+        return renovations;
+    }
+
+    public void setRenovations (List<Renovation> renovationHistory) {
+        this.renovations = renovationHistory;
+    }
 
     public void updateBookCondition (Condition newCondition){
         if (this.bookCondition != Condition.NOWA && newCondition == Condition.NOWA) {
@@ -197,19 +204,6 @@ public class Book extends ObjectPlus implements Serializable {
             throw new ValidationException("Publishing house cannot be empty");
         }
         this.publishingHouse = publishingHouse;
-    }
-
-    @Transient
-    public Rack getRack() {
-        return rack;
-    }
-
-    public static void showExtent() throws Exception {
-        ObjectPlus.showExtent(Book.class);
-    }
-
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Book.class);
     }
 
     @Basic

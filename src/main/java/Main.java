@@ -54,8 +54,8 @@ public class Main {
 //
 //        Book testBook = new Book(21, "Władca Pierścieni Drużynia Pierścienia", testCategories, Condition.ZŁA, 448, 2009, "Wydawnictwo Amber");
 //        Book testBook2 = new Book(22, "Trzy kroki w szachowy świat", testCategories2, Condition.DOBRA, 88, 2020, "Wydawnictwo BIS");
-//        Author testAuthor = new Author("John", "Tolkien", testBirthDate, "angielska", "mężczyzna");
-//        Author testAuthor2 = new Author("Ryszard", "Czajkowski", testBirthDate2, "polska", "mężczyzna");
+        Author testAuthor = new Author("John", "Tolkien", testBirthDate, "angielska", "mężczyzna");
+        Author testAuthor2 = new Author("Ryszard", "Czajkowski", testBirthDate2, "polska", "mężczyzna");
 //        Author testAuthor3 = new Author("Andrzej", "Nowicki", testBirthDate3, "polska", "mężczyzna");
 //
 //        testBook.addAuthor(testAuthor);
@@ -127,13 +127,13 @@ public class Main {
 //        System.out.println(testStandardRack.getInventoryHistory());
 //        System.out.println(testLibrarian.getDoneInventories());
 //
-//        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
-//        RestorerReport testRestorerReport = new RestorerReport("Przegląd konserwatora", false, testRestorer, 10);
-//        LibrarianReport tesLibrarianReport = new LibrarianReport("Przegląd bibliotekarza", false, testLibrarian, "potrzeba więcej inwentaryzacji");
+        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
+        RestorerReport testRestorerReport = new RestorerReport("Przegląd konserwatora", false, 10);
+        LibrarianReport tesLibrarianReport = new LibrarianReport("Przegląd bibliotekarza", false, "potrzeba więcej inwentaryzacji");
 //
-//        testDirector.generateReport(testBookReport);
-//        testDirector.generateReport(testRestorerReport);
-//        testDirector.generateReport(tesLibrarianReport);
+
+//
+//
 //
 //        System.out.println(testDirector.getGeneratedReports());
 //        System.out.println(testBookReport.getReportAuthor());
@@ -223,9 +223,9 @@ public class Main {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
-       App app = new App();
+       //App app = new App();
 
-       app.start();
+       //app.start();
 
         Set<String> book1Categories = new HashSet<>();
         Set<String> book2Categories = new HashSet<>();
@@ -339,49 +339,62 @@ public class Main {
             testLibrarian.setLibrary(testLibrary);
             testRestorer.setLibrary(testLibrary);
 
-//            session.save(testDirector);
-//            session.save(testLibrarian);
-//            session.save(testRestorer);
-//            session.save(testStandardRack);
-//            session.save(book1);
-//            book1.addRenovationToBook(testRestorer, testRenovation241);
-//            testStandardRack.addInventoryToRack(testLibrarian,testInventory);
-//            session.save(testInventory);
-//            session.save(testRenovation241);
-//
-//
-//            session.save(testLibrary);
-//            session.save(testMovingRack);
-//            session.save(testSmartRack);
-//
-//            session.save(testMovingSmartRack);
-//
-//
-//            session.save(book2);
-//            session.save(book3);
-//            session.save(book4);
-//            session.save(book5);
-//            session.save(book6);
-//            session.save(book7);
-//            session.save(book8);
-//            session.save(book9);
-//            session.save(book10);
-//            session.save(book11);
-//            session.save(book12);
-//            session.save(book13);
-//            session.save(book14);
-//            session.save(book15);
-//            session.save(book16);
-//            session.save(book17);
-//            session.save(book18);
-//            session.save(book19);
-//            session.save(book20);
-//
-//            session.save(restorer1);
-//            session.save(restorer2);
-//            session.save(restorer3);
-//            session.save(restorer4);
-//            session.save(restorer5);
+            book1.addAuthor(testAuthor);
+            book1.addAuthor(testAuthor2);
+            book1.addRackToBook(testSmartRack);
+
+            session.save(testDirector);
+            session.save(testLibrarian);
+            session.save(testRestorer);
+            session.save(testStandardRack);
+            session.save(book1);
+            session.save(testAuthor);
+            session.save(testAuthor2);
+            book1.addRenovationToBook(testRestorer, testRenovation241);
+            testStandardRack.addInventoryToRack(testLibrarian,testInventory);
+            testDirector.generateReport(testBookReport);
+            testLibrarian.generateReport(tesLibrarianReport);
+            testRestorer.generateReport(testRestorerReport);
+
+            session.save(testInventory);
+            session.save(testRenovation241);
+            session.save(testBookReport);
+            session.save(tesLibrarianReport);
+            session.save(testRestorerReport);
+
+
+            session.save(testLibrary);
+            session.save(testMovingRack);
+            session.save(testSmartRack);
+
+            session.save(testMovingSmartRack);
+
+
+            session.save(book2);
+            session.save(book3);
+            session.save(book4);
+            session.save(book5);
+            session.save(book6);
+            session.save(book7);
+            session.save(book8);
+            session.save(book9);
+            session.save(book10);
+            session.save(book11);
+            session.save(book12);
+            session.save(book13);
+            session.save(book14);
+            session.save(book15);
+            session.save(book16);
+            session.save(book17);
+            session.save(book18);
+            session.save(book19);
+            session.save(book20);
+
+            session.save(restorer1);
+            session.save(restorer2);
+            session.save(restorer3);
+            session.save(restorer4);
+            session.save(restorer5);
 
             session.getTransaction().commit();
             session.close();

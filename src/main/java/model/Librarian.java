@@ -33,6 +33,7 @@ public class Librarian implements Serializable {
     private Set<String> languages = new HashSet<>();
 
     private List<Inventory> inventories = new ArrayList<>();
+    private List<LibrarianReport> librarianReports = new ArrayList<>();
 
 
     public Librarian (String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, Set languages){
@@ -89,6 +90,29 @@ public class Librarian implements Serializable {
 
     public void setInventories (List<Inventory> doneInventories) { this.inventories = doneInventories;
     }
+
+    @OneToMany(mappedBy = "librarian", fetch = FetchType.EAGER)
+    public List<LibrarianReport> getLibrarianReports () {
+        return librarianReports;
+    }
+
+    public void setLibrarianReports (List<LibrarianReport> librarianReports) {
+        this.librarianReports = librarianReports;
+    }
+
+    public void generateReport(LibrarianReport reportToGenerate){
+        if (reportToGenerate == null) {
+            throw new ValidationException("Report  cannot be empty");
+        }
+        else if (!librarianReports.contains(reportToGenerate)) {
+            reportToGenerate.setDoneInventories(this.getInventories().size());
+            reportToGenerate.setSuggestedBonus(this.getBaseSalary() + reportToGenerate.getDoneInventories() * 100 );
+            librarianReports.add(reportToGenerate);
+            reportToGenerate.addLibrarianToReport(this); // polaczenie zwrotne
+        }
+    }
+
+
 
     @Basic
     public String getName() {

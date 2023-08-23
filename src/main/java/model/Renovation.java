@@ -93,7 +93,7 @@ public class Renovation implements Serializable {
     }
     public void setRenovationDate (LocalDate renovationDate) {
         if (renovationDate == null){
-            throw new ValidationException("Renovation date date cannot be empty");
+            throw new ValidationException("Renovation date cannot be empty");
         }
         else if (renovationDate.getYear() < 1900 ) {
             throw new ValidationException("Provide valid renovation date");

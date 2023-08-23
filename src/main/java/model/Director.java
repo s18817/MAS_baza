@@ -1,5 +1,5 @@
 package model;
-
+import static model.Book.booksFromDb;
 import enums.State;
 import exception.ValidationException;
 import jakarta.persistence.*;
@@ -16,8 +16,6 @@ import java.util.Set;
 @Table(name = "director")
 public class Director implements Serializable {
 
-    private List<Report> generatedReports = new ArrayList<>(); // wykorzystana lista, aby zapamietac kolejnosc wygenerowanych raportow
-
 
     private long id;
     private String name;
@@ -31,6 +29,8 @@ public class Director implements Serializable {
     private LocalDate hiringDate; // data  zatrudnienia
     private String address; // dane adresowe
     private String education;
+
+    private List<BookReport> bookReports = new ArrayList<>();
 
 
     public Director (String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn , LocalDate hiringDate, double baseSalary, String address, String education){
@@ -78,6 +78,43 @@ public class Director implements Serializable {
         }
         this.id = id;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "library_id")
+    public Library getLibrary() {
+        return library;
+    }
+    public void setLibrary (Library library) {
+        if ( library != null && this.library != library ) {
+            this.library = library;
+        }
+    }
+
+    public void generateReport(BookReport reportToGenerate){
+        if (reportToGenerate == null) {
+            throw new ValidationException("Report cannot be empty");
+        }
+        else if (!bookReports.contains(reportToGenerate)) {
+            bookReports.add(reportToGenerate);
+            reportToGenerate.setBookAmount(booksFromDb.size());
+            reportToGenerate.addReportAuthor(this); // polaczenie zwrotne
+        }
+    }
+
+    @OneToMany(mappedBy = "director", fetch = FetchType.EAGER)
+    public List<BookReport> getBookReports () {
+        return bookReports;
+    }
+
+    public void setBookReports (List<BookReport> bookReports) {
+        this.bookReports = bookReports;
+    }
+
+    @Basic
+    public String getEducation () {
+        return education;
+    }
+
     public void setEducation (String education) {
         if (education == null || education.trim().isBlank() ) {
             throw new ValidationException("Education cannot be empty");
@@ -85,18 +122,9 @@ public class Director implements Serializable {
         this.education = education;
     }
 
-    public void generateReport(Report reportToGenerate){
-        if (reportToGenerate == null) {
-            throw new ValidationException("Report  cannot be empty");
-        }
-        else if (!generatedReports.contains(reportToGenerate)) {
-            generatedReports.add(reportToGenerate);
-            reportToGenerate.addReportAuthor(this); // polaczenie zwrotne
-        }
-    }
     @Transient
-    public List<Report> getGeneratedReports() {
-        return generatedReports;
+    public List<BookReport> getGeneratedReports() {
+        return bookReports;
     }
 
     @Transient
@@ -138,6 +166,9 @@ public class Director implements Serializable {
         if (birthDate == null){
             throw new ValidationException("Birth date cannot be empty");
         }
+        else if (birthDate.getYear() < 1900 ) {
+            throw new ValidationException("Provide valid birth date");
+        }
         this.birthDate = birthDate;
     }
 
@@ -148,7 +179,7 @@ public class Director implements Serializable {
 
 
     public void setGender(String gender) {
-        if (gender == null){
+        if (gender == null || gender.trim().isBlank()){
             throw new ValidationException("Gender cannot be empty");
         }
         this.gender = gender;
@@ -161,7 +192,7 @@ public class Director implements Serializable {
 
 
     public void setNationality(String nationality) {
-        if (nationality == null){
+        if (nationality == null || nationality.trim().isBlank()){
             throw new ValidationException("Nationality cannot be empty");
         }
         this.nationality = nationality;
@@ -211,18 +242,6 @@ public class Director implements Serializable {
             throw new ValidationException("Provide valid hiring date");
         }
         this.hiringDate = hiringDate;
-    }
-
-
-    @ManyToOne
-    @JoinColumn(name = "library_id")
-    public Library getLibrary() {
-        return library;
-    }
-    public void setLibrary (Library library) {
-        if ( library != null && this.library != library ) {
-            this.library = library;
-    }
     }
 
 

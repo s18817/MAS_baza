@@ -1,20 +1,51 @@
 package model;
 
 import exception.ValidationException;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
-public class RestorerReport extends Report implements Serializable {
+@Entity(name = "model.RestorerReport")
+@Table(name = "restorer_report")
+public class RestorerReport implements Serializable {
 
+    private long id;
+    private LocalDate creationDate;
+    private String topic;
+    private boolean confidential;
+    private int doneRenovations;
+    private double suggestedBonus;
     private Restorer restorer;
     private double avgCost;
 
-    public RestorerReport (String topic, boolean confidential, Restorer restorer, double avgCost) {
-        super(topic, confidential);
+    public RestorerReport (String topic, boolean confidential, double avgCost) {
+        setTopic(topic);
+        setConfidential(confidential);
+        creationDate = LocalDate.now();
         setAvgCost(avgCost);
-        setRestorer(restorer);
     }
 
+    public RestorerReport(){};
+
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @Column(name = "restorer_report_id", nullable = false)
+    public long getId () {
+        return id;
+    }
+
+    public void setId (long id) {
+        if (id < 0) {
+            throw new ValidationException("ID cannot be negative");
+        }
+        this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "restorer_id")
     public Restorer getRestorer () {
         return restorer;
     }
@@ -26,18 +57,78 @@ public class RestorerReport extends Report implements Serializable {
         this.restorer = restorer;
     }
 
+    public void addRestorerToReport(Restorer restorerReport){
+        if ( restorerReport != null && this.restorer != restorerReport ) {
+            this.restorer = restorerReport;
+            restorerReport.generateReport(this); // polaczenie zwrotne
+        }
+    }
+
+    @Basic
+    public LocalDate getCreationDate () {
+        return creationDate;
+    }
+
+    public void setCreationDate (LocalDate creationDate) {
+        if (creationDate == null){
+            throw new ValidationException("Creation date cannot be empty");
+        }
+        else if (creationDate.getYear() < 1900 ) {
+            throw new ValidationException("Provide valid renovation date");
+        }
+        this.creationDate = creationDate;
+    }
+
+    @Basic
+    public String getTopic () {
+        return topic;
+    }
+
+    public void setTopic (String topic) {
+        if (topic == null || topic.trim().isBlank()){
+            throw new ValidationException("Topic cannot be empty");
+        }
+        this.topic = topic;
+    }
+
+    @Basic
+    public boolean isConfidential () {
+        return confidential;
+    }
+
+    public void setConfidential (boolean confidential) {
+        this.confidential = confidential;
+    }
+
+    @Basic
     public double getAvgCost () {
         return avgCost;
     }
 
     public void setAvgCost (double avgCost) {
-        if (avgCost< 0){
+        if (avgCost < 0){
             throw new ValidationException("Average cost cannot be negative");
         }
         this.avgCost = avgCost;
     }
 
+    @Basic
+    public int getDoneRenovations () {
+        return doneRenovations;
+    }
 
+    public void setDoneRenovations (int doneRenovations) {
+        this.doneRenovations = doneRenovations;
+    }
+
+    @Basic
+    public double getSuggestedBonus () {
+        return suggestedBonus;
+    }
+
+    public void setSuggestedBonus (double suggestedBonus) {
+        this.suggestedBonus = suggestedBonus;
+    }
 
     public void showReport(){
         System.out.println(super.toString()  +
@@ -49,12 +140,5 @@ public class RestorerReport extends Report implements Serializable {
         );
     }
 
-    public static void showExtent() throws Exception {
-        ObjectPlus.showExtent(RestorerReport.class);
-    }
-
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(RestorerReport.class);
-    }
 }
 

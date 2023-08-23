@@ -33,10 +33,10 @@ public abstract class Report extends ObjectPlus implements Serializable {
 
 
     public void addReportAuthor(Director reportAuthor){
-        if ( reportAuthor != null && this.reportAuthor != reportAuthor ) {
-            this.reportAuthor = reportAuthor;
-            reportAuthor.generateReport(this); // polacze
-        }
+//        if ( reportAuthor != null && this.reportAuthor != reportAuthor ) {
+//            this.reportAuthor = reportAuthor;
+//            reportAuthor.generateReport(this); // polacze
+//        }
     }
 
     public void setTopic (String topic) {

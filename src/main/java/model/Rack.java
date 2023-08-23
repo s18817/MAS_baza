@@ -95,6 +95,33 @@ public class Rack implements Serializable {
     }
 
     @OneToMany(mappedBy = "rack", fetch = FetchType.EAGER)
+    public List<Book> getBooks () { return books;
+    }
+
+    public void setBooks (List<Book> books) {
+        this.books = books;
+    }
+
+    public void addBookToRack(Book book) {
+        if (!books.contains(book)) {
+            if (allBooks.contains(book)) {
+                throw new ValidationException("This book is already in another rack");
+            }
+            books.add(book); // dodanie ksiazki do regalu
+            book.addRackToBook(this); // polaczenie zwrotne
+            allBooks.add(book); // zapamietanie, ze ksiazka juz ma swoj regal
+        }
+    }
+
+    public void changeRackForBook(Book book) {
+        if (this.books.contains(book)) {
+            this.books.remove(book); // usuniecie ze starego regalu
+            books.add(book); // dodanie ksiazki do nowego regalu
+        }
+
+    }
+
+    @OneToMany(mappedBy = "rack", fetch = FetchType.EAGER)
     @OrderBy("date")
     public List<Inventory> getInventories () { return inventories;
     }
@@ -130,24 +157,6 @@ public class Rack implements Serializable {
 //        }
 //    }
 
-    public void addBook(Book book) {
-        if (!books.contains(book)) {
-            if (allBooks.contains(book)) {
-                throw new ValidationException("This book is already in another rack");
-            }
-            books.add(book); // dodanie ksiazki do regalu
-            book.addRack(this); // polaczenie zwrotne
-            allBooks.add(book); // zapamietanie, ze ksiazka juz ma swoj regal
-        }
-    }
-
-    public void changeRackForBook(Book book) {
-        if (this.books.contains(book)) {
-            this.books.remove(book); // usuniecie ze starego regalu
-            books.add(book); // dodanie ksiazki do nowego regalu
-        }
-
-    }
 
     @Basic
     public boolean isWorking () {
@@ -251,9 +260,5 @@ public class Rack implements Serializable {
             result = result + " " + book.getTitle() + "\n";
         }
         return result;
-    }
-    @Transient
-    public List<Book> getBooks() {
-        return this.books;
     }
 }

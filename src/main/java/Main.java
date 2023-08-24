@@ -30,15 +30,15 @@ public class Main {
         LocalDate testBirthDate = LocalDate.of(1982, 1, 3);
         LocalDate testBirthDate2 = LocalDate.of(1933, 10, 4);
         LocalDate testBirthDate3 = LocalDate.of(1919, 5, 1);
-//        LocalDate testBirthDate4 = LocalDate.of(1995, 11, 21);
+        LocalDate testBirthDate4 = LocalDate.of(1995, 11, 21);
 //
         LocalDate testHiringDate = LocalDate.of(2020, 1, 1);
         LocalDate testHiringDate2 = LocalDate.of(2021, 1, 1);
         LocalDate testHiringDate3 = LocalDate.of(2022, 1, 1);
 //        LocalDate testHiringDate4 = LocalDate.of(2023, 1, 1);
 //
-//        LocalDate testFrom = LocalDate.of(2023, 6, 29);
-//        LocalDate testTo = LocalDate.of(2023, 7, 1);
+        LocalDate testFrom = LocalDate.of(2023, 6, 29);
+        LocalDate testTo = LocalDate.of(2023, 7, 1);
 //
 //        LocalDate testRenovationDate = LocalDate.of(2023, 06,28);
         LocalDate testInventoryDate = LocalDate.of(2023, 06,28);
@@ -65,9 +65,9 @@ public class Main {
 //        System.out.println(testBook2.getAuthors());
 //        System.out.println(testAuthor2.getBooks());
 //
-//        Client testClient = new Client("Jan", "Kowalski", testBirthDate4, "mężczyzna", "polska", false, "brak", "jan.kowalski@gmail.com");
+        Client testClient = new Client("Jan", "Kowalski", testBirthDate4, "mężczyzna", "polska", "brak", "jan.kowalski@gmail.com");
 //
-//        Borrow testBorrow = new Borrow(testFrom, testTo, testTo,true, "brak");
+        Borrow testBorrow = new Borrow(testFrom, testTo, testTo,true, "brak");
 //
 //        System.out.println(testBook.getState());
 //        testClient.addBorrowToClient(testBook, testBorrow);
@@ -352,6 +352,7 @@ public class Main {
             session.save(testAuthor2);
             book1.addRenovationToBook(testRestorer, testRenovation241);
             testStandardRack.addInventoryToRack(testLibrarian,testInventory);
+            book1.addBorrowToBook(testClient,testBorrow);
             testDirector.generateReport(testBookReport);
             testLibrarian.generateReport(tesLibrarianReport);
             testRestorer.generateReport(testRestorerReport);
@@ -362,7 +363,8 @@ public class Main {
             session.save(tesLibrarianReport);
             session.save(testRestorerReport);
 
-
+            session.save(testClient);
+            session.save(testBorrow);
             session.save(testLibrary);
             session.save(testMovingRack);
             session.save(testSmartRack);

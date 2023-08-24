@@ -153,11 +153,23 @@ public class Book extends ObjectPlus implements Serializable {
         }
     }
 
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    public List<Borrow> getBorrowDetails() { return borrowDetails;
+    }
+
+    public void setBorrowDetails (List<Borrow> borrows) {
+        this.borrowDetails = borrows;
+    }
+
+
     public void addBorrowToBook(Client client, Borrow newBorrow) {
 
         if (!borrowDetails.contains(newBorrow)) {
                 borrowDetails.add(newBorrow);
-                this.setState(State.WYPOŻYCZONA); // ksiazka zostala wypozyczena, nie jest juz dostepna dla innych
+            if(newBorrow.getBook() == null && newBorrow.getClient() == null){
+                newBorrow.setBook(this);
+                newBorrow.setClient(client);
+            }
                 client.addBorrowToClient(this, newBorrow); // polaczenie zwrotne
         }
     }
@@ -173,7 +185,7 @@ public class Book extends ObjectPlus implements Serializable {
 
     public void returnBook (Borrow borrowToReturn){
         borrowToReturn.setActualTo(LocalDate.now());
-        if(borrowToReturn.getActualTo().isAfter(borrowToReturn.getTo())) {
+        if(borrowToReturn.getActualTo().isAfter(borrowToReturn.getDateTo())) {
             borrowToReturn.setOnTime(false);
         }
         else{
@@ -316,15 +328,6 @@ public class Book extends ObjectPlus implements Serializable {
                 "Tytuł: '" + title +
                 "', kondycja: " + bookCondition +
                 ", stan: " + state;
-    }
-
-    @Transient
-    public List<Borrow> getBorrowDetails() {
-        return this.borrowDetails;
-    }
-
-    public void setBorrowDetails (List<Borrow> borrowDetails) {
-        this.borrowDetails = borrowDetails;
     }
 
     public static String  printBooksConditon() throws ClassNotFoundException { // metoda klasowa

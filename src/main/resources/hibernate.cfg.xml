@@ -25,17 +25,19 @@
         <!-- Enable Hibernate stats in the logs -->
         <property name="hibernate.generate_statistics">false</property>
 
-        <mapping class="model.Book"/>
         <mapping class="model.Author"/>
-        <mapping class="model.Restorer"/>
-        <mapping class="model.Director"/>
-        <mapping class="model.Librarian"/>
-        <mapping class="model.Library"/>
-        <mapping class="model.Renovation"/>
-        <mapping class="model.Inventory"/>
-        <mapping class="model.Rack"/>
+        <mapping class="model.Book"/>
+        <mapping class="model.Borrow"/>
         <mapping class="model.BookReport"/>
+        <mapping class="model.Client"/>
+        <mapping class="model.Director"/>
+        <mapping class="model.Inventory"/>
+        <mapping class="model.Librarian"/>
         <mapping class="model.LibrarianReport"/>
+        <mapping class="model.Library"/>
+        <mapping class="model.Rack"/>
+        <mapping class="model.Renovation"/>
+        <mapping class="model.Restorer"/>
         <mapping class="model.RestorerReport"/>
 
     </session-factory>

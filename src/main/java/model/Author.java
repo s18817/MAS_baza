@@ -130,7 +130,7 @@ public class Author  implements Serializable {
         this.gender = gender;
     }
 
-
+    @Basic
     public String getNationality() {
         return nationality;
     }

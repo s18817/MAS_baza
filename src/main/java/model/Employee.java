@@ -70,7 +70,7 @@ public abstract class Employee extends Person implements Serializable {
     public void addLibrary(Library library){
         if ( library != null && this.library != library ) {
             this.library = library;
-            library.addEmployee(this);
+            //library.addEmployee(this);
         }
     }
 

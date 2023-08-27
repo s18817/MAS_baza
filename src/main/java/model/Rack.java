@@ -15,6 +15,8 @@ public class Rack implements Serializable {
 
     enum RackType {RegałStandardowy, RegałRuchomy, RegałInteligenty};
 
+    public static List<Rack> racksFromDb = new ArrayList<>();
+
     private List<Book> books = new ArrayList<>(); // regal przetrzymuje wiele ksiazek
 
     private static Set<Book> allBooks = new HashSet<>();
@@ -27,11 +29,8 @@ public class Rack implements Serializable {
     private String marking;
     private String subject;
 
-
     private String softwareVersion; // dla reguału smart
     private boolean working; // dla reguału smart
-
-
 
     private double maxWeight; // dla regału ruchomego
     private boolean hasBrake; // dla regału ruchomego
@@ -254,11 +253,23 @@ public class Rack implements Serializable {
     }
 
     @Override
-    public String toString() {
-        String result = "Rack: " + marking + "\n";
-        for (Book book : books) {
-            result = result + " " + book.getTitle() + "\n";
-        }
-        return result;
+    public String toString () {
+        return "Rack{" +
+                "books=" + books +
+                ", rackKind=" + rackKind +
+                ", id=" + id +
+                ", floor=" + floor +
+                ", marking='" + marking + '\'' +
+                ", subject='" + subject + '\'' +
+                ", softwareVersion='" + softwareVersion + '\'' +
+                ", working=" + working +
+                ", maxWeight=" + maxWeight +
+                ", hasBrake=" + hasBrake +
+                ", inventories=" + inventories +
+                '}';
+    }
+
+    public static List<Rack> getRacksFromDb () {
+        return racksFromDb;
     }
 }

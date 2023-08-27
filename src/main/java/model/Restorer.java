@@ -15,6 +15,8 @@ import java.util.List;
 @Table(name = "restorer")
 public class Restorer implements Serializable {
 
+    public static List<Restorer> restorersFromDb = new ArrayList<>();
+
     private long id;
     private String name;
     private String surname;
@@ -47,7 +49,7 @@ public class Restorer implements Serializable {
         setSpecialisation(specialisation);
     }
 
-    public Restorer(Employee prevEmployee, String specialisation, int booksRenovated){
+    public Restorer(Employee prevEmployee, String specialisation){
         setId(id);
         setName(prevEmployee.getName());
         setSurname(surname);
@@ -59,7 +61,34 @@ public class Restorer implements Serializable {
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setSpecialisation(specialisation); // zapisanie nowych danych
-        // dodac true w sprawie SSN
+    }
+
+    public Restorer(Director prevEmployee, String specialisation){
+        setId(id);
+        setName(prevEmployee.getName());
+        setSurname(surname);
+        setBirthDate(prevEmployee.getBirthDate());
+        setGender(prevEmployee.getGender());
+        setNationality(prevEmployee.getNationality());
+        this.ssn = prevEmployee.getSsn();
+        setHiringDate(prevEmployee.getHiringDate());
+        setBaseSalary(prevEmployee.getBaseSalary());
+        setAddress(prevEmployee.getAddress());
+        setSpecialisation(specialisation); // zapisanie nowych danych
+    }
+
+    public Restorer(Librarian prevEmployee, String specialisation){
+        setId(id);
+        setName(prevEmployee.getName());
+        setSurname(surname);
+        setBirthDate(prevEmployee.getBirthDate());
+        setGender(prevEmployee.getGender());
+        setNationality(prevEmployee.getNationality());
+        this.ssn = prevEmployee.getSsn();
+        setHiringDate(prevEmployee.getHiringDate());
+        setBaseSalary(prevEmployee.getBaseSalary());
+        setAddress(prevEmployee.getAddress());
+        setSpecialisation(specialisation); // zapisanie nowych danych
     }
 
     public Restorer(){};
@@ -109,6 +138,26 @@ public class Restorer implements Serializable {
             reportToGenerate.addRestorerToReport(this); // polaczenie zwrotne
         }
     }
+
+    @ManyToOne
+    @JoinColumn(name = "library_id")
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary (Library library) {
+        if ( library != null && this.library != library ) {
+            this.library = library;
+        }
+    }
+
+    public void addLibraryToRestorer(Library libraryToAdd){
+        if ( libraryToAdd != null && this.library != libraryToAdd ) {
+            this.library = libraryToAdd;
+            libraryToAdd.addRestorer(this); // polaczenie zwrotne
+        }
+    }
+
 
     @Basic
     public String getName() {
@@ -256,20 +305,6 @@ public class Restorer implements Serializable {
         this.hiringDate = hiringDate;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "library_id")
-    public Library getLibrary() {
-        return library;
-    }
-
-    public void setLibrary (Library library) {
-        if ( library != null && this.library != library ) {
-            this.library = library;
-        }
-    }
-
-
-
     @Basic
     public String getAddress () {
         return address;
@@ -292,4 +327,9 @@ public class Restorer implements Serializable {
                 ", doneRenovations=" + renovations +
                 '}';
     }
+
+    public static List<Restorer> getRestorersFromDb () {
+        return restorersFromDb;
+    }
+
 }

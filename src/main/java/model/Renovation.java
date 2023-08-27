@@ -19,6 +19,8 @@ import java.util.Set;
 
 public class Renovation implements Serializable {
 
+    public static List<Renovation> renovationsFromDb = new ArrayList<>();
+
     private long id;
     private LocalDate renovationDate;
     private Set<String> materials = new HashSet<>();
@@ -135,12 +137,7 @@ public class Renovation implements Serializable {
                 '}';
     }
 
-    public static void showExtent() throws Exception {
-        ObjectPlus.showExtent(Renovation.class);
+    public static List<Renovation> getRenovationsFromDb () {
+        return renovationsFromDb;
     }
-
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Renovation.class);
-    }
-
 }

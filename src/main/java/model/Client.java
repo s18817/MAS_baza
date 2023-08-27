@@ -19,6 +19,8 @@ public class Client implements Serializable {
     String regex = "^(.+)@(.+)$"; // walidacja adresu email
     Pattern pattern = Pattern.compile(regex);
 
+    public static List<Client> clientsFromDb = new ArrayList<>();
+
     private List<Borrow> borrowDetails = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania historii wypozyczen ksiazki ; kolekcja, poniewaz jedna ksiazka moze miec wiele wypozyczen
 
     private long id;
@@ -208,13 +210,24 @@ public class Client implements Serializable {
         this.regularClient = true;
     }
 
+
     @Override
-    public String toString() {
-        return super.toString() + "Client{" +
-                "borrowDetails=" + borrowDetails +
+    public String toString () {
+        return "Client{" +
+                //"borrowDetails=" + borrowDetails +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", nationality='" + nationality + '\'' +
                 ", regularClient=" + regularClient +
                 ", opinion='" + opinion + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 
+    public static List<Client> getClientsFromDb () {
+        return clientsFromDb;
+    }
 }

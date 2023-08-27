@@ -16,6 +16,7 @@ import java.util.Set;
 @Table(name = "director")
 public class Director implements Serializable {
 
+    public static List<Director> directorsFromDb = new ArrayList<>();
 
     private long id;
     private String name;
@@ -47,20 +48,33 @@ public class Director implements Serializable {
         setEducation(education);
     }
 
-    public Director(Employee prevEmployee, String education){
+    public Director(Restorer prevEmployee, String education){
         setId(id);
         setName(prevEmployee.getName());
         setSurname(prevEmployee.getSurname());
         setBirthDate(prevEmployee.getBirthDate());
         setGender(prevEmployee.getGender());
         setNationality(prevEmployee.getNationality());
-        setSsn(prevEmployee.getSsn());
+        this.ssn = prevEmployee.getSsn();
         setHiringDate(prevEmployee.getHiringDate());
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setEducation(education);
-        // pamietac o SSN
         }
+
+    public Director(Librarian prevEmployee, String education){
+        setId(id);
+        setName(prevEmployee.getName());
+        setSurname(prevEmployee.getSurname());
+        setBirthDate(prevEmployee.getBirthDate());
+        setGender(prevEmployee.getGender());
+        setNationality(prevEmployee.getNationality());
+        this.ssn = prevEmployee.getSsn();
+        setHiringDate(prevEmployee.getHiringDate());
+        setBaseSalary(prevEmployee.getBaseSalary());
+        setAddress(prevEmployee.getAddress());
+        setEducation(education);
+    }
 
     public Director(){};
 
@@ -88,6 +102,17 @@ public class Director implements Serializable {
         if ( library != null && this.library != library ) {
             this.library = library;
         }
+    }
+
+    public void addLibraryToDirector(Library libraryToAdd){
+        if ( libraryToAdd != null && this.library != libraryToAdd ) {
+            this.library = libraryToAdd;
+            libraryToAdd.addDirector(this); // polaczenie zwrotne
+        }
+    }
+
+    public void removeLibrary() {
+        this.library = null;
     }
 
     public void generateReport(BookReport reportToGenerate){
@@ -257,5 +282,28 @@ public class Director implements Serializable {
             throw new ValidationException("Address cannot be longer that 100 digits");
         }
         this.address = address;
+    }
+
+    @Override
+    public String toString () {
+        return "Director{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", ssn='" + ssn + '\'' +
+                //", library=" + library +
+                ", baseSalary=" + baseSalary +
+                ", hiringDate=" + hiringDate +
+                ", address='" + address + '\'' +
+                ", education='" + education + '\'' +
+                ", bookReports=" + bookReports +
+                '}';
+    }
+
+    public static List<Director> getDirectorsFromDb () {
+        return directorsFromDb;
     }
 }

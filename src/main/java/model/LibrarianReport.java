@@ -6,10 +6,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "model.LibrarianReport")
 @Table(name = "librarian_report")
 public class LibrarianReport implements Serializable {
+
+
+    public static List<LibrarianReport> librarianReportsFromDb = new ArrayList<>();
 
     private long id;
     private LocalDate creationDate;
@@ -139,5 +144,22 @@ public class LibrarianReport implements Serializable {
         );
     }
 
+    @Override
+    public String toString () {
+        return "LibrarianReport{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", topic='" + topic + '\'' +
+                ", confidential=" + confidential +
+                //", librarian=" + librarian +
+                ", doneInventories=" + doneInventories +
+                ", suggestedBonus=" + suggestedBonus +
+                ", summary='" + summary + '\'' +
+                '}';
+    }
+
+    public static List<LibrarianReport> getLibrarianReportsFromDb () {
+        return librarianReportsFromDb;
+    }
 }
 

@@ -6,10 +6,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "model.RestorerReport")
 @Table(name = "restorer_report")
 public class RestorerReport implements Serializable {
+
+    public static List<RestorerReport> restorerReportsFromDb = new ArrayList<>();
 
     private long id;
     private LocalDate creationDate;
@@ -140,5 +144,22 @@ public class RestorerReport implements Serializable {
         );
     }
 
+    @Override
+    public String toString () {
+        return "RestorerReport{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", topic='" + topic + '\'' +
+                ", confidential=" + confidential +
+                ", doneRenovations=" + doneRenovations +
+                ", suggestedBonus=" + suggestedBonus +
+                ", restorer=" + restorer +
+                ", avgCost=" + avgCost +
+                '}';
+    }
+
+    public static List<RestorerReport> getRestorerReportsFromDb () {
+        return restorerReportsFromDb;
+    }
 }
 

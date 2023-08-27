@@ -397,4 +397,7 @@ public class Book extends ObjectPlus implements Serializable {
         }
     }
 
+    public static List<Book> getBooksFromDb () {
+        return booksFromDb;
+    }
 }

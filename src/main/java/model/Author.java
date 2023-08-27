@@ -13,6 +13,8 @@ import java.util.List;
 
 public class Author  implements Serializable {
 
+    public static List<Author> authorsFromDb = new ArrayList<>();
+
     private List<Book> books = new ArrayList<>(); // asocjacja binarna ; kolekcja do przetrzymywania powiazan z Autorami ; kolekcja, poniewaz jednen autor moze byc autorem wielu ksiazek
 
     private long id;
@@ -161,13 +163,21 @@ public class Author  implements Serializable {
         }
     }
 
-
     @Override
-    public String toString() {
-        return super.toString() + " Author{" +
+    public String toString () {
+        return "Author{" +
                 "books=" + books +
+                ", id=" + id +
                 ", pseudonym='" + pseudonym + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", nationality='" + nationality + '\'' +
                 '}';
     }
 
+    public static List<Author> getAuthorsFromDb () {
+        return authorsFromDb;
+    }
 }

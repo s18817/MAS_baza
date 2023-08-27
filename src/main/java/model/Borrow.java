@@ -6,10 +6,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "model.Borrow")
 @Table(name = "borrow")
 public class Borrow implements Serializable {
+
+    public static List<Borrow> borrowsFromDb = new ArrayList<>();
+
 
     private long id;
     private LocalDate dateFrom;
@@ -131,12 +136,20 @@ public class Borrow implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return "Borrow{" +
-                "from=" + dateFrom +
-                ", to=" + dateTo +
+                "id=" + id +
+                ", dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
+                ", actualTo=" + actualTo +
                 ", onTime=" + onTime +
-                ", remarks='" + remarks + '\'' + "}\n" ;
+                ", remarks='" + remarks + '\'' +
+                ", client=" + client +
+                ", book=" + book +
+                '}';
     }
 
+    public static List<Borrow> getBorrowsFromDb () {
+        return borrowsFromDb;
+    }
 }

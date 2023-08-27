@@ -18,13 +18,15 @@ import java.util.Set;
 @Table(name = "librarian")
 public class Librarian implements Serializable {
 
+    public static List<Librarian> librariansFromDb = new ArrayList<>();
+
+
     private long id;
     private String name;
     private String surname;
     private LocalDate birthDate;
     private String gender;
     private String nationality;
-    private String specialisation;
     private String ssn; // social security number // kwalifikator
     private Library library; // dla pracownika tylko jedna biblioteka
     private double baseSalary;
@@ -50,19 +52,32 @@ public class Librarian implements Serializable {
         setLanguages(languages);
     }
 
-    public Librarian(Employee prevEmployee, Set languages){
+    public Librarian(Restorer prevEmployee, Set languages){
         setId(id);
         setName(prevEmployee.getName());
         setSurname(prevEmployee.getSurname());
         setBirthDate(prevEmployee.getBirthDate());
         setGender(prevEmployee.getGender());
         setNationality(prevEmployee.getNationality());
-        setSsn(prevEmployee.getSsn());
+        this.ssn = prevEmployee.getSsn();
         setHiringDate(prevEmployee.getHiringDate());
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setLanguages(languages);
-        // pamietac o SSN
+    }
+
+    public Librarian(Director prevEmployee, Set languages){
+        setId(id);
+        setName(prevEmployee.getName());
+        setSurname(prevEmployee.getSurname());
+        setBirthDate(prevEmployee.getBirthDate());
+        setGender(prevEmployee.getGender());
+        setNationality(prevEmployee.getNationality());
+        this.ssn = prevEmployee.getSsn();
+        setHiringDate(prevEmployee.getHiringDate());
+        setBaseSalary(prevEmployee.getBaseSalary());
+        setAddress(prevEmployee.getAddress());
+        setLanguages(languages);
     }
 
     public Librarian(){};
@@ -109,6 +124,25 @@ public class Librarian implements Serializable {
             reportToGenerate.setSuggestedBonus(this.getBaseSalary() + reportToGenerate.getDoneInventories() * 100 );
             librarianReports.add(reportToGenerate);
             reportToGenerate.addLibrarianToReport(this); // polaczenie zwrotne
+        }
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "library_id")
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary (Library library) {
+        if ( library != null && this.library != library ) {
+            this.library = library;
+        }
+    }
+
+    public void addLibraryToLibrarian(Library libraryToAdd){
+        if ( libraryToAdd != null && this.library != libraryToAdd ) {
+            this.library = libraryToAdd;
+            libraryToAdd.addLibrarian(this); // polaczenie zwrotne
         }
     }
 
@@ -259,18 +293,6 @@ public class Librarian implements Serializable {
         this.hiringDate = hiringDate;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "library_id")
-    public Library getLibrary() {
-        return library;
-    }
-
-    public void setLibrary (Library library) {
-        if ( library != null && this.library != library ) {
-            this.library = library;
-        }
-    }
-
     @Basic
     public String getAddress () {
         return address;
@@ -287,10 +309,26 @@ public class Librarian implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + " Librarian{" +
-                "languages=" + languages +
+    public String toString () {
+        return "Librarian{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", ssn='" + ssn + '\'' +
+                //", library=" + library +
+                ", baseSalary=" + baseSalary +
+                ", hiringDate=" + hiringDate +
+                ", address='" + address + '\'' +
+                ", languages=" + languages +
+                ", inventories=" + inventories +
+                ", librarianReports=" + librarianReports +
                 '}';
     }
 
+    public static List<Librarian> getLibrariansFromDb () {
+        return librariansFromDb;
+    }
 }

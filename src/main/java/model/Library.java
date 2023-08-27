@@ -6,14 +6,15 @@ import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+
+import static model.Book.booksFromDb;
 
 @Entity(name = "model.Library")
 @Table(name = "library")
 public class Library implements Serializable {
+
+    public static List<Library> librariesFromDb = new ArrayList<>();
 
     private long id;
     private String name;
@@ -25,16 +26,10 @@ public class Library implements Serializable {
     private List<Restorer> restorers = new ArrayList<>(); // kolekcja do przetrzymywania powiazan z Pracownikami
     private List<Librarian> librarians = new ArrayList<>(); // kolekcja do przetrzymywania powiazan z Pracownikami
 
-    private Map<String, Employee> employeeQualif = new TreeMap<>(); // w jednej bibliotece moze pracowac wielu pracownikow
+    //private Map<String, Employee> employeeQualif = new TreeMap<>(); // w jednej bibliotece moze pracowac wielu pracownikow
 
-    @Override
-    public String toString () {
-        return "Library{" +
-                "name='" + name + '\'' +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", postalCode='" + postalCode + '}';
-    }
+    Set<String> ssnDictionary = new HashSet<>();  // zadbanie o unikalność numerów ssn każdego pracownika
+
 
     public Library(String name, String street, String city, String postalCode) {
         setName(name);
@@ -65,6 +60,25 @@ public class Library implements Serializable {
         this.directors = directors;
     }
 
+    public void addDirector(Director director) {
+        if (director == null) {
+            throw new ValidationException("Director cannot be empty");
+        }
+        else if (!directors.contains(director)) {
+            if(ssnDictionary.contains(director.getSsn())){
+                throw new ValidationException("Employee with given SSN number is already assigned");
+            }
+            ssnDictionary.add(director.getSsn());
+            directors.add(director);
+            director.addLibraryToDirector(this); // polaczenie zwrotne
+        }
+    }
+
+    public void removeDirector(Director director) {
+        getDirectors().remove(director); // usuwanie polaczenia
+        director.removeLibrary();
+    }
+
     @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
     public List<Restorer> getRestorers () {
         return restorers;
@@ -74,12 +88,49 @@ public class Library implements Serializable {
         this.restorers = restorers;
     }
 
+    public void addRestorer(Restorer restorer) {
+        if (restorer == null) {
+            throw new ValidationException("Restorer cannot be empty");
+        }
+        else if (!restorers.contains(restorer)) {
+            if(ssnDictionary.contains(restorer.getSsn())){
+                throw new ValidationException("Employee with given SSN number is already assigned");
+            }
+            ssnDictionary.add(restorer.getSsn());
+            restorers.add(restorer);
+            restorer.addLibraryToRestorer(this); // polaczenie zwrotne
+        }
+    }
+
+    public void removeRestorer(Restorer restorer) {
+        getRestorers().remove(restorer); // usuwanie polaczenia
+    }
+
     @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
     public List<Librarian> getLibrarians () { return librarians;
     }
 
     public void setLibrarians (List<Librarian> librarians) {
         this.librarians = librarians;
+    }
+
+
+    public void addLibrarian(Librarian librarian) {
+        if (librarian == null) {
+            throw new ValidationException("Librarian cannot be empty");
+        }
+        else if (!librarians.contains(librarian)) {
+            if(ssnDictionary.contains(librarian.getSsn())){
+                throw new ValidationException("Employee with given SSN number is already assigned");
+            }
+            ssnDictionary.add(librarian.getSsn());
+            librarians.add(librarian);
+            librarian.addLibraryToLibrarian(this); // polaczenie zwrotne
+        }
+    }
+
+    public void removeLibrarian(Librarian librarian) {
+        getLibrarians().remove(librarian); // usuwanie polaczenia
     }
 
     @Basic
@@ -130,42 +181,77 @@ public class Library implements Serializable {
         this.postalCode = postalCode;
     }
 
-
-    public void addEmployee(Employee employeeToAdd) {
-
-//        if (!employees.contains(employeeToAdd)) {
-//            employees.add(employeeToAdd);
-//
-//            employeeToAdd.addLibrary(this); // polaczenie zwrotne
-//        }
-    }
-
-    public void addEmployeeQualif(Employee newEmployee) {
-        if (!employeeQualif.containsKey(newEmployee.getSsn())) {
-            employeeQualif.put(newEmployee.getSsn(), newEmployee);
-
-            newEmployee.addLibrary(this);  // polaczenie zwrotne
-        }
-
-    }
-
-    public Employee findEmployeeQualif(String ssn) throws Exception {
-        if (!employeeQualif.containsKey(ssn)) {
-            throw new Exception("No such ssn number" + ssn);
-        }
-        return employeeQualif.get(ssn);
-    }
-
-
-
     @Transient
-    public Map<String, Employee> getEmployeeQualif () {
-        return employeeQualif;
+    public Set<String> getSsnDictionary () {
+        return ssnDictionary;
     }
 
-    public void setEmployeeQualif (Map<String, Employee> employeeQualif) {
-        this.employeeQualif = employeeQualif;
+    public void setSsnDictionary (Set<String> ssnDictionary) {
+        this.ssnDictionary = ssnDictionary;
     }
 
+    public void addEmployeeSSN(String ssnToAdd){
+        if (ssnToAdd == null || ssnToAdd.trim().isBlank()){
+            throw new ValidationException("SSN cannot be empty");
+        }
+        else if (ssnDictionary.contains(ssnToAdd)) { // unikalnosc ssn
+            throw new ValidationException("Given SSN is already used");
+        }
 
+        ssnDictionary.add(ssnToAdd);
+    }
+
+//    public void addEmployeeQualif(Employee newEmployee) {
+//        if (!employeeQualif.containsKey(newEmployee.getSsn())) {
+//            employeeQualif.put(newEmployee.getSsn(), newEmployee);
+//
+//            newEmployee.addLibrary(this);  // polaczenie zwrotne
+//        }
+//
+//    }
+//
+    public Librarian findLibrarian (String ssn) throws Exception {
+        for (Librarian lib : librarians) {
+            if (lib.getSsn().equals(ssn)) {
+                return lib;
+            }
+        }
+        return null;
+    }
+
+    public Director findDirector (String ssn) throws Exception {
+        for (Director dir : directors) {
+            if (dir.getSsn().equals(ssn)) {
+                return dir;
+            }
+        }
+        return null;
+    }
+
+    public Restorer findRestorer (String ssn) throws Exception {
+        for (Restorer res : restorers) {
+            if (res.getSsn().equals(ssn)) {
+                return res;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString () {
+        return "Library{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", directors=" + directors +
+                ", restorers=" + restorers +
+                ", librarians=" + librarians +
+                '}';
+    }
+
+    public static List<Library> getLibrariesFromDb () {
+        return librariesFromDb;
+    }
 }

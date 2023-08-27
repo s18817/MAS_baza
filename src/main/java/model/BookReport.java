@@ -6,11 +6,15 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "model.BookReport")
 @Table(name = "book_report")
 public class BookReport implements Serializable {
+
+    public static List<BookReport> bookReportsFromDb = new ArrayList<>();
 
     private long id;
     private LocalDate creationDate;
@@ -126,6 +130,21 @@ public class BookReport implements Serializable {
         System.out.println(Book.printBooksConditon());
     }
 
+    @Override
+    public String toString () {
+        return "BookReport{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", topic='" + topic + '\'' +
+                ", confidential=" + confidential +
+                ", propositions='" + propositions + '\'' +
+                ", bookAmount=" + bookAmount +
+                //", director=" + director +
+                '}';
+    }
 
+    public static List<BookReport> getBookReportsFromDb () {
+        return bookReportsFromDb;
+    }
 }
 

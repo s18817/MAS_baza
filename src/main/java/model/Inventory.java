@@ -13,6 +13,8 @@ import java.util.List;
 @Table(name = "inventory")
 public class Inventory  implements Serializable {
 
+    public static List<Inventory> inventoriesFromDb = new ArrayList<>();
+
     private long id;
     private String sector;
     private String status;
@@ -118,13 +120,19 @@ public class Inventory  implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return "Inventory{" +
+                "id=" + id +
                 ", sector='" + sector + '\'' +
                 ", status='" + status + '\'' +
                 ", notes='" + notes + '\'' +
                 ", date=" + date +
+                //", librarian=" + librarian +
+                //", rack=" + rack +
                 '}';
     }
 
+    public static List<Inventory> getInventoriesFromDb () {
+        return inventoriesFromDb;
+    }
 }

@@ -201,7 +201,8 @@ public class RenovationFormFrame extends JFrame {
                 session.getTransaction().commit();
 
                 if (newCondition != null){
-                    session.refresh(book);
+                    //session.refresh(book);
+                    //book = session.get(Book.class, book.getId());
                     loggedRestorer = session.get(Restorer.class, loggedRestorer.getId());
                     session.close();
                 }else{
@@ -210,6 +211,10 @@ public class RenovationFormFrame extends JFrame {
                     loggedRestorer = session2.get(Restorer.class, loggedRestorer.getId());
                     session2.close();
                 }
+                Session session3 = App.createSession();
+                 session3.refresh(book);
+                 session3.close();
+
 
 
                 JOptionPane.showMessageDialog(null, "Renowacja została zapisana");

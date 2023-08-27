@@ -233,7 +233,7 @@ public class Restorer implements Serializable {
                 }
                 book.addRenovationToBook(this, renovation); // polaczenie zwrotne
             } else {
-                throw new ValidationException("Book is not available and cannot be borrowed");
+                throw new ValidationException("Book is not available and cannot be restored");
             }
         }
     }

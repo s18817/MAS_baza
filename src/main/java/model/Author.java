@@ -114,9 +114,6 @@ public class Author  implements Serializable {
         if (birthDate == null){
             throw new ValidationException("Birth date cannot be empty");
         }
-        else if (birthDate.getYear() < 1900 ) {
-            throw new ValidationException("Provide valid birth date");
-        }
         this.birthDate = birthDate;
     }
 

@@ -61,9 +61,8 @@ public class Author  implements Serializable {
         }
     }
 
-    public void removeBook(Book bookToRemove) {
+    public void removeBookFromAuthor(Book bookToRemove) {
         getBooks().remove(bookToRemove);
-
     }
 
 

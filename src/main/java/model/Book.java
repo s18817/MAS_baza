@@ -93,11 +93,6 @@ public class Book extends ObjectPlus implements Serializable {
         this.authors = authorsToAdd;
     }
 
-    public void removeAuthor(Author authorToRemove) {
-        getAuthors().remove(authorToRemove);
-
-    }
-
     public void addAuthor(Author authorToAdd) {
 
         if (!authors.contains(authorToAdd)) {
@@ -105,6 +100,13 @@ public class Book extends ObjectPlus implements Serializable {
 
             authorToAdd.addBookToAuthor(this); // polaczenie zwrotne
         }
+    }
+
+    public void removeAuthorsFromBook(List<Author> authorsToRemove ) {
+        for (Author author : authorsToRemove){
+            author.removeBookFromAuthor(this);
+        }
+        authors = null;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -132,6 +134,12 @@ public class Book extends ObjectPlus implements Serializable {
         rackToChange.changeRackForBook(this); // polaczenie zwrotne - ksiazka z poprzednim regalem
         this.rack = rackToChange;
     }
+
+    public void removeRackFromBook(){
+        rack.removeBookFromRack(this);
+        this.rack = null;
+    }
+
 
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)

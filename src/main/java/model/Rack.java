@@ -120,6 +120,13 @@ public class Rack implements Serializable {
 
     }
 
+    public void removeBookFromRack(Book book) {
+        if (this.books.contains(book)) {
+            this.books.remove(book); // usuniecie z regalu
+        }
+
+    }
+
     @OneToMany(mappedBy = "rack", fetch = FetchType.EAGER)
     @OrderBy("date")
     public List<Inventory> getInventories () { return inventories;

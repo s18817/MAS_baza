@@ -30,6 +30,8 @@ public class Director implements Serializable {
     private LocalDate hiringDate; // data  zatrudnienia
     private String address; // dane adresowe
     private String education;
+    private boolean changeFlag;
+
 
     private List<BookReport> bookReports = new ArrayList<>();
 
@@ -60,6 +62,7 @@ public class Director implements Serializable {
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setEducation(education);
+        this.changeFlag = true;
         }
 
     public Director(Librarian prevEmployee, String education){
@@ -74,6 +77,7 @@ public class Director implements Serializable {
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setEducation(education);
+        this.changeFlag = true;
     }
 
     public Director(){};
@@ -145,11 +149,6 @@ public class Director implements Serializable {
             throw new ValidationException("Education cannot be empty");
         }
         this.education = education;
-    }
-
-    @Transient
-    public List<BookReport> getGeneratedReports() {
-        return bookReports;
     }
 
     @Transient
@@ -282,6 +281,14 @@ public class Director implements Serializable {
             throw new ValidationException("Address cannot be longer that 100 digits");
         }
         this.address = address;
+    }
+
+    public boolean isChangeFlag () {
+        return changeFlag;
+    }
+
+    public void setChangeFlag (boolean changeFlag) {
+        this.changeFlag = changeFlag;
     }
 
     @Override

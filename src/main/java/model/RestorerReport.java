@@ -153,7 +153,7 @@ public class RestorerReport implements Serializable {
                 ", confidential=" + confidential +
                 ", doneRenovations=" + doneRenovations +
                 ", suggestedBonus=" + suggestedBonus +
-                ", restorer=" + restorer +
+       //         ", restorer=" + restorer +
                 ", avgCost=" + avgCost +
                 '}';
     }

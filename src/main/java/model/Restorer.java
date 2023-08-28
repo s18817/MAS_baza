@@ -29,6 +29,7 @@ public class Restorer implements Serializable {
     private double baseSalary;
     private LocalDate hiringDate; // data  zatrudnienia
     private String address; // dane adresowe
+    private boolean changeFlag;
 
     public static Restorer loggedRestorer;
 
@@ -75,6 +76,7 @@ public class Restorer implements Serializable {
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setSpecialisation(specialisation); // zapisanie nowych danych
+        this.changeFlag = true;
     }
 
     public Restorer(Librarian prevEmployee, String specialisation){
@@ -89,6 +91,7 @@ public class Restorer implements Serializable {
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setSpecialisation(specialisation); // zapisanie nowych danych
+        this.changeFlag = true;
     }
 
     public Restorer(){};
@@ -156,6 +159,10 @@ public class Restorer implements Serializable {
             this.library = libraryToAdd;
             libraryToAdd.addRestorer(this); // polaczenie zwrotne
         }
+    }
+
+    public void removeLibrary() {
+        this.library = null;
     }
 
 
@@ -270,9 +277,6 @@ public class Restorer implements Serializable {
         return Year.now().getValue() - this.getHiringDate().getYear();
     }
 
-    public static void getExtent() throws Exception {
-        ObjectPlus.getExtent(Restorer.class);
-    }
 
     @Basic
     public String getSsn() {
@@ -319,12 +323,40 @@ public class Restorer implements Serializable {
         this.address = address;
     }
 
+    public boolean isChangeFlag () {
+        return changeFlag;
+    }
+
+    public void setChangeFlag (boolean changeFlag) {
+        this.changeFlag = changeFlag;
+    }
+
+    //    @Override
+//    public String toString () {
+//        return super.toString() + "Restorer{" +
+//                "specialisation='" + specialisation + '\'' +
+//                ", doneRenovations=" + renovations +
+//                '}';
+//    }
+
 
     @Override
     public String toString () {
-        return super.toString() + "Restorer{" +
-                "specialisation='" + specialisation + '\'' +
-                ", doneRenovations=" + renovations +
+        return "Restorer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", specialisation='" + specialisation + '\'' +
+                ", ssn='" + ssn + '\'' +
+                //", library=" + library +
+                ", baseSalary=" + baseSalary +
+                ", hiringDate=" + hiringDate +
+                ", address='" + address + '\'' +
+                ", renovations=" + renovations +
+                ", restorerReports=" + restorerReports +
                 '}';
     }
 

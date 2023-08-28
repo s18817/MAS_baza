@@ -65,10 +65,12 @@ public class Library implements Serializable {
             throw new ValidationException("Director cannot be empty");
         }
         else if (!directors.contains(director)) {
-            if(ssnDictionary.contains(director.getSsn())){
+            if(ssnDictionary.contains(director.getSsn()) && (!director.isChangeFlag())){
                 throw new ValidationException("Employee with given SSN number is already assigned");
             }
-            ssnDictionary.add(director.getSsn());
+            if(!director.isChangeFlag()) {
+                ssnDictionary.add(director.getSsn());
+            }
             directors.add(director);
             director.addLibraryToDirector(this); // polaczenie zwrotne
         }
@@ -93,10 +95,12 @@ public class Library implements Serializable {
             throw new ValidationException("Restorer cannot be empty");
         }
         else if (!restorers.contains(restorer)) {
-            if(ssnDictionary.contains(restorer.getSsn())){
+            if(ssnDictionary.contains(restorer.getSsn()) && (!restorer.isChangeFlag())){
                 throw new ValidationException("Employee with given SSN number is already assigned");
             }
-            ssnDictionary.add(restorer.getSsn());
+            if(!restorer.isChangeFlag()) {
+                ssnDictionary.add(restorer.getSsn());
+            }
             restorers.add(restorer);
             restorer.addLibraryToRestorer(this); // polaczenie zwrotne
         }
@@ -104,6 +108,7 @@ public class Library implements Serializable {
 
     public void removeRestorer(Restorer restorer) {
         getRestorers().remove(restorer); // usuwanie polaczenia
+        restorer.removeLibrary();
     }
 
     @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
@@ -115,15 +120,17 @@ public class Library implements Serializable {
     }
 
 
-    public void addLibrarian(Librarian librarian) {
+    public void addLibrarian(Librarian librarian) throws Exception {
         if (librarian == null) {
             throw new ValidationException("Librarian cannot be empty");
         }
         else if (!librarians.contains(librarian)) {
-            if(ssnDictionary.contains(librarian.getSsn())){
+            if(ssnDictionary.contains(librarian.getSsn()) && (!librarian.isChangeFlag())){
                 throw new ValidationException("Employee with given SSN number is already assigned");
             }
-            ssnDictionary.add(librarian.getSsn());
+            if(!librarian.isChangeFlag()) {
+                ssnDictionary.add(librarian.getSsn());
+            }
             librarians.add(librarian);
             librarian.addLibraryToLibrarian(this); // polaczenie zwrotne
         }
@@ -131,6 +138,7 @@ public class Library implements Serializable {
 
     public void removeLibrarian(Librarian librarian) {
         getLibrarians().remove(librarian); // usuwanie polaczenia
+        librarian.removeLibrary();
     }
 
     @Basic

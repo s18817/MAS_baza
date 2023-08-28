@@ -33,6 +33,7 @@ public class Librarian implements Serializable {
     private LocalDate hiringDate; // data  zatrudnienia
     private String address; // dane adresowe
     private Set<String> languages = new HashSet<>();
+    private boolean changeFlag;
 
     private List<Inventory> inventories = new ArrayList<>();
     private List<LibrarianReport> librarianReports = new ArrayList<>();
@@ -64,6 +65,7 @@ public class Librarian implements Serializable {
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setLanguages(languages);
+        this.changeFlag = true;
     }
 
     public Librarian(Director prevEmployee, Set languages){
@@ -78,6 +80,7 @@ public class Librarian implements Serializable {
         setBaseSalary(prevEmployee.getBaseSalary());
         setAddress(prevEmployee.getAddress());
         setLanguages(languages);
+        this.changeFlag = true;
     }
 
     public Librarian(){};
@@ -139,14 +142,16 @@ public class Librarian implements Serializable {
         }
     }
 
-    public void addLibraryToLibrarian(Library libraryToAdd){
+    public void addLibraryToLibrarian(Library libraryToAdd) throws Exception {
         if ( libraryToAdd != null && this.library != libraryToAdd ) {
             this.library = libraryToAdd;
             libraryToAdd.addLibrarian(this); // polaczenie zwrotne
         }
     }
 
-
+    public void removeLibrary() {
+        this.library = null;
+    }
 
     @Basic
     public String getName() {
@@ -306,6 +311,15 @@ public class Librarian implements Serializable {
             throw new ValidationException("Address cannot be longer that 100 digits");
         }
         this.address = address;
+    }
+
+    @Basic
+    public boolean isChangeFlag () {
+        return changeFlag;
+    }
+
+    public void setChangeFlag (boolean changeflag) {
+        this.changeFlag = changeflag;
     }
 
     @Override

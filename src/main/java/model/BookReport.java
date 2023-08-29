@@ -124,7 +124,9 @@ public class BookReport implements Serializable {
     public void setBookAmount (int bookAmount) {
         if (bookAmount < 0) {
             throw new ValidationException("Amount cannot be negative");
-        }    }
+        }
+        this.bookAmount = bookAmount;
+    }
 
     public void showReport () throws Exception {
         System.out.println(super.toString() +

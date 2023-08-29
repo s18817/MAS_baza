@@ -280,7 +280,7 @@ public class Main {
         Rack testStandardRack = new Rack(1, "A01", "fantastyka");
         Rack testMovingRack = new Rack(1, "B01", "nauka", 10000, true);
         Rack testSmartRack = new Rack(2, "A02", "historia", "Software 1.1.12", true);
-        Rack testMovingSmartRack = new Rack(3, "A03", "powieść", "Software 1.1.12", true, 10000,true);
+        Rack testMovingSmartRack = new Rack(3, "A03", "powieść", "Software 1.1.13", true, 10000,true);
 //
         testStandardRack.addBookToRack(testBook);
         testStandardRack.addBookToRack(book1);
@@ -358,7 +358,7 @@ public class Main {
         testLibrary.addLibrarian(testLibrarian3);
         testLibrary.addLibrarian(testLibrarian4);
         testLibrary.addLibrarian(testLibrarian5);
-        //testLibrary.addLibrarian(testChangeRestorerToLibrarian);
+        testLibrary.addLibrarian(testChangeRestorerToLibrarian);
 
         testLibrary.addDirector(testDirector);
         testLibrary.addDirector(testDirector2);
@@ -371,43 +371,74 @@ public class Main {
 //
 //        System.out.println(testDirector.findEmployee("001-321"));
 
-
-
-        Set<String> testMaterials = new HashSet<>();
-        testMaterials.add("folia");
-        testMaterials.add("klej");
-
-        Set<String> testMaterials2 = new HashSet<>();
-
-        testMaterials2.add("folia");
-
-        Renovation testRenovation = new Renovation(100, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "renowacja zakończona sukcesem" );
-
         Inventory testInventory = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "potrzeba zwrócenia uwagi na fantastykę", testInventoryDate);
         Inventory testInventory2 = new Inventory("Piętro 2", "Inwentaryzacja", "przegląd książek naukowych", testInventoryDate2);
         Inventory testInventory3 = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "przegląd książek historycznych", testInventoryDate3);
         Inventory testInventory4 = new Inventory("Piętro 3", "Inwentaryzacja w trakcie przeglądu", "sprawdzenie zbioru powieści", testInventoryDate4);
-        Inventory testInventory5 = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "poukładanie fantastyki", testInventoryDate5);
+        Inventory testInventory5 = new Inventory("Piętro 1", "Inwentaryzacja zakończona", "poukładanie fantastyki", testInventoryDate5);
+        Inventory testInventory6 = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "Odkurzenie książek", testInventoryDate5);
+        Inventory testInventory7 = new Inventory("Piętro 1", "Inwentaryzacja ", "poukładanie fantastyki", testInventoryDate5);
+        Inventory testInventory8 = new Inventory("Piętro 2", "Inwentaryzacja","wstawienie podpórek", testInventoryDate5);
+        Inventory testInventory9 = new Inventory("Piętro 3", "Inwentaryzacja w trakcie przeglądu", "spis książek", testInventoryDate5);
+        Inventory testInventory10 = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "przegląd zbioru", testInventoryDate5);
 
         testStandardRack.addInventoryToRack(testLibrarian, testInventory);
         testMovingRack.addInventoryToRack(testLibrarian2, testInventory2);
         testSmartRack.addInventoryToRack(testLibrarian3, testInventory3);
         testMovingSmartRack.addInventoryToRack(testLibrarian4, testInventory4);
         testStandardRack.addInventoryToRack(testLibrarian5, testInventory5);
-
+        testStandardRack.addInventoryToRack(testLibrarian, testInventory6);
+        testMovingRack.addInventoryToRack(testLibrarian, testInventory7);
+        testSmartRack.addInventoryToRack(testLibrarian2, testInventory8);
+        testMovingSmartRack.addInventoryToRack(testLibrarian2, testInventory9);
+        testStandardRack.addInventoryToRack(testLibrarian3, testInventory10);
 
         //testBook.changeRack(testMovingSmartRack);
 //        System.out.println(testStandardRack.getInventoryHistory());
 //        System.out.println(testLibrarian.getDoneInventories());
-//
-        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
+
+        Set<String> testMaterials = new HashSet<>();
+        testMaterials.add("folia");
+        testMaterials.add("klej");
+
+        Set<String> testMaterials2 = new HashSet<>();
+        testMaterials2.add("folia");
+
+        Set<String> testMaterials3 = new HashSet<>();
+        testMaterials3.add("klej");
+        testMaterials3.add("karton");
+
+        Renovation testRenovation = new Renovation(100, testRenovationDate, testMaterials2, Status.ZAKOŃCZONA, "renowacja zakończona sukcesem" );
+        Renovation testRenovation2 = new Renovation(101, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "sklejenie kartek" );
+        Renovation testRenovation3 = new Renovation(102, testRenovationDate, testMaterials3, Status.ZAKOŃCZONA, "wzmocnienie grzebietu" );
+        Renovation testRenovation4 = new Renovation(103, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "sklejenie spisu treści" );
+        Renovation testRenovation5 = new Renovation(104, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "naklejenie folii na okładkę" );
+
+        book10.addRenovationToBook(restorer1, testRenovation);
+        book12.addRenovationToBook(restorer2, testRenovation2);
+        book14.addRenovationToBook(restorer3, testRenovation3);
+        book16.addRenovationToBook(restorer4, testRenovation4);
+        book18.addRenovationToBook(restorer5, testRenovation5);
+
         RestorerReport testRestorerReport = new RestorerReport("Przegląd konserwatora", false, 10);
+        RestorerReport testRestorerReport2 = new RestorerReport("Przegląd konserwatora", false, 20);
+        RestorerReport testRestorerReport3 = new RestorerReport("Przegląd konserwatora", false, 25);
+        RestorerReport testRestorerReport4 = new RestorerReport("Przegląd konserwatora", false, 30);
+
         LibrarianReport tesLibrarianReport = new LibrarianReport("Przegląd bibliotekarza", false, "potrzeba więcej inwentaryzacji");
+        LibrarianReport tesLibrarianReport2 = new LibrarianReport("Przegląd bibliotekarza", false, "sprawedzenie postępu");
+        LibrarianReport tesLibrarianReport3 = new LibrarianReport("Przegląd bibliotekarza", false, "weryfikacja");
 
-        testDirector.generateReport(testBookReport);
         testLibrarian.generateReport(tesLibrarianReport);
-        restorer1.generateReport(testRestorerReport);
+        testLibrarian2.generateReport(tesLibrarianReport2);
+        testLibrarian3.generateReport(tesLibrarianReport3);
 
+        restorer1.generateReport(testRestorerReport);
+        restorer2.generateReport(testRestorerReport2);
+        restorer3.generateReport(testRestorerReport3);
+        restorer4.generateReport(testRestorerReport4);
+
+        // --------------------- uruchomienie sesji z bazą ----------------------------------------
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -438,7 +469,7 @@ public class Main {
         inventoriesFromDb = sessionInitial.createQuery("FROM model.Inventory").list();
 
         Query loginQuery = sessionInitial.createQuery("FROM model.Restorer r WHERE r.id = :id");
-        loginQuery.setParameter("id", 1);
+        loginQuery.setParameter("id", 5);
         loggedRestorer = (Restorer) loginQuery.uniqueResult();
 
             // --------------------- wyświetlenie ekstensji -----------------------------------------
@@ -508,7 +539,10 @@ public class Main {
             System.out.println(restorerReport.toString());
         }
 
-            //librariesFromDb.get(0).removeDirector(directorsFromDb.get(0));
+        // --------------------- modyfikacje powiązań -----------------------------------------
+
+
+        //librariesFromDb.get(0).removeDirector(directorsFromDb.get(0));
             //librariesFromDb.get(0).removeLibrarian(librariansFromDb.get(0));
             //librariesFromDb.get(0).removeRestorer(restorersFromDb.get(0));
             //directorsFromDb.get(0).addLibraryToDirector(librariesFromDb.get(0));
@@ -526,27 +560,34 @@ public class Main {
 //            System.out.println(librariesFromDb.get(0).findDirector("001-380"));
 //            System.out.println(librariesFromDb.get(0).findRestorer("001-003"));
 
+//        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
+//        BookReport testBookReport2 = new BookReport("Przegląd książek", true, "Za mało książek do norm europejskich");
+//        BookReport testBookReport3 = new BookReport("Raport książek", false, "zbiór od dawna bez zmian - potrzebne nowe zamówienia");
+//        testDirector.generateReport(testBookReport);
+//        testDirector2.generateReport(testBookReport2);
+//        testDirector3.generateReport(testBookReport3);
+//        directorsFromDb.get(0).generateReport(testBookReport);
+//        directorsFromDb.get(1).generateReport(testBookReport2);
+//        directorsFromDb.get(2).generateReport(testBookReport3);
+//        sessionInitial.save(testBookReport);
+//        sessionInitial.save(testBookReport2);
+//        sessionInitial.save(testBookReport3);
+
+
             sessionInitial.getTransaction().commit();
             sessionInitial.close();
 
             // --------------------- uruchomienie GUI -----------------------------------------
         try {
-         //   App app = new App();
 
-          //  app.start();
-
-//
-         Session session = sessionFactory.openSession();
-         session.beginTransaction();
-//
-////session.save(testChangeRestorerToLibrarian);
-//
-//
-//         session.getTransaction().commit();
-//         session.close();
+//            App app = new App();
+//            app.start();
 
 
-//             --------------------- zapisanie danych testowych do bazy -----------------------------------------
+//        --------------------- zapisanie danych testowych do bazy -----------------------------------------
+
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
 
             session.save(book1);
             session.save(book2);
@@ -597,9 +638,6 @@ public class Main {
             session.save(testClient5);
             session.save(testClient6);
 
-
-
-
             session.save(testBorrow);
             session.save(testBorrow2);
             session.save(testBorrow3);
@@ -619,11 +657,7 @@ public class Main {
 //                book2.setState(State.NIEDOSTĘPNA);
 //                book5.setState(State.WYPOŻYCZONA);
 //                book7.setState(State.NIEDOSTĘPNA);
-//                book11.setState(State.WYPOŻYCZONA);
-//                book13.setState(State.NIEDOSTĘPNA);
-//                book15.setState(State.WYPOŻYCZONA);
-//                book17.setState(State.NIEDOSTĘPNA);
-//
+
             session.save(testStandardRack);
             session.save(testMovingRack);
             session.save(testSmartRack);
@@ -635,15 +669,24 @@ public class Main {
             session.save(restorer4);
             session.save(restorer5);
 
-            testBook.addRenovationToBook(restorer1,testRenovation);
+//            book10.addRenovationToBook(restorer1, testRenovation);
+//            book12.addRenovationToBook(restorer2, testRenovation2);
+//            book14.addRenovationToBook(restorer3, testRenovation3);
+//            book16.addRenovationToBook(restorer4, testRenovation4);
+//            book18.addRenovationToBook(restorer5, testRenovation5);
 
-            //session.save(testChangeRestorerToLibrarian);
+            session.save(testRenovation);
+            session.save(testRenovation2);
+            session.save(testRenovation3);
+            session.save(testRenovation4);
+            session.save(testRenovation5);
 
             session.save(testLibrarian);
             session.save(testLibrarian2);
             session.save(testLibrarian3);
             session.save(testLibrarian4);
             session.save(testLibrarian5);
+            session.save(testChangeRestorerToLibrarian);
 
             session.save(testDirector);
             session.save(testDirector2);
@@ -651,24 +694,29 @@ public class Main {
             session.save(testDirector4);
             session.save(testDirector5);
 
-            session.save(testRenovation);
-           // session.save(testRenovation241);
-
             session.save(testInventory);
             session.save(testInventory2);
             session.save(testInventory3);
             session.save(testInventory4);
             session.save(testInventory5);
-
-            session.save(testBookReport);
-            session.save(tesLibrarianReport);
-            session.save(testRestorerReport);
+            session.save(testInventory6);
+            session.save(testInventory7);
+            session.save(testInventory8);
+            session.save(testInventory9);
+            session.save(testInventory10);
 
             session.save(testLibrary);
 
+//            session.save(tesLibrarianReport);
+//            session.save(tesLibrarianReport2);
+//            session.save(tesLibrarianReport3);
+//            session.save(testRestorerReport);
+//            session.save(testRestorerReport2);
+//            session.save(testRestorerReport3);
+//            session.save(testRestorerReport4);
 
-                session.getTransaction().commit();
-                session.close();
+            session.getTransaction().commit();
+            session.close();
 
         }
         catch (Exception ex) {

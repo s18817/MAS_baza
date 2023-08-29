@@ -15,7 +15,7 @@ import jakarta.persistence.*;
 
 @Entity(name = "model.Book")
 @Table(name = "book")
-public class Book extends ObjectPlus implements Serializable {
+public class Book implements Serializable {
 
     private static String CurrentbookRentalName = "S18817"; // atrybut klasowy
 
@@ -30,9 +30,9 @@ public class Book extends ObjectPlus implements Serializable {
     private int ageOfBook; // atrybut pochodny - wartosc moze byc wyliczona na podstawie roku wydania ksiazki
     private State state; // czy ksiazka dostepna do wypozyczenia
 
-    private Rack rack;
-
     public static List<Book> booksFromDb = new ArrayList<>();
+
+    private Rack rack;
 
     private List<Author> authors = new ArrayList<>(); // asocjacja binarna ; kolekcja do przetrzymywania powiazan z Ksiazkami ; kolekcja, poniewaz jedna ksiazka moze miec wielu autorow
 
@@ -339,9 +339,9 @@ public class Book extends ObjectPlus implements Serializable {
     }
 
     public static String  printBooksConditon() throws ClassNotFoundException { // metoda klasowa
-        Iterable<Book> extent = getExtent(Book.class);
+
         int newBooks = 0, goodBooks = 0, badBooks = 0, destroyedBooks = 0, otherBooks = 0;
-        for (Book book : extent) {
+        for (Book book : booksFromDb) {
             if (book.bookCondition == Condition.NOWA){
                 newBooks++;
             }
@@ -367,7 +367,7 @@ public class Book extends ObjectPlus implements Serializable {
     }
 
     public static void printDestroyedBooks () throws ClassNotFoundException {
-        Iterable<Book> extent = getExtent(Book.class);
+        Iterable<Book> extent = booksFromDb;
         for (Book book : extent) {
             if (book.bookCondition == Condition.ZNISZCZONA) {
                 System.out.println(book);

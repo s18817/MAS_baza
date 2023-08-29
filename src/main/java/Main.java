@@ -408,11 +408,11 @@ public class Main {
         testMaterials3.add("klej");
         testMaterials3.add("karton");
 
-        Renovation testRenovation = new Renovation(100, testRenovationDate, testMaterials2, Status.ZAKOŃCZONA, "renowacja zakończona sukcesem" );
-        Renovation testRenovation2 = new Renovation(101, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "sklejenie kartek" );
-        Renovation testRenovation3 = new Renovation(102, testRenovationDate, testMaterials3, Status.ZAKOŃCZONA, "wzmocnienie grzebietu" );
-        Renovation testRenovation4 = new Renovation(103, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "sklejenie spisu treści" );
-        Renovation testRenovation5 = new Renovation(104, testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "naklejenie folii na okładkę" );
+        Renovation testRenovation = new Renovation(testRenovationDate, testMaterials2, Status.ZAKOŃCZONA, "renowacja zakończona sukcesem" );
+        Renovation testRenovation2 = new Renovation(testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "sklejenie kartek" );
+        Renovation testRenovation3 = new Renovation(testRenovationDate, testMaterials3, Status.ZAKOŃCZONA, "wzmocnienie grzebietu" );
+        Renovation testRenovation4 = new Renovation(testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "sklejenie spisu treści" );
+        Renovation testRenovation5 = new Renovation(testRenovationDate, testMaterials, Status.ZAKOŃCZONA, "naklejenie folii na okładkę" );
 
         book10.addRenovationToBook(restorer1, testRenovation);
         book12.addRenovationToBook(restorer2, testRenovation2);
@@ -580,8 +580,8 @@ public class Main {
             // --------------------- uruchomienie GUI -----------------------------------------
         try {
 
-//            App app = new App();
-//            app.start();
+           App app = new App();
+           app.start();
 
 
 //        --------------------- zapisanie danych testowych do bazy -----------------------------------------
@@ -589,123 +589,117 @@ public class Main {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
-            session.save(book1);
-            session.save(book2);
-            session.save(book3);
-            session.save(book4);
-            session.save(book5);
-            session.save(book6);
-            session.save(book7);
-            session.save(book8);
-            session.save(book9);
-            session.save(book10);
-            session.save(book11);
-            session.save(book12);
-            session.save(book13);
-            session.save(book14);
-            session.save(book15);
-            session.save(book16);
-            session.save(book17);
-            session.save(book18);
-            session.save(book19);
-            session.save(book20);
-            session.save(testBook);
-            session.save(testBook2);
-
-            session.save(author1);
-            session.save(author2);
-            session.save(author3);
-            session.save(author4);
-            session.save(author5);
-            session.save(author6);
-            session.save(author7);
-            session.save(author8);
-            session.save(author9);
-            session.save(author10);
-            session.save(author11);
-            session.save(author12);
-            session.save(author13);
-            session.save(author14);
-            session.save(author15);
-            session.save(testAuthor);
-            session.save(testAuthor2);
-            session.save(testAuthor3);
-
-            session.save(testClient1);
-            session.save(testClient2);
-            session.save(testClient3);
-            session.save(testClient4);
-            session.save(testClient5);
-            session.save(testClient6);
-
-            session.save(testBorrow);
-            session.save(testBorrow2);
-            session.save(testBorrow3);
-            session.save(testBorrow4);
-            session.save(testBorrow5);
-            session.save(testBorrow6);
-            session.save(testBorrow7);
-            session.save(testBorrow8);
-            session.save(testBorrow9);
-            session.save(testBorrow10);
-            session.save(testBorrow11);
-            session.save(testBorrow12);
-            session.save(testBorrow13);
-            session.save(testBorrow14);
-            session.save(testBorrow15);
-
-//                book2.setState(State.NIEDOSTĘPNA);
-//                book5.setState(State.WYPOŻYCZONA);
-//                book7.setState(State.NIEDOSTĘPNA);
-
-            session.save(testStandardRack);
-            session.save(testMovingRack);
-            session.save(testSmartRack);
-            session.save(testMovingSmartRack);
-
-            session.save(restorer1);
-            session.save(restorer2);
-            session.save(restorer3);
-            session.save(restorer4);
-            session.save(restorer5);
-
-//            book10.addRenovationToBook(restorer1, testRenovation);
-//            book12.addRenovationToBook(restorer2, testRenovation2);
-//            book14.addRenovationToBook(restorer3, testRenovation3);
-//            book16.addRenovationToBook(restorer4, testRenovation4);
-//            book18.addRenovationToBook(restorer5, testRenovation5);
-
-            session.save(testRenovation);
-            session.save(testRenovation2);
-            session.save(testRenovation3);
-            session.save(testRenovation4);
-            session.save(testRenovation5);
-
-            session.save(testLibrarian);
-            session.save(testLibrarian2);
-            session.save(testLibrarian3);
-            session.save(testLibrarian4);
-            session.save(testLibrarian5);
-            session.save(testChangeRestorerToLibrarian);
-
-            session.save(testDirector);
-            session.save(testDirector2);
-            session.save(testDirector3);
-            session.save(testDirector4);
-            session.save(testDirector5);
-
-            session.save(testInventory);
-            session.save(testInventory2);
-            session.save(testInventory3);
-            session.save(testInventory4);
-            session.save(testInventory5);
-            session.save(testInventory6);
-            session.save(testInventory7);
-            session.save(testInventory8);
-            session.save(testInventory9);
-            session.save(testInventory10);
-
-            session.save(testLibrary);
+//            session.save(book1);
+//            session.save(book2);
+//            session.save(book3);
+//            session.save(book4);
+//            session.save(book5);
+//            session.save(book6);
+//            session.save(book7);
+//            session.save(book8);
+//            session.save(book9);
+//            session.save(book10);
+//            session.save(book11);
+//            session.save(book12);
+//            session.save(book13);
+//            session.save(book14);
+//            session.save(book15);
+//            session.save(book16);
+//            session.save(book17);
+//            session.save(book18);
+//            session.save(book19);
+//            session.save(book20);
+//            session.save(testBook);
+//            session.save(testBook2);
+//
+//            session.save(author1);
+//            session.save(author2);
+//            session.save(author3);
+//            session.save(author4);
+//            session.save(author5);
+//            session.save(author6);
+//            session.save(author7);
+//            session.save(author8);
+//            session.save(author9);
+//            session.save(author10);
+//            session.save(author11);
+//            session.save(author12);
+//            session.save(author13);
+//            session.save(author14);
+//            session.save(author15);
+//            session.save(testAuthor);
+//            session.save(testAuthor2);
+//            session.save(testAuthor3);
+//
+//            session.save(testClient1);
+//            session.save(testClient2);
+//            session.save(testClient3);
+//            session.save(testClient4);
+//            session.save(testClient5);
+//            session.save(testClient6);
+//
+//            session.save(testBorrow);
+//            session.save(testBorrow2);
+//            session.save(testBorrow3);
+//            session.save(testBorrow4);
+//            session.save(testBorrow5);
+//            session.save(testBorrow6);
+//            session.save(testBorrow7);
+//            session.save(testBorrow8);
+//            session.save(testBorrow9);
+//            session.save(testBorrow10);
+//            session.save(testBorrow11);
+//            session.save(testBorrow12);
+//            session.save(testBorrow13);
+//            session.save(testBorrow14);
+//            session.save(testBorrow15);
+//
+////                book2.setState(State.NIEDOSTĘPNA);
+////                book5.setState(State.WYPOŻYCZONA);
+////                book7.setState(State.NIEDOSTĘPNA);
+//
+//            session.save(testStandardRack);
+//            session.save(testMovingRack);
+//            session.save(testSmartRack);
+//            session.save(testMovingSmartRack);
+//
+//            session.save(restorer1);
+//            session.save(restorer2);
+//            session.save(restorer3);
+//            session.save(restorer4);
+//            session.save(restorer5);
+//
+//            session.save(testLibrarian);
+//            session.save(testLibrarian2);
+//            session.save(testLibrarian3);
+//            session.save(testLibrarian4);
+//            session.save(testLibrarian5);
+//            session.save(testChangeRestorerToLibrarian);
+//
+//            session.save(testDirector);
+//            session.save(testDirector2);
+//            session.save(testDirector3);
+//            session.save(testDirector4);
+//            session.save(testDirector5);
+//
+//            session.save(testRenovation);
+//            session.save(testRenovation2);
+//            session.save(testRenovation3);
+//            session.save(testRenovation4);
+//            session.save(testRenovation5);
+//
+//            session.save(testInventory);
+//            session.save(testInventory2);
+//            session.save(testInventory3);
+//            session.save(testInventory4);
+//            session.save(testInventory5);
+//            session.save(testInventory6);
+//            session.save(testInventory7);
+//            session.save(testInventory8);
+//            session.save(testInventory9);
+//            session.save(testInventory10);
+//
+//            session.save(testLibrary);
 
 //            session.save(tesLibrarianReport);
 //            session.save(tesLibrarianReport2);

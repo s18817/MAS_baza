@@ -30,7 +30,7 @@ public class Renovation implements Serializable {
     private Restorer restorer;
 
 
-    public Renovation(int id, LocalDate renovationDate, Set<String> materials, Status status, String result) {
+    public Renovation(LocalDate renovationDate, Set<String> materials, Status status, String result) {
         setId(id);
         setRenovationDate(renovationDate);
         setMaterials(materials);

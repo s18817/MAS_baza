@@ -187,7 +187,7 @@ public class RenovationFormFrame extends JFrame {
                 } else {
                     renovationStatus = Status.ZAKOŃCZONA;
                 }
-                Renovation newRenovation = new Renovation(1000, renovationDate, materials, renovationStatus, txtResult.getText());
+                Renovation newRenovation = new Renovation(renovationDate, materials, renovationStatus, txtResult.getText());
                 newRenovation.setRestorer(loggedRestorer);
                 newRenovation.setBook(book);
                 session.save(newRenovation);

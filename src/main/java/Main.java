@@ -140,28 +140,28 @@ public class Main {
         LocalDate testInventoryDate4 = LocalDate.of(2023, 8,23);
         LocalDate testInventoryDate5 = LocalDate.of(2023,8 ,24);
 
-        Book book1 = new Book(1, "Harry Potter i Kamień Filozoficzny", book1Categories, Condition.ZŁA, 654, 2016, "Media Rodzina");
-        Book book2 = new Book(2, "Harry Potter i Komnata Tajemnic", book1Categories, Condition.DOBRA, 358, 2016, "Media Rodzina");
-        Book book3 = new Book(3, "Harry Potter i Więzień Azkabanu", book1Categories, Condition.DOBRA, 448, 2016, "Media Rodzina");
-        Book book4 = new Book(4, "Harry Potter i Czara Ognia", book1Categories, Condition.DOBRA, 768, 2016, "Media Rodzina");
-        Book book5 = new Book(5, "Harry Potter i Książę Półkrwi", book1Categories, Condition.DOBRA, 704, 2016, "Media Rodzina");
-        Book book6 = new Book(6, "Harry Potter i Insygnia Śmierci", book1Categories, Condition.DOBRA, 782, 2016, "Media Rodzina");
-        Book book7 = new Book(7, "Ojciec Chrzestny", book2Categories, Condition.DOBRA, 1088, 2019, "Albatros");
-        Book book8 = new Book(8, "Toeria wszystkiego", book3Categories, Condition.DOBRA, 144, 2018, "Editio");
-        Book book9 = new Book(9, "Czarny Łabędź", book14Categories, Condition.DOBRA, 698, 2020, "Zysk i S-ka");
-        Book book10 = new Book(10, "Pan Tadeusz", book4Categories, Condition.DOBRA, 352, 2022, "Wydawnictwo Dragon");
-        Book book11 = new Book(12, "Medaliony", book6Categories, Condition.ZŁA, 62, 2011, "GREG");
-        Book book12 = new Book(11, "Dziady", book5Categories, Condition.DOBRA, 282, 2021, "Wydawnictwo Siedmioróg");
-        Book book13 = new Book(13, "Błękitna kropka", book3Categories, Condition.ZŁA, 560, 2011, "Zysk i S-ka");
-        Book book14 = new Book(14, "Nadchodzi III wojna światowa", book7Categories, Condition.NOWA, 336, 2021, "Dom Wydawniczy Rebis");
-        Book book15 = new Book(15, "Krew elfów. Wiedźmin", book8Categories, Condition.DOBRA, 340, 2014, "SUPERNOWA");
-        Book book16 = new Book(16, "Polskie triumfy. 50 chwalebnych bitew naszej historii", book9Categories, Condition.DOBRA, 560, 2018, "Społeczny Instytut Wydawniczy Znak");
-        Book book17 = new Book(17, "Jadłonomia po polsku", book10Categories, Condition.NOWA, 280, 2022, "Wydawnictwo Marginesy");
-        Book book18 = new Book(18, "Serce Europy", book11Categories, Condition.DOBRA, 544, 2018, "Społeczny Instytut Wydawniczy Znak");
-        Book book19 = new Book(19, "Thinking in Java", book12Categories, Condition.ZNISZCZONA, 1248, 2006, "Helion");
-        Book book20 = new Book(20, "Powszechny Atlas Świata", book13Categories, Condition.ZNISZCZONA, 221, 2022, "Demart");
-        Book testBook = new Book(21, "Władca Pierścieni Drużynia Pierścienia", testCategories, Condition.ZŁA, 448, 2009, "Wydawnictwo Amber");
-        Book testBook2 = new Book(22, "Trzy kroki w szachowy świat", testCategories2, Condition.DOBRA, 88, 2020, "Wydawnictwo BIS");
+        Book book1 = new Book("Harry Potter i Kamień Filozoficzny", book1Categories, Condition.ZŁA, 654, 2016, "Media Rodzina");
+        Book book2 = new Book("Harry Potter i Komnata Tajemnic", book1Categories, Condition.DOBRA, 358, 2016, "Media Rodzina");
+        Book book3 = new Book( "Harry Potter i Więzień Azkabanu", book1Categories, Condition.DOBRA, 448, 2016, "Media Rodzina");
+        Book book4 = new Book("Harry Potter i Czara Ognia", book1Categories, Condition.DOBRA, 768, 2016, "Media Rodzina");
+        Book book5 = new Book("Harry Potter i Książę Półkrwi", book1Categories, Condition.DOBRA, 704, 2016, "Media Rodzina");
+        Book book6 = new Book("Harry Potter i Insygnia Śmierci", book1Categories, Condition.DOBRA, 782, 2016, "Media Rodzina");
+        Book book7 = new Book("Ojciec Chrzestny", book2Categories, Condition.DOBRA, 1088, 2019, "Albatros");
+        Book book8 = new Book("Toeria wszystkiego", book3Categories, Condition.DOBRA, 144, 2018, "Editio");
+        Book book9 = new Book("Czarny Łabędź", book14Categories, Condition.DOBRA, 698, 2020, "Zysk i S-ka");
+        Book book10 = new Book( "Pan Tadeusz", book4Categories, Condition.DOBRA, 352, 2022, "Wydawnictwo Dragon");
+        Book book11 = new Book("Medaliony", book6Categories, Condition.ZŁA, 62, 2011, "GREG");
+        Book book12 = new Book("Dziady", book5Categories, Condition.DOBRA, 282, 2021, "Wydawnictwo Siedmioróg");
+        Book book13 = new Book("Błękitna kropka", book3Categories, Condition.ZŁA, 560, 2011, "Zysk i S-ka");
+        Book book14 = new Book("Nadchodzi III wojna światowa", book7Categories, Condition.NOWA, 336, 2021, "Dom Wydawniczy Rebis");
+        Book book15 = new Book("Krew elfów. Wiedźmin", book8Categories, Condition.DOBRA, 340, 2014, "SUPERNOWA");
+        Book book16 = new Book("Polskie triumfy. 50 chwalebnych bitew naszej historii", book9Categories, Condition.DOBRA, 560, 2018, "Społeczny Instytut Wydawniczy Znak");
+        Book book17 = new Book("Jadłonomia po polsku", book10Categories, Condition.NOWA, 280, 2022, "Wydawnictwo Marginesy");
+        Book book18 = new Book("Serce Europy", book11Categories, Condition.DOBRA, 544, 2018, "Społeczny Instytut Wydawniczy Znak");
+        Book book19 = new Book("Thinking in Java", book12Categories, Condition.ZNISZCZONA, 1248, 2006, "Helion");
+        Book book20 = new Book("Powszechny Atlas Świata", book13Categories, Condition.ZNISZCZONA, 221, 2022, "Demart");
+        Book testBook = new Book("Władca Pierścieni Drużynia Pierścienia", testCategories, Condition.ZŁA, 448, 2009, "Wydawnictwo Amber");
+        Book testBook2 = new Book("Trzy kroki w szachowy świat", testCategories2, Condition.DOBRA, 88, 2020, "Wydawnictwo BIS");
 
         Author author1 = new Author("J.K.", "Rowling", testBirthDate, "angielska", "kobieta");
         Author author2 = new Author("Mario", "Puzo", testBirthDate2, "włoska", "mężczyzna");
@@ -325,12 +325,11 @@ public class Main {
         testLanguages3.add("niemiecki");
         testLanguages3.add("hiszpański");
 
-        //Restorer testRestorer = new Restorer(100, "Adam", "Nowak", testBirthDate, "mężczyzna", "polska", "001-321", testHiringDate, 10000, "Damięcka 12A/14 01-47testLanguages1 Warszawa", "sklejanie" );
-        Restorer restorer1 = new Restorer(1, "Karol", "Szyszka", birthDate1, "mężczyzna", "polska", "001-001", hiringdate1, 7000, "Kondratowicza 17A/51, Warszawa", "sklejanie");
-        Restorer restorer2 = new Restorer(2, "Karolina", "Wacławiak", birthDate2, "kobieta", "polska", "001-002", hiringdate2, 11000, "Prosta 12/1, Warszawa", "zabezpieczanie");
-        Restorer restorer3 = new Restorer(3, "Robert", "Styrkosz", birthDate3, "mężczyzna", "polska", "001-003", hiringdate3, 11000, "Aleje Jerozolimskie 151, Warszawa", "brak");
-        Restorer restorer4 = new Restorer(4, "Izabela", "Damięcka", birthDate4, "kobieta", "polska", "001-004", hiringdate4, 13000, "Polska 12, Warszawa", "naprawa");
-        Restorer restorer5 = new Restorer(5, "Łukasz", "Łubik", birthDate5, "mężczyzna", "polska", "001-005", hiringdate5, 12000, "Polska 12, Warszawa", "sklejanie");
+        Restorer restorer1 = new Restorer("Karol", "Szyszka", birthDate1, "mężczyzna", "polska", "001-001", hiringdate1, 7000, "Kondratowicza 17A/51, Warszawa", "sklejanie");
+        Restorer restorer2 = new Restorer("Karolina", "Wacławiak", birthDate2, "kobieta", "polska", "001-002", hiringdate2, 11000, "Prosta 12/1, Warszawa", "zabezpieczanie");
+        Restorer restorer3 = new Restorer("Robert", "Styrkosz", birthDate3, "mężczyzna", "polska", "001-003", hiringdate3, 11000, "Aleje Jerozolimskie 151, Warszawa", "brak");
+        Restorer restorer4 = new Restorer("Izabela", "Damięcka", birthDate4, "kobieta", "polska", "001-004", hiringdate4, 13000, "Zaciszna 12, Warszawa", "naprawa");
+        Restorer restorer5 = new Restorer("Łukasz", "Łubik", birthDate5, "mężczyzna", "polska", "001-005", hiringdate5, 12000, "Partyzanów 1/3,  Warszawa", "sklejanie");
 
         Librarian testLibrarian = new Librarian ("Krzysztof", "Damięcki", testBirthDate2, "mężczyzna", "polska", "001-322", testHiringDate2, 11000, "Damięcka 12A/14 01-471 Warszawa", testLanguages);
         Librarian testLibrarian2 = new Librarian ("Witold", "Krwaczyk", testBirthDate3, "mężczyzna", "polska", "001-326", testHiringDate3, 10000, "Partyzantów 13 04-271 Warszawa", testLanguages2);
@@ -542,7 +541,7 @@ public class Main {
         // --------------------- modyfikacje powiązań -----------------------------------------
 
 
-        //librariesFromDb.get(0).removeDirector(directorsFromDb.get(0));
+            //librariesFromDb.get(0).removeDirector(directorsFromDb.get(0));
             //librariesFromDb.get(0).removeLibrarian(librariansFromDb.get(0));
             //librariesFromDb.get(0).removeRestorer(restorersFromDb.get(0));
             //directorsFromDb.get(0).addLibraryToDirector(librariesFromDb.get(0));
@@ -550,15 +549,15 @@ public class Main {
             //librariansFromDb.get(0).addLibraryToLibrarian(librariesFromDb.get(0));
 
             //booksFromDb.get(0).removeAuthorsFromBook(booksFromDb.get(0).getAuthors());
-            //booksFromDb.get(0).addAuthor(authorsFromDb.get(4));
+            //booksFromDb.get(0).addAuthor(authorsFromDb.get(0));
 
             //booksFromDb.get(0).changeRack(racksFromDb.get(2));
             //booksFromDb.get(0).removeRackFromBook();
-            //booksFromDb.get(0).addRackToBook(racksFromDb.get(3));
+            //booksFromDb.get(0).addRackToBook(racksFromDb.get(0));
 
-//            System.out.println(librariesFromDb.get(0).findLibrarian("001-326"));
-//            System.out.println(librariesFromDb.get(0).findDirector("001-380"));
-//            System.out.println(librariesFromDb.get(0).findRestorer("001-003"));
+            //System.out.println(librariesFromDb.get(0).findLibrarian("001-326"));
+            //System.out.println(librariesFromDb.get(0).findDirector("001-380"));
+            //System.out.println(librariesFromDb.get(0).findRestorer("001-003"));
 
 //        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
 //        BookReport testBookReport2 = new BookReport("Przegląd książek", true, "Za mało książek do norm europejskich");

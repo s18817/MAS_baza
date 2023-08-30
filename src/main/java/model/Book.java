@@ -42,7 +42,7 @@ public class Book implements Serializable {
 
     public Book () {}
 
-    public Book(int id, String title, Set category, Condition bookCondition, int numberOfPages, int yearOfEdition, String publishingHouse) {
+    public Book(String title, Set category, Condition bookCondition, int numberOfPages, int yearOfEdition, String publishingHouse) {
         super(); // wywolanie konstrukotra z nadklasy
         this.id = id;
         setTitle(title);
@@ -56,7 +56,7 @@ public class Book implements Serializable {
     }
 
     // jest to tez przyklad przeciazenia
-    public Book(int id, String title, Set category, Condition bookCondition, int yearOfEdition, String publishingHouse) { // drugi konstruktor bez liczby stron - jest to pole opcjonalne
+    public Book(String title, Set category, Condition bookCondition, int yearOfEdition, String publishingHouse) { // drugi konstruktor bez liczby stron - jest to pole opcjonalne
         super(); // wywolanie konstrukotra z nadklasy
         this.id = id;
         setTitle(title);

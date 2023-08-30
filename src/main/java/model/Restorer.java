@@ -36,7 +36,7 @@ public class Restorer implements Serializable {
     private List<Renovation> renovations = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania wykonanych renowacji ksiazek ; kolekcja, poniewaz jeden konwserwator moze wykonac wiele renowacji
     private List<RestorerReport> restorerReports = new ArrayList<>();
 
-    public Restorer(int id, String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, String specialisation){
+    public Restorer(String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, String specialisation){
         setId(id);
         setName(name);
         setSurname(surname);

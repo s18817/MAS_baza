@@ -20,6 +20,9 @@ public class Restorer implements Serializable {
     private long id;
     private String name;
     private String surname;
+    private String street;
+    private String city;
+    private String postalCode;
     private LocalDate birthDate;
     private String gender;
     private String nationality;
@@ -28,7 +31,6 @@ public class Restorer implements Serializable {
     private Library library; // dla pracownika tylko jedna biblioteka
     private double baseSalary;
     private LocalDate hiringDate; // data  zatrudnienia
-    private String address; // dane adresowe
     private boolean changeFlag;
 
     public static Restorer loggedRestorer;
@@ -36,60 +38,49 @@ public class Restorer implements Serializable {
     private List<Renovation> renovations = new ArrayList<>(); // asocjacja z atrybutem ; kolekcja do przetrzymywania wykonanych renowacji ksiazek ; kolekcja, poniewaz jeden konwserwator moze wykonac wiele renowacji
     private List<RestorerReport> restorerReports = new ArrayList<>();
 
-    public Restorer(String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String address, String specialisation){
-        setId(id);
+    public Restorer(String name, String surname, String street, String city, String postalCode, LocalDate birthDate, String gender, String nationality, String ssn, LocalDate hiringDate, double baseSalary, String specialisation){
         setName(name);
         setSurname(surname);
+        setStreet(street);
+        setCity(city);
+        setPostalCode(postalCode);
         setBirthDate(birthDate);
         setGender(gender);
         setNationality(nationality);
         setSsn(ssn);
         setHiringDate(hiringDate);
         setBaseSalary(baseSalary);
-        setAddress(address);
         setSpecialisation(specialisation);
     }
 
-    public Restorer(Employee prevEmployee, String specialisation){
-        setId(id);
+    public Restorer(Director prevEmployee, String specialisation){
         setName(prevEmployee.getName());
-        setSurname(surname);
+        setSurname(prevEmployee.getSurname());
+        setStreet(prevEmployee.getStreet());
+        setCity(prevEmployee.getCity());
+        setPostalCode(prevEmployee.getPostalCode());
         setBirthDate(prevEmployee.getBirthDate());
         setGender(prevEmployee.getGender());
         setNationality(prevEmployee.getNationality());
         setSsn(prevEmployee.getSsn());
         setHiringDate(prevEmployee.getHiringDate());
         setBaseSalary(prevEmployee.getBaseSalary());
-        setAddress(prevEmployee.getAddress());
-        setSpecialisation(specialisation); // zapisanie nowych danych
-    }
-
-    public Restorer(Director prevEmployee, String specialisation){
-        setId(id);
-        setName(prevEmployee.getName());
-        setSurname(surname);
-        setBirthDate(prevEmployee.getBirthDate());
-        setGender(prevEmployee.getGender());
-        setNationality(prevEmployee.getNationality());
-        this.ssn = prevEmployee.getSsn();
-        setHiringDate(prevEmployee.getHiringDate());
-        setBaseSalary(prevEmployee.getBaseSalary());
-        setAddress(prevEmployee.getAddress());
         setSpecialisation(specialisation); // zapisanie nowych danych
         this.changeFlag = true;
     }
 
     public Restorer(Librarian prevEmployee, String specialisation){
-        setId(id);
         setName(prevEmployee.getName());
-        setSurname(surname);
+        setSurname(prevEmployee.getSurname());
+        setStreet(prevEmployee.getStreet());
+        setCity(prevEmployee.getCity());
+        setPostalCode(prevEmployee.getPostalCode());
         setBirthDate(prevEmployee.getBirthDate());
         setGender(prevEmployee.getGender());
         setNationality(prevEmployee.getNationality());
-        this.ssn = prevEmployee.getSsn();
+        setSsn(prevEmployee.getSsn());
         setHiringDate(prevEmployee.getHiringDate());
         setBaseSalary(prevEmployee.getBaseSalary());
-        setAddress(prevEmployee.getAddress());
         setSpecialisation(specialisation); // zapisanie nowych danych
         this.changeFlag = true;
     }
@@ -191,6 +182,42 @@ public class Restorer implements Serializable {
     }
 
     @Basic
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        if (street == null || street.trim().isBlank()){
+            throw new ValidationException("Street cannot be empty");
+        }
+        this.street = street;
+    }
+
+    @Basic
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        if (city == null || city.trim().isBlank()){
+            throw new ValidationException("City cannot be empty");
+        }
+        this.city = city;
+    }
+
+    @Basic
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        if (postalCode == null || postalCode.trim().isBlank()){
+            throw new ValidationException("Postal code cannot be empty");
+        }
+        this.postalCode = postalCode;
+    }
+
+    @Basic
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -287,10 +314,6 @@ public class Restorer implements Serializable {
         if (ssn == null || ssn.trim().isBlank()){
             throw new ValidationException("SSN cannot be empty");
         }
-//        else if (getSsnDictionary().contains(ssn)) { // unikalnosc ssn
-//            //throw new ValidationException("Given SSN is already used");
-//        }
-//        getSsnDictionary().add(ssn);
         this.ssn = ssn;
     }
 
@@ -307,20 +330,6 @@ public class Restorer implements Serializable {
             throw new ValidationException("Provide valid hiring date");
         }
         this.hiringDate = hiringDate;
-    }
-
-    @Basic
-    public String getAddress () {
-        return address;
-    }
-
-    public void setAddress (String address) {
-        if (address == null || address.trim().isBlank()) {
-            throw new ValidationException("Address cannot be empty");
-        } else if (address.length() > 100) {
-            throw new ValidationException("Address cannot be longer that 100 digits");
-        }
-        this.address = address;
     }
 
     public boolean isChangeFlag () {
@@ -346,6 +355,9 @@ public class Restorer implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
                 ", birthDate=" + birthDate +
                 ", gender='" + gender + '\'' +
                 ", nationality='" + nationality + '\'' +
@@ -354,7 +366,7 @@ public class Restorer implements Serializable {
                 //", library=" + library +
                 ", baseSalary=" + baseSalary +
                 ", hiringDate=" + hiringDate +
-                ", address='" + address + '\'' +
+                ", changeFlag=" + changeFlag +
                 ", renovations=" + renovations +
                 ", restorerReports=" + restorerReports +
                 '}';

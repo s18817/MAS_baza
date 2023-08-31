@@ -69,7 +69,7 @@ public class Library implements Serializable {
                 throw new ValidationException("Employee with given SSN number is already assigned");
             }
             if(!director.isChangeFlag()) {
-                ssnDictionary.add(director.getSsn());
+                addSSNToDictionary(director.getSsn());
             }
             directors.add(director);
             director.addLibraryToDirector(this); // polaczenie zwrotne
@@ -79,6 +79,7 @@ public class Library implements Serializable {
     public void removeDirector(Director director) {
         getDirectors().remove(director); // usuwanie polaczenia
         director.removeLibrary();
+        removeSSNFromDictionary(director.getSsn());
     }
 
     @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
@@ -99,7 +100,7 @@ public class Library implements Serializable {
                 throw new ValidationException("Employee with given SSN number is already assigned");
             }
             if(!restorer.isChangeFlag()) {
-                ssnDictionary.add(restorer.getSsn());
+                addSSNToDictionary(restorer.getSsn());
             }
             restorers.add(restorer);
             restorer.addLibraryToRestorer(this); // polaczenie zwrotne
@@ -109,6 +110,7 @@ public class Library implements Serializable {
     public void removeRestorer(Restorer restorer) {
         getRestorers().remove(restorer); // usuwanie polaczenia
         restorer.removeLibrary();
+        removeSSNFromDictionary(restorer.getSsn());
     }
 
     @OneToMany(mappedBy = "library", fetch = FetchType.EAGER)
@@ -129,7 +131,7 @@ public class Library implements Serializable {
                 throw new ValidationException("Employee with given SSN number is already assigned");
             }
             if(!librarian.isChangeFlag()) {
-                ssnDictionary.add(librarian.getSsn());
+                addSSNToDictionary(librarian.getSsn());
             }
             librarians.add(librarian);
             librarian.addLibraryToLibrarian(this); // polaczenie zwrotne
@@ -139,6 +141,7 @@ public class Library implements Serializable {
     public void removeLibrarian(Librarian librarian) {
         getLibrarians().remove(librarian); // usuwanie polaczenia
         librarian.removeLibrary();
+        removeSSNFromDictionary(librarian.getSsn());
     }
 
     @Basic
@@ -189,25 +192,25 @@ public class Library implements Serializable {
         this.postalCode = postalCode;
     }
 
-    @Transient
+    @ElementCollection
     public Set<String> getSsnDictionary () {
         return ssnDictionary;
     }
 
     public void setSsnDictionary (Set<String> ssnDictionary) {
-        this.ssnDictionary = ssnDictionary;
+            this.ssnDictionary = ssnDictionary;
     }
 
-    public void addEmployeeSSN(String ssnToAdd){
-        if (ssnToAdd == null || ssnToAdd.trim().isBlank()){
+    public void addSSNToDictionary(String ssnToAdd) {
+        if (ssnToAdd == null || ssnToAdd.trim().isBlank()) {
             throw new ValidationException("SSN cannot be empty");
         }
-        else if (ssnDictionary.contains(ssnToAdd)) { // unikalnosc ssn
-            throw new ValidationException("Given SSN is already used");
-        }
-
-        ssnDictionary.add(ssnToAdd);
+        this.ssnDictionary.add(ssnToAdd);
     }
+    public void removeSSNFromDictionary(String SSNToRemove) {
+        this.ssnDictionary.remove(SSNToRemove);
+    }
+
 
 //    public void addEmployeeQualif(Employee newEmployee) {
 //        if (!employeeQualif.containsKey(newEmployee.getSsn())) {
@@ -218,7 +221,7 @@ public class Library implements Serializable {
 //
 //    }
 //
-    public Librarian findLibrarian (String ssn) throws Exception {
+    public Librarian findLibrarian (String ssn) {
         for (Librarian lib : librarians) {
             if (lib.getSsn().equals(ssn)) {
                 return lib;
@@ -227,7 +230,7 @@ public class Library implements Serializable {
         return null;
     }
 
-    public Director findDirector (String ssn) throws Exception {
+    public Director findDirector (String ssn) {
         for (Director dir : directors) {
             if (dir.getSsn().equals(ssn)) {
                 return dir;
@@ -236,7 +239,7 @@ public class Library implements Serializable {
         return null;
     }
 
-    public Restorer findRestorer (String ssn) throws Exception {
+    public Restorer findRestorer (String ssn) {
         for (Restorer res : restorers) {
             if (res.getSsn().equals(ssn)) {
                 return res;

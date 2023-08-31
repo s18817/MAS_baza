@@ -30,8 +30,6 @@ import static model.Rack.racksFromDb;
 import static model.Renovation.renovationsFromDb;
 import static model.Restorer.restorersFromDb;
 import static model.RestorerReport.restorerReportsFromDb;
-
-
 import static model.Restorer.loggedRestorer;
 
 public class Main {
@@ -266,22 +264,20 @@ public class Main {
         testClient6.returnBook(testBorrow14, book3);
         testClient6.returnBook(testBorrow15, book4);
 
-
-//
 //        System.out.println(testBook.getState());
 //        testClient1.addBorrowToClient(testBook, testBorrow);
 //        System.out.println(testBook.getBorrowDetails());
-//        System.out.println(testClient.getBorrowDetails());
+//        System.out.println(testClient1.getBorrowDetails());
 //        System.out.println(testBook.getState());
 //        testClient1.returnBook(testBorrow, testBook);
 //        System.out.println(testBook.getBorrowDetails());
 //        System.out.println(testBook.getState());
-//
+
         Rack testStandardRack = new Rack(1, "A01", "fantastyka");
         Rack testMovingRack = new Rack(1, "B01", "nauka", 10000, true);
         Rack testSmartRack = new Rack(2, "A02", "historia", "Software 1.1.12", true);
         Rack testMovingSmartRack = new Rack(3, "A03", "powieść", "Software 1.1.13", true, 10000,true);
-//
+
         testStandardRack.addBookToRack(testBook);
         testStandardRack.addBookToRack(book1);
         testStandardRack.addBookToRack(book2);
@@ -325,27 +321,27 @@ public class Main {
         testLanguages3.add("niemiecki");
         testLanguages3.add("hiszpański");
 
-        Restorer restorer1 = new Restorer("Karol", "Szyszka", birthDate1, "mężczyzna", "polska", "001-001", hiringdate1, 7000, "Kondratowicza 17A/51, Warszawa", "sklejanie");
-        Restorer restorer2 = new Restorer("Karolina", "Wacławiak", birthDate2, "kobieta", "polska", "001-002", hiringdate2, 11000, "Prosta 12/1, Warszawa", "zabezpieczanie");
-        Restorer restorer3 = new Restorer("Robert", "Styrkosz", birthDate3, "mężczyzna", "polska", "001-003", hiringdate3, 11000, "Aleje Jerozolimskie 151, Warszawa", "brak");
-        Restorer restorer4 = new Restorer("Izabela", "Damięcka", birthDate4, "kobieta", "polska", "001-004", hiringdate4, 13000, "Zaciszna 12, Warszawa", "naprawa");
-        Restorer restorer5 = new Restorer("Łukasz", "Łubik", birthDate5, "mężczyzna", "polska", "001-005", hiringdate5, 12000, "Partyzanów 1/3,  Warszawa", "sklejanie");
+        Restorer restorer1 = new Restorer("Karol", "Szyszka","Kondratowicza 17A/51", "Warszawa","04-234", birthDate1, "mężczyzna", "polska", "001-001", hiringdate1, 7000, "sklejanie");
+        Restorer restorer2 = new Restorer("Karolina", "Wacławiak", "Prosta 12/1", "Warszawa", "04-242", birthDate2, "kobieta", "polska", "001-002", hiringdate2, 11000, "zabezpieczanie");
+        Restorer restorer3 = new Restorer("Robert", "Styrkosz","Aleje Jerozolimskie 151", "Warszawa", "01-427", birthDate3, "mężczyzna", "polska", "001-003", hiringdate3, 11000, "brak");
+        Restorer restorer4 = new Restorer("Izabela", "Damięcka", "Zaciszna 12", "Warszawa", "04-216", birthDate4, "kobieta", "polska", "001-004", hiringdate4, 13000, "naprawa");
+        Restorer restorer5 = new Restorer("Łukasz", "Łubik", "Partyzanów 1/3",  "Piaseczno", "02-212", birthDate5, "mężczyzna", "polska", "001-005", hiringdate5, 12000, "sklejanie");
 
-        Librarian testLibrarian = new Librarian ("Krzysztof", "Damięcki", testBirthDate2, "mężczyzna", "polska", "001-322", testHiringDate2, 11000, "Damięcka 12A/14 01-471 Warszawa", testLanguages);
-        Librarian testLibrarian2 = new Librarian ("Witold", "Krwaczyk", testBirthDate3, "mężczyzna", "polska", "001-326", testHiringDate3, 10000, "Partyzantów 13 04-271 Warszawa", testLanguages2);
-        Librarian testLibrarian3 = new Librarian ("Zygmunt", "Wałyszew", testBirthDate4, "mężczyzna", "polska", "001-329", testHiringDate4, 11000, "Szaserów 111/16 04-349 Warszawa", testLanguages2);
-        Librarian testLibrarian4 = new Librarian ("Klaudia", "Durczok", testBirthDate5, "kobieta", "polska", "001-330", testHiringDate2, 13000, "Zacna 5 02-171 Legionowo", testLanguages3);
-        Librarian testLibrarian5 = new Librarian ("Izabela", "Kwark", testBirthDate6, "kobieta", "polska", "001-375", testHiringDate3, 11000, "Pełczyńskiego 11A/4 01-111 Warszawa", testLanguages);
+        Librarian testLibrarian = new Librarian ("Krzysztof", "Damięcki", "Damięcka 12A/14", "Warszawa", "01-471", testBirthDate2, "mężczyzna", "polska", "001-322", testHiringDate2, 11000, testLanguages);
+        Librarian testLibrarian2 = new Librarian ("Witold", "Krwaczyk", "Kobuszewska 13" , "Warszawa", "04-271", testBirthDate3, "mężczyzna", "polska", "001-326", testHiringDate3, 10000, testLanguages2);
+        Librarian testLibrarian3 = new Librarian ("Zygmunt", "Wałyszew", "Szaserów 111/16", "Warszawa", "04-349", testBirthDate4, "mężczyzna", "polska", "001-329", testHiringDate4, 11000, testLanguages2);
+        Librarian testLibrarian4 = new Librarian ("Klaudia", "Durczok", "Zacna 5", "Legionowo","02-171", testBirthDate5, "kobieta", "polska", "001-330", testHiringDate2, 13000, testLanguages3);
+        Librarian testLibrarian5 = new Librarian ("Izabela", "Kwark", "Pełczyńskiego 11A/4", "Warszawa", "01-111", testBirthDate6, "kobieta", "polska", "001-375", testHiringDate3, 11000, testLanguages);
 
-        Director testDirector = new Director("Joanna", "Kalisz", testBirthDate3, "kobieta", "polska", "001-323", testHiringDate, 16000, " Anielewicza 100/4 04-124 Warszawa", "Doktorat z ekonomii");
-        Director testDirector2 = new Director("Ireneusz", "Sawicki", testBirthDate2, "mężczyzna", "polska", "001-340", testHiringDate2, 15000, "Krzywa 11A/4 01-421 Warszawa", "Doktorat z ekonomii");
-        Director testDirector3 = new Director("Zenon", "Martyniuk", testBirthDate4, "mężczyzna", "polska", "001-364", testHiringDate4, 18000, "Powstańców 53/11 05-212 Warszawa", "Inżynier logistyk");
-        Director testDirector4 = new Director("John", "Cole", testBirthDate2, "mężczyzna", "angielska", "005-365", testHiringDate4, 22000, "Piaseczno 141 01-543 Piaseczno", "Cambridge");
-        Director testDirector5 = new Director("Krystyna", "Radziszewska", testBirthDate2, "kobieta", "polska", "001-380", testHiringDate2, 15000, "Miodowa  153 01-532 Warszawa", "Inżynier informatyk");
+        Director testDirector = new Director("Joanna", "Kalisz", "Anielewicza 100/4", "Warszawa", "04-124", testBirthDate3, "kobieta", "polska", "001-323", testHiringDate, 16000, "Doktorat z ekonomii");
+        Director testDirector2 = new Director("Ireneusz", "Sawicki", "Krzywa 11A/4", "Warszawa", "01-421", testBirthDate2, "mężczyzna", "polska", "001-340", testHiringDate2, 15000, "Doktorat z ekonomii");
+        Director testDirector3 = new Director("Zenon", "Martyniuk", "Powstańców 53/11", "Warszawa","05-212", testBirthDate4, "mężczyzna", "polska", "001-364", testHiringDate4, 18000, "Inżynier logistyk");
+        Director testDirector4 = new Director("John", "Cole","Piaseczno 141", "Piaseczno", "01-543", testBirthDate2, "mężczyzna", "angielska", "005-365", testHiringDate4, 22000, "Cambridge");
+        Director testDirector5 = new Director("Krystyna", "Radziszewska", "Miodowa  153", "Warszawa", "01-532", testBirthDate2, "kobieta", "polska", "001-380", testHiringDate2, 15000, "Inżynier informatyk");
         Librarian testChangeRestorerToLibrarian = new Librarian(restorer1, testLanguages);
-//
+
         Library testLibrary = new Library("Biblioteka narodowa", "Aleja Niepodległości 213", "Warszawa", "02-086");
-//
+
         testLibrary.addRestorer(restorer1);
         testLibrary.addRestorer(restorer2);
         testLibrary.addRestorer(restorer3);
@@ -364,11 +360,6 @@ public class Main {
         testLibrary.addDirector(testDirector3);
         testLibrary.addDirector(testDirector4);
         testLibrary.addDirector(testDirector5);
-//
-//        System.out.println(testLibrary.getEmployees());
-//        System.out.println(testRestorer.getLibrary());
-//
-//        System.out.println(testDirector.findEmployee("001-321"));
 
         Inventory testInventory = new Inventory("Piętro 1", "Inwentaryzacja w trakcie przeglądu", "potrzeba zwrócenia uwagi na fantastykę", testInventoryDate);
         Inventory testInventory2 = new Inventory("Piętro 2", "Inwentaryzacja", "przegląd książek naukowych", testInventoryDate2);
@@ -391,10 +382,6 @@ public class Main {
         testSmartRack.addInventoryToRack(testLibrarian2, testInventory8);
         testMovingSmartRack.addInventoryToRack(testLibrarian2, testInventory9);
         testStandardRack.addInventoryToRack(testLibrarian3, testInventory10);
-
-        //testBook.changeRack(testMovingSmartRack);
-//        System.out.println(testStandardRack.getInventoryHistory());
-//        System.out.println(testLibrarian.getDoneInventories());
 
         Set<String> testMaterials = new HashSet<>();
         testMaterials.add("folia");
@@ -541,36 +528,36 @@ public class Main {
         // --------------------- modyfikacje powiązań -----------------------------------------
 
 
-            //librariesFromDb.get(0).removeDirector(directorsFromDb.get(0));
-            //librariesFromDb.get(0).removeLibrarian(librariansFromDb.get(0));
-            //librariesFromDb.get(0).removeRestorer(restorersFromDb.get(0));
-            //directorsFromDb.get(0).addLibraryToDirector(librariesFromDb.get(0));
-            //restorersFromDb.get(0).addLibraryToRestorer(librariesFromDb.get(0));
-            //librariansFromDb.get(0).addLibraryToLibrarian(librariesFromDb.get(0));
+            librariesFromDb.get(0).removeDirector(directorsFromDb.get(0));
+            librariesFromDb.get(0).removeLibrarian(librariansFromDb.get(0));
+            librariesFromDb.get(0).removeRestorer(restorersFromDb.get(0));
+            directorsFromDb.get(0).addLibraryToDirector(librariesFromDb.get(0));
+            restorersFromDb.get(0).addLibraryToRestorer(librariesFromDb.get(0));
+            librariansFromDb.get(0).addLibraryToLibrarian(librariesFromDb.get(0));
 
-            //booksFromDb.get(0).removeAuthorsFromBook(booksFromDb.get(0).getAuthors());
-            //booksFromDb.get(0).addAuthor(authorsFromDb.get(0));
+            booksFromDb.get(0).removeAuthorsFromBook(booksFromDb.get(0).getAuthors());
+            booksFromDb.get(0).addAuthor(authorsFromDb.get(0));
 
-            //booksFromDb.get(0).changeRack(racksFromDb.get(2));
-            //booksFromDb.get(0).removeRackFromBook();
-            //booksFromDb.get(0).addRackToBook(racksFromDb.get(0));
+            booksFromDb.get(0).changeRack(racksFromDb.get(2));
+            booksFromDb.get(0).removeRackFromBook();
+            booksFromDb.get(0).addRackToBook(racksFromDb.get(0));
 
-            //System.out.println(librariesFromDb.get(0).findLibrarian("001-326"));
-            //System.out.println(librariesFromDb.get(0).findDirector("001-380"));
-            //System.out.println(librariesFromDb.get(0).findRestorer("001-003"));
+            System.out.println(librariesFromDb.get(0).findLibrarian("001-322"));
+            System.out.println(librariesFromDb.get(0).findDirector("001-364"));
+            System.out.println(librariesFromDb.get(0).findRestorer("001-003"));
 
-//        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
-//        BookReport testBookReport2 = new BookReport("Przegląd książek", true, "Za mało książek do norm europejskich");
-//        BookReport testBookReport3 = new BookReport("Raport książek", false, "zbiór od dawna bez zmian - potrzebne nowe zamówienia");
-//        testDirector.generateReport(testBookReport);
-//        testDirector2.generateReport(testBookReport2);
-//        testDirector3.generateReport(testBookReport3);
-//        directorsFromDb.get(0).generateReport(testBookReport);
-//        directorsFromDb.get(1).generateReport(testBookReport2);
-//        directorsFromDb.get(2).generateReport(testBookReport3);
-//        sessionInitial.save(testBookReport);
-//        sessionInitial.save(testBookReport2);
-//        sessionInitial.save(testBookReport3);
+        BookReport testBookReport = new BookReport("Przegląd książek", false, "Do zbioru warto dodać trylogię Gwiezdnych Wojen");
+        BookReport testBookReport2 = new BookReport("Przegląd książek", true, "Za mało książek do norm europejskich");
+        BookReport testBookReport3 = new BookReport("Raport książek", false, "zbiór od dawna bez zmian - potrzebne nowe zamówienia");
+        testDirector.generateReport(testBookReport);
+        testDirector2.generateReport(testBookReport2);
+        testDirector3.generateReport(testBookReport3);
+        directorsFromDb.get(0).generateReport(testBookReport);
+        directorsFromDb.get(1).generateReport(testBookReport2);
+        directorsFromDb.get(2).generateReport(testBookReport3);
+        sessionInitial.save(testBookReport);
+        sessionInitial.save(testBookReport2);
+        sessionInitial.save(testBookReport3);
 
 
             sessionInitial.getTransaction().commit();

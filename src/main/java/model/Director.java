@@ -21,6 +21,9 @@ public class Director implements Serializable {
     private long id;
     private String name;
     private String surname;
+    private String street;
+    private String city;
+    private String postalCode;
     private LocalDate birthDate;
     private String gender;
     private String nationality;
@@ -28,7 +31,6 @@ public class Director implements Serializable {
     private Library library; // dla pracownika tylko jedna biblioteka
     private double baseSalary;
     private LocalDate hiringDate; // data  zatrudnienia
-    private String address; // dane adresowe
     private String education;
     private boolean changeFlag;
 
@@ -36,46 +38,49 @@ public class Director implements Serializable {
     private List<BookReport> bookReports = new ArrayList<>();
 
 
-    public Director (String name, String surname, LocalDate birthDate, String gender, String nationality, String ssn , LocalDate hiringDate, double baseSalary, String address, String education){
-        setId(id);
+    public Director (String name, String surname, String street, String city, String postalCode, LocalDate birthDate, String gender, String nationality, String ssn , LocalDate hiringDate, double baseSalary, String education){
         setName(name);
         setSurname(surname);
+        setStreet(street);
+        setCity(city);
+        setPostalCode(postalCode);
         setBirthDate(birthDate);
         setGender(gender);
         setNationality(nationality);
         setSsn(ssn);
         setHiringDate(hiringDate);
         setBaseSalary(baseSalary);
-        setAddress(address);
         setEducation(education);
     }
 
     public Director(Restorer prevEmployee, String education){
-        setId(id);
         setName(prevEmployee.getName());
         setSurname(prevEmployee.getSurname());
+        setStreet(prevEmployee.getStreet());
+        setCity(prevEmployee.getCity());
+        setPostalCode(prevEmployee.getPostalCode());
         setBirthDate(prevEmployee.getBirthDate());
         setGender(prevEmployee.getGender());
         setNationality(prevEmployee.getNationality());
-        this.ssn = prevEmployee.getSsn();
+        setSsn(prevEmployee.getSsn());
         setHiringDate(prevEmployee.getHiringDate());
         setBaseSalary(prevEmployee.getBaseSalary());
-        setAddress(prevEmployee.getAddress());
         setEducation(education);
         this.changeFlag = true;
         }
 
     public Director(Librarian prevEmployee, String education){
-        setId(id);
         setName(prevEmployee.getName());
         setSurname(prevEmployee.getSurname());
+        setStreet(prevEmployee.getStreet());
+        setCity(prevEmployee.getCity());
+        setPostalCode(prevEmployee.getPostalCode());
         setBirthDate(prevEmployee.getBirthDate());
         setGender(prevEmployee.getGender());
         setNationality(prevEmployee.getNationality());
-        this.ssn = prevEmployee.getSsn();
+        setSsn(prevEmployee.getSsn());
         setHiringDate(prevEmployee.getHiringDate());
         setBaseSalary(prevEmployee.getBaseSalary());
-        setAddress(prevEmployee.getAddress());
         setEducation(education);
         this.changeFlag = true;
     }
@@ -181,6 +186,42 @@ public class Director implements Serializable {
     }
 
     @Basic
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        if (street == null || street.trim().isBlank()){
+            throw new ValidationException("Street cannot be empty");
+        }
+        this.street = street;
+    }
+
+    @Basic
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        if (city == null || city.trim().isBlank()){
+            throw new ValidationException("City cannot be empty");
+        }
+        this.city = city;
+    }
+
+    @Basic
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        if (postalCode == null || postalCode.trim().isBlank()){
+            throw new ValidationException("Postal code cannot be empty");
+        }
+        this.postalCode = postalCode;
+    }
+
+    @Basic
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -246,10 +287,6 @@ public class Director implements Serializable {
         if (ssn == null || ssn.trim().isBlank()){
             throw new ValidationException("SSN cannot be empty");
         }
-//        else if (getSsnDictionary().contains(ssn)) { // unikalnosc ssn
-//            //throw new ValidationException("Given SSN is already used");
-//        }
-//        getSsnDictionary().add(ssn);
         this.ssn = ssn;
     }
 
@@ -269,20 +306,6 @@ public class Director implements Serializable {
     }
 
 
-    @Basic
-    public String getAddress () {
-        return address;
-    }
-
-    public void setAddress (String address) {
-        if (address == null || address.trim().isBlank()) {
-            throw new ValidationException("Address cannot be empty");
-        } else if (address.length() > 100) {
-            throw new ValidationException("Address cannot be longer that 100 digits");
-        }
-        this.address = address;
-    }
-
     public boolean isChangeFlag () {
         return changeFlag;
     }
@@ -297,6 +320,9 @@ public class Director implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
                 ", birthDate=" + birthDate +
                 ", gender='" + gender + '\'' +
                 ", nationality='" + nationality + '\'' +
@@ -304,8 +330,8 @@ public class Director implements Serializable {
                 //", library=" + library +
                 ", baseSalary=" + baseSalary +
                 ", hiringDate=" + hiringDate +
-                ", address='" + address + '\'' +
                 ", education='" + education + '\'' +
+                ", changeFlag=" + changeFlag +
                 ", bookReports=" + bookReports +
                 '}';
     }

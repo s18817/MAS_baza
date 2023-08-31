@@ -43,8 +43,6 @@ public class Book implements Serializable {
     public Book () {}
 
     public Book(String title, Set category, Condition bookCondition, int numberOfPages, int yearOfEdition, String publishingHouse) {
-        super(); // wywolanie konstrukotra z nadklasy
-        this.id = id;
         setTitle(title);
         setCategory(category);
         setBookCondition(bookCondition);
@@ -57,8 +55,6 @@ public class Book implements Serializable {
 
     // jest to tez przyklad przeciazenia
     public Book(String title, Set category, Condition bookCondition, int yearOfEdition, String publishingHouse) { // drugi konstruktor bez liczby stron - jest to pole opcjonalne
-        super(); // wywolanie konstrukotra z nadklasy
-        this.id = id;
         setTitle(title);
         setCategory(category);
         setBookCondition(bookCondition);
@@ -67,7 +63,6 @@ public class Book implements Serializable {
         setBookRentalName(CurrentbookRentalName);
         setState(State.DOSTĘPNA);
     }
-
 
     @Id()
     @GeneratedValue(generator="increment")
@@ -93,11 +88,13 @@ public class Book implements Serializable {
         this.authors = authorsToAdd;
     }
 
-    public void addAuthor(Author authorToAdd) {
+    public void addAuthor (Author authorToAdd) {
 
-        if (!authors.contains(authorToAdd)) {
+        if (authors.isEmpty()) {
             authors.add(authorToAdd);
-
+            authorToAdd.addBookToAuthor(this); // polaczenie zwrotne
+        } else if (!authors.contains(authorToAdd)) {
+            authors.add(authorToAdd);
             authorToAdd.addBookToAuthor(this); // polaczenie zwrotne
         }
     }
@@ -106,7 +103,7 @@ public class Book implements Serializable {
         for (Author author : authorsToRemove){
             author.removeBookFromAuthor(this);
         }
-        authors = null;
+        authors.clear();
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

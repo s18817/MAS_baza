@@ -18,7 +18,7 @@ public class ClientLibrarian extends Librarian implements IClientLibrarian {
     private List<Borrow> borrowDetails = new ArrayList<>();
 
     public ClientLibrarian(String name, String surname, LocalDate birthDate, String gender, String nationality, String opinion, String email, String ssn , LocalDate hiringDate, double baseSalary, String address, Set languages, boolean regularClient){
-        super(name, surname, birthDate, gender, nationality, ssn, hiringDate, baseSalary, address, languages);
+        //super(name, surname, birthDate, gender, nationality, ssn, hiringDate, baseSalary, address, languages);
         this.regularClient = regularClient;
         this.opinion = opinion;
         this.email = email;

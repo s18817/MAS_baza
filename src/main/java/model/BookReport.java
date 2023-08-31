@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import static model.Book.booksFromDb;
+import static model.Book.getBooksFromDb;
 
 @Entity(name = "model.BookReport")
 @Table(name = "book_report")
@@ -30,7 +31,7 @@ public class BookReport implements Serializable {
         setConfidential(confidential);
         creationDate = LocalDate.now();
         setPropositions(propositions);
-        setBookAmount(booksFromDb.size());
+        setBookAmount(getBooksFromDb().size());
     }
 
     public BookReport(){}
